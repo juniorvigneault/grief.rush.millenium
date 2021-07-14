@@ -1,1 +1,2 @@
-# Process - Scans, journal entries, notes, ideas, thoughts.
+# About the process
+Scans, journal entries, notes, ideas, thoughts, prayers.

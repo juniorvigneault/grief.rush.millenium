@@ -1,0 +1,57 @@
+body {
+  margin: 50px;
+  width: 800px;
+  font-family: 'helvetica', sans-serif;
+  text-align: justify;
+  line-height: 1.3;
+}
+
+h1 {
+  color: orange;
+  font-size: 50px;
+  text-align: left;
+}
+
+h3 {
+  background-color: orange;
+  font-size: 30px;
+}
+
+div {
+  font-size: 20px;
+}
+
+.question1 {
+  background-color: orange;
+}
+
+.important {
+  background-color: orange;
+}
+h4 {
+  background-color: orange;
+  font-size: 30px;
+  display: inline;
+}
+.me_devil {
+  height: 300px;
+  position: fixed;
+  margin-top: -22px;
+  margin-left: 415px;
+}
+.journal_title {
+  display: inline;
+}
+
+.to_do_title {
+  font-size: 100px;
+  display: inline;
+}
+.to_do_list {
+  font-size: 25px;
+}
+.to_do_devil {
+  margin-left: 800px;
+  margin-top: -10px;
+  position: fixed;
+}

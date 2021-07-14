@@ -1,4 +1,4 @@
 # Grief Project
-by Junior
+### by Junior
 
-This is a project about grief and gamification. More to come SOON.
+This is a project about the future of grief and gamification. More to come SOON.

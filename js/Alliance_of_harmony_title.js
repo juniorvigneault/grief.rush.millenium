@@ -1,66 +1,81 @@
 class Alliance_of_harmony_title {
 
-  constructor(alliancePNG, ofPNG, harmonyPNG, flowersPNG, decorationPNG, starGIF) {
+  constructor(flowersPNG) {
     // PNG for the title
-    this.alliancePNG = alliancePNG;
-    this.ofPNG = ofPNG;
-    this.harmonyPNG = harmonyPNG;
+    // flowers at the bottom
     this.flowersPNG = flowersPNG;
-    this.decorationPNG = decorationPNG;
 
-    // gif for title
-    this.starGIF = starGIF;
 
     // display grid to design stuff
     this.grid = false;
+
+    // white rectangle on top of the title to create a fade in / out
+    this.fade = true;
+    this.fadeSpeed = -1;
+    this.fadeIn = 255;
+    this.fadeOut = 1.5;
+
   }
 
   update() {
     this.display();
-
     // display grid to design stuff
     if (keyIsDown(LEFT_ARROW)) {
       this.grid = true;
     } else {
-      this.grid = false;
+      this.grid = true;
+    }
+    if (this.fade) {
+      this.fadeIn = this.fadeIn + this.fadeSpeed;
     }
   }
 
   display() {
     // display grid to design stuff
     if (this.grid) {
-      line(width / 2, 0, width / 2, height)
-      line(0, height / 2, width, height / 2)
+      push();
+      stroke(230);
+      fill(255);
+      ellipse(width / 2, height / 2, 600);
+      pop();
+      push();
+      stroke(230);
+      line(width / 2, 0, width / 2, height);
+      line(200, height / 2, width - 200, height / 2);
+      pop();
     }
 
 
-    // this.alliancePNG.resize(405, 105)
-    // image(this.alliancePNG, 300, 200)
-    // this.ofPNG.resize(90, 90)
-    // image(this.ofPNG, 240, 285)
-    // this.harmonyPNG.resize(405, 130)
-    // image(this.harmonyPNG, 320, 330)
-    // this.flowersPNG.resize(300, 300)
-    // image(this.flowersPNG, 140, 330)
+    this.flowersPNG.resize(378, 212)
+    imageMode(CENTER)
+    tint(255, 175)
+    image(this.flowersPNG, width / 2 + 1, 560)
+
     // this.decorationPNG.resize(150, 50)
     // image(this.decorationPNG, 500, 315)
     push();
     imageMode(CENTER);
-    image(this.starGIF, 250, 350);
-    textSize(100)
-    // textFont(eleganteFONT);
-    text(`Alliance`, 390, 280);
-    text(`of`, 390, 380);
-    text(`Harmony`, 390, 480);
+    // image(this.starGIF, width/2 - 2, 565);
+    textSize(75);
+    textFont(obrigeFONT);
+    fillHsluv(0, 100, 74)
+    textAlign(CENTER, CENTER)
+    text(`Alliance`, width / 2, 150);
+    text(`of`, width / 2, 258);
+    text(`Harmony`, width / 2, 350);
 
     pop();
 
+    push();
+    rectMode(CENTER);
+    noStroke();
+    fill(255, 255, 255, this.fadeIn);
+    rect(width / 2, height / 2, 1000, 700)
+    pop();
   }
 
-  mousePressed(){
+
+  mousePressed() {
 
   }
-
-
-
 }

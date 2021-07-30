@@ -17,32 +17,34 @@ let harmonyPNG;
 let flowersPNG;
 let decorationPNG;
 let starGIF;
-let eleganteFONT;
+let obrigeFONT;
 
 // Current active OOP state
 let currentState;
 
+let avatar_typewriter;
+
+let message;
+
 function preload(){
   // IMAGES PRELOAD
   // Alliance of harmony title png
-  alliancePNG = loadImage(`assets/images/png/alliance.png`)
-  harmonyPNG = loadImage(`assets/images/png/harmony.png`)
-  ofPNG = loadImage(`assets/images/png/of.png`)
   flowersPNG = loadImage(`assets/images/png/flowers.png`)
-  decorationPNG = loadImage(`assets/images/png/decoration.png`)
-  starGIF = loadImage(`assets/gifs/star_2.gif`)
+  starGIF = loadImage(`assets/gifs/star1.gif`)
 
-  eleganteFONT = loadFont(`assets/fonts/elegante.ttf`)
+  obrigeFONT = loadFont(`assets/fonts/obrige.otf`)
 
 }
 
 function setup() {
   createCanvas(cnvX, cnvY);
-  currentState = new Alliance_of_harmony_title(alliancePNG, ofPNG, harmonyPNG, flowersPNG, decorationPNG, starGIF);
+  // currentState = new Ten_seconds_title();
+  currentState = new Alliance_of_harmony_title(flowersPNG);
+  // currentState = new Avatar_intro();
 }
 
 function draw() {
-  background(240);
+  background(255);
   currentState.update();
 }
 

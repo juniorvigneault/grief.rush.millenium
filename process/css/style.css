@@ -68,6 +68,9 @@ h4 {
 .journal_scans {
   width: 800px;
 }
+.big_journal_scans {
+  width: 1000px;
+}
 
 .screaming {
   font-size: 100px;

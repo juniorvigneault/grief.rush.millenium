@@ -16,7 +16,8 @@ h3 {
   background-color: orange;
   font-size: 30px;
 }
-h5{
+
+h5 {
   font-size: 25px;
 }
 
@@ -31,17 +32,21 @@ div {
 .important {
   background-color: orange;
 }
+
 h4 {
   background-color: orange;
   font-size: 30px;
   display: inline;
 }
+
 .me_devil {
   height: 300px;
   position: fixed;
   margin-top: -22px;
   margin-left: 415px;
+  z-index: -1;
 }
+
 .journal_title {
   display: inline;
 }
@@ -50,24 +55,28 @@ h4 {
   font-size: 100px;
   display: inline;
 }
+
 .to_do_list {
   font-size: 25px;
 }
+
 .to_do_devil {
   margin-left: 800px;
   margin-top: -10px;
   position: fixed;
 }
+
 .me_devil_scans {
   position: fixed;
   height: 300px;
   margin-top: -100px;
-  margin-left:800px
+  margin-left: 800px
 }
 
 .journal_scans {
   width: 800px;
 }
+
 .big_journal_scans {
   width: 1000px;
 }

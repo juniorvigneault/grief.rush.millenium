@@ -10,3 +10,9 @@ body {
   overflow: hidden;
   /* Hide anything that goes off the window size */
 }
+
+#p5js-canvas {
+  border-style: solid;
+  border-width: thin;
+  border-color: #778899;
+}

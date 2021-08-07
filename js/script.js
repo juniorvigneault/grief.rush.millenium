@@ -6,8 +6,8 @@
 // VARIABLES DECLARATION
 
 // canvas size variable
-let cnvX = 1000;
-let cnvY = 700;
+let cnvX = 1300;
+let cnvY = 800;
 
 // IMAGE VARIABLES
 // Alliance of harmony title variable
@@ -26,7 +26,7 @@ let avatar_typewriter;
 
 let message;
 
-function preload(){
+function preload() {
   // IMAGES PRELOAD
   // Alliance of harmony title png
   flowersPNG = loadImage(`assets/images/png/flowers.png`)
@@ -37,10 +37,15 @@ function preload(){
 }
 
 function setup() {
-  createCanvas(cnvX, cnvY);
+  // Create the p5 canvas
+  let canvas = createCanvas(cnvX, cnvY);
+  // Move the canvas within the HTML into the appropriate section
+  canvas.parent('p5js-canvas');
   // currentState = new Ten_seconds_title();
-  currentState = new Alliance_of_harmony_title(flowersPNG);
+  currentState = new Alliance_of_harmony_title();
   // currentState = new Avatar_intro();
+  // currentState = new Start();
+
 }
 
 function draw() {
@@ -48,11 +53,11 @@ function draw() {
   currentState.update();
 }
 
-function mousePressed(){
+function mousePressed() {
   currentState.mousePressed();
 }
 
-function keyIsDown(){
+function keyIsDown() {
   currentState.keyIsDown();
 }
 

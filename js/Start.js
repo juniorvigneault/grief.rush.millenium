@@ -79,6 +79,7 @@ class Start {
     b: 0
   }) {
     push();
+    textFont(`futura`)
     fill(color.r, color.g, color.b)
     textAlign(CENTER, CENTER);
     textSize(size);
@@ -136,7 +137,7 @@ class Start {
       console.log('START');
       this.activateFade = true;
       setTimeout(() => {
-        currentState = new Alliance_of_harmony_title();
+        currentState = new Ten_seconds_title();
       }, 4000);
 
       // currentState = new Alliance_of_harmony_title(flowersPNG);

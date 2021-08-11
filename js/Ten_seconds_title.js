@@ -31,8 +31,16 @@ class Ten_seconds_title {
     }, 3000);
 
     setTimeout(() => {
-      currentState = new Alliance_of_harmony_title(flowersPNG);
+      currentState = new Alliance_of_harmony_title();
     }, 25000);
+
+    introSFX.play();
+    introSFX.setVolume(0.05);
+
+    setTimeout(() => {
+      introSFX2.play();
+      introSFX2.setVolume(0.07);
+    }, 16000);
   }
 
   update() {
@@ -41,15 +49,15 @@ class Ten_seconds_title {
     textAlign(CENTER, CENTER);
     if (this.quote1) {
       textSize(30);
-      textFont("arial");
-      fillHsluv(0, 100, 74)
+      textFont("futura");
+      fill(0)
       text(`A person can stand just about anything for 10 seconds...`, width / 2, height / 2);
     }
     if (this.quote2) {
       textSize(30);
-      textFont("arial");
-      fillHsluv(0, 100, 74)
-      text(`...then just start a new 10 seconds.`, width / 2, height / 2);
+      textFont("futura");
+      fill(0)
+      text(`...then you just start on a new 10 seconds.`, width / 2, height / 2);
     }
     pop();
     console.log(this.quote1)

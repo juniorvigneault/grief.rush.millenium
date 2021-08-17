@@ -21,6 +21,11 @@ let world;
 let blood;
 let bloodDrops = [];
 
+// ground variable
+let ground;
+let grounds = [];
+
+
 // canvas size variable
 let cnvX = 800;
 let cnvY = 800;

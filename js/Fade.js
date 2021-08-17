@@ -1,15 +1,15 @@
 class Fade {
   // class to create fade in and out of states
-  constructor(opacity, speed, fadeIn, fadeOut) {
+  constructor(opacity, speed, fadeIn, fadeOut, r, g, b) {
     this.whiteRect = true;
     this.fadeIn = fadeIn;
     this.fadeOut = fadeOut;
     this.opacity = opacity;
 
     this.fadeColor = {
-      r: 255,
-      g: 255,
-      b: 255
+      r: r,
+      g: g,
+      b: b
     }
 
     this.fadeSpeed = speed;

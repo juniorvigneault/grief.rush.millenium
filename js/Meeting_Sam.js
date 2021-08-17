@@ -2,26 +2,28 @@ class Meeting_Sam {
   constructor(samIMG, arrowGIF) {
     this.sam = {
       image: samIMG,
-      x: 650,
+      x: 400,
       y: 900,
       vy: 0,
-      speed: -5,
+      speed: -7,
       finaleY: 300,
       isMoving: false
     }
 
     this.textBox = {
-      x: 650,
-      y: 900,
+      x: 400,
+      y: 2300,
       vy: 0,
       speed: -7,
-      finaleY: 650
+      finaleY: 650,
+      back: false,
+      speed2: 2
     }
 
     this.arrow = {
       gif: arrowGIF,
-      x: 1050,
-      y: 700,
+      x: 630,
+      y: 680,
       isShowing: false
     }
 
@@ -33,33 +35,21 @@ class Meeting_Sam {
 
     typewriter2 = new Typewriter();
 
-    setTimeout(() => {
-      this.typewriter.typewrite(`
-        “Only people who are capable of loving strongly can also suffer great sorrow,
-        but this same necessity of loving serves to counteract their grief and heals
-        them.”
-        - Leon Toilstoï`, 140, 650);
 
+
+    setTimeout(() => {
+      this.sam.isMoving = true;
     }, 1000);
 
     setTimeout(() => {
       this.typewriter.typewrite(
-        ``, 140, 650);
-    }, 15000);
-
-    setTimeout(() => {
-      this.sam.isMoving = true;
-    }, 16000);
-
-    setTimeout(() => {
-      this.typewriter.typewrite(
-        `Hi...`, 300, 650);
+        `Hi...`, 200, 650);
       this.message1 = true;
-    }, 18000);
+    }, 4500);
 
     setTimeout(() => {
       this.toggleTextArrow();
-    }, 20000);
+    }, 5000);
 
     $(`#name_form`).dialog({
       buttons: {
@@ -101,10 +91,19 @@ class Meeting_Sam {
   }
 
   display() {
+
+    push();
+    noStroke();
+    rectMode(CENTER);
+    fillHsluv(305, 34.8, 90)
+    rect(400, 400, 800, 800)
+    pop();
+    
     rectMode(CENTER)
+    // noStroke();
     strokeWeight(1);
-    fill(0)
-    rect(this.textBox.x, this.textBox.y, 900, 200, 0, 0, 0, 20);
+    fill(211, 192, 216)
+    rect(this.textBox.x, this.textBox.y, 550, 150, 0, 0, 0, 0);
     this.typewriter.display();
 
     if (this.arrow.isShowing)
@@ -156,17 +155,19 @@ class Meeting_Sam {
   mousePressed() {
     if (this.message1) {
       this.typewriter.typewrite(
-        `I'm Sam.`, 300, 650);
+        `I'm Sam.`, 200, 650);
       this.arrow.isShowing = false;
       setTimeout(() => {
         this.arrow.isShowing = true;
         this.message1 = false;
         this.message2 = true;
-      }, 500);
+      }, 1000);
     }
     if (this.message2) {
       this.typewriter.typewrite(
-        `What's your name?`, 300, 650);
+        `What's your name?`, 200, 650);
+        this.arrow.isShowing = false;
+
       setTimeout(() => {
         $("#name_form").dialog("open");
       }, 1500);

@@ -2,26 +2,28 @@ class Meeting_Sam2 {
   constructor(samIMG, arrowGIF) {
     this.sam = {
       image: samIMG,
-      x: 650,
+      x: 400,
       y: 300,
       vy: 0,
-      speed: -5,
+      speed: -7,
       finaleY: 300,
       isMoving: false
     }
 
     this.textBox = {
-      x: 650,
+      x: 400,
       y: 650,
       vy: 0,
       speed: -7,
-      finaleY: 650
+      finaleY: 650,
+      back: false,
+      speed2: 2
     }
 
     this.arrow = {
       gif: arrowGIF,
-      x: 1050,
-      y: 700,
+      x: 630,
+      y: 680,
       isShowing: false
     }
 
@@ -34,15 +36,15 @@ class Meeting_Sam2 {
 
     this.typewriter = new Typewriter();
 
-    this.fade = new Fade(0, 1, false, true)
+    this.fade = new Fade(0, 1, false, true, 255,255,255)
 
     setTimeout(() => {
       this.typewriter.typewrite(`
-        Hello ` + userName + `.`, 160, 650);
+        Hello ` + userName + `.`, 100, 650);
     }, 800);
     setTimeout(() => {
       this.typewriter.typewrite(`
-        This might be a difficult time for you, I understand...`, 160, 650);
+        This might be a difficult time for you, I understand...`, 82, 650);
       setTimeout(() => {
         this.arrow.isShowing = true;
         this.message1 = true;
@@ -51,9 +53,8 @@ class Meeting_Sam2 {
   }
 
   update() {
-
-    this.displaySam();
     this.display();
+    this.displaySam();
 
 
 if (this.fading){
@@ -62,10 +63,19 @@ if (this.fading){
   }
 
   display() {
+
+    push();
+    noStroke();
+    rectMode(CENTER);
+    fillHsluv(305, 34.8, 90)
+    rect(400, 400, 800, 800)
+    pop();
+
     rectMode(CENTER)
+    // noStroke();
     strokeWeight(1);
-    fill(0)
-    rect(this.textBox.x, this.textBox.y, 900, 200, 0, 0, 0, 20);
+    fill(211, 192, 216)
+    rect(this.textBox.x, this.textBox.y, 550, 150, 0, 0, 0, 0);
     this.typewriter.display();
 
     if (this.arrow.isShowing)
@@ -99,7 +109,7 @@ if (this.fading){
   mousePressed() {
     if (this.message1) {
       this.typewriter.typewrite(
-        `I have lost countless people in my life...`, 300, 650);
+        `I have lost countless people in my life...`, 170, 650);
       this.arrow.isShowing = false;
       this.message1 = false;
       setTimeout(() => {
@@ -109,31 +119,31 @@ if (this.fading){
     }
     if (this.message2) {
       this.typewriter.typewrite(
-        `It never gets easy...`, 300, 650);
+        `It never gets easy...`, 170, 650);
       this.message2 = false;
       this.arrow.isShowing = false;
       setTimeout(() => {
         this.arrow.isShowing = true;
         this.message3 = true;
       }, 2000);
+      setTimeout(() => {
+        this.fading = true;
+
+      }, 8000);
     }
 
     if (this.message3) {
       this.typewriter.typewrite(
-        `Together, we will make it through your grieveing journey.
-        I promise.`, 300, 650);
+          `Together, we'll make it through your grieveing journey.
+      I promise.`, 150, 650);
       this.message3 = false;
       this.arrow.isShowing = false;
       setTimeout(() => {
-        this.arrow.isShowing = true;
-        this.message4 = true;
-      }, 4000);
-    }
-    if (this.message4) {
-      this.fading = true;
-      setTimeout(() => {
+        // this.arrow.isShowing = true;
         currentState = new Main_Level_Page_1()
-      }, 5000);
+        // this.fading = true;
+      },12000);
+
     }
   }
 }

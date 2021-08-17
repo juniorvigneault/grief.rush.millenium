@@ -9,9 +9,18 @@ body {
   /* Body is the height of the viewport */
   overflow: hidden;
   /* Hide anything that goes off the window size */
-  background-color: black;
+
 }
 
 #p5js-canvas {
+  /* box-shadow:
+    0 0 0 10px hsl(305, 34.8%, 90%),
+    0 0 0 15px hsl(305, 34.8%, 88%),
+    0 0 0 20px hsl(305, 34.8%, 93%),
+    0 0 0 25px hsl(305, 34.8%, 97%),
+    0 0 0 30px hsl(305, 34.8%, 99%);
+
+    margin-bottom: 0;
+    padding-bottom: 0; */
 
 }

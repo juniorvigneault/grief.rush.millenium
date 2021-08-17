@@ -5,8 +5,24 @@
 
 // VARIABLES DECLARATION
 
+// module aliases // create engine variable
+let Engine = Matter.Engine;
+// let Render = Matter.Render
+let World = Matter.World;
+let Bodies = Matter.Bodies;
+
+// create an engine variable for the physics engine
+let engine;
+
+// create a world variable in which bodies will exist
+let world;
+
+// blood variables for the title poster
+let blood;
+let bloodDrops = [];
+
 // canvas size variable
-let cnvX = 1300;
+let cnvX = 800;
 let cnvY = 800;
 
 // IMAGE VARIABLES
@@ -18,6 +34,11 @@ let flowersPNG;
 let decorationPNG;
 let starGIF;
 let obrigeFONT;
+
+// classic font
+let robotoFONT;
+let ibmFONT;
+let ibmFONTTypewriter;
 
 // Current active OOP state
 let currentState;
@@ -41,8 +62,14 @@ let introSFX2;
 // name of the player
 let userName;
 
+//start page png
+let deadRosePNG;
+
 // typewriter to use with jquery
 let typewriter2
+
+// backgrounds
+let purpleBG;
 
 function preload() {
   // IMAGES PRELOAD
@@ -51,6 +78,10 @@ function preload() {
   starGIF = loadImage(`assets/gifs/star1.gif`)
 
   obrigeFONT = loadFont(`assets/fonts/obrige.otf`)
+  robotoFONT = loadFont(`assets/fonts/roboto.ttf`)
+  ibmFONT = loadFont(`assets/fonts/ibm.ttf`)
+  ibmFONTTypewriter = loadFont(`assets/fonts/ibm_typewriter.ttf`)
+
   // diamond for fake loading page
   loadingCircle = loadImage(`assets/gifs/loader.gif`);
   // sam avatar neutral
@@ -63,6 +94,11 @@ function preload() {
   introSFX = loadSound(`assets/sounds/music_samples/introSFX.wav`)
   introSFX2 = loadSound(`assets/sounds/music_samples/introSFX2.wav`)
 
+  // start page
+  deadRosePNG = loadImage(`assets/images/png/dead_rose_small.png`)
+
+  // backgrounds gifss
+  // purpleBG = loadImage(`assets/gifs/backgrounds/purple.gif`)
 
 }
 
@@ -71,15 +107,25 @@ function setup() {
   let canvas = createCanvas(cnvX, cnvY);
   // Move the canvas within the HTML into the appropriate section
   canvas.parent('p5js-canvas');
-  // currentState = new Ten_seconds_title();
+  // currentState = new Ten_seconds_title(deadRosePNG);
   // currentState = new Alliance_of_harmony_title();
-  currentState = new Start();
+  // currentState = new Start();
   // currentState = new Loading(loadingCircle);
   // currentState = new Meeting_Sam(samIMG, arrowGIF);
   // currentState = new Meeting_Sam2(samIMG, arrowGIF);
   // currentState = new Main_Level_Page_1();
+  currentState = new Denial();
 
+  $("#name_form").hide();
+  $("#about_box").hide();
 
+  // MATTER.JS
+  // create engine
+  engine = Engine.create();
+  // run the engine
+  Engine.run(engine);
+  // create the physics in the world
+  world = engine.world;
 }
 
 function draw() {

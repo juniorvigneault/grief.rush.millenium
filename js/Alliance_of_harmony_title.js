@@ -3,39 +3,39 @@ class Alliance_of_harmony_title {
   constructor() {
     this.text = {
       alliance: {
-        string: `Alliance`,
-        size: 75,
-        x: 300,
+        string: `ALLIANCE`,
+        size: 70,
+        x: 360,
         y: -100,
         vx: 0,
         vy: 0,
-        speed: .75,
+        speed: .90,
         finaleY: 200
       },
       of: {
-        string: `of`,
-        size: 75,
+        string: `OF`,
+        size: 30,
         x: 1500,
         y: 310,
         vx: 0,
         vy: 0,
-        speed: -3.4,
-        finaleX: 145
+        speed: -3.3,
+        finaleX: 400
       },
       harmony: {
-        string: `Harmony`,
-        size: 150,
-        x: 580,
+        string: `HARMONY`,
+        size: 75,
+        x: 410,
         y: 900,
         vx: 0,
         vy: 0,
-        speed: -1.14,
-        finaleY: 450
+        speed: -1.55,
+        finaleY: 390
       },
       play: {
-        x: 650,
+        x: 400,
         y: 900,
-        string: `play`,
+        string: `PLAY`,
         size: 40,
         vy: 0,
         speed: -.5,
@@ -48,17 +48,27 @@ class Alliance_of_harmony_title {
         color: 0,
         vx: 0,
         vy: 0,
-        speed: -1.3,
+        speed: -1.5,
         finaleY: 680
       }
     }
 
-    this.fade = new Fade(255, 1, true, false);
+    this.sloganColor = 0;
+    this.sloganAppear = false;
+
+    this.fade = new Fade(255, 1, true, false, 0, 0, 0);
+    this.fade2 = new Fade(0, 1, false, true, 255, 255, 255)
+    this.fade2Appear = false;
+
 
     this.displayPlay = false;
 
+    this.rectWidth = 30;
+    this.rectHeight = 30;
+
     setTimeout(() => {
       this.displayPlay = true;
+      this.sloganAppear = true;
     }, 5500);
   }
 
@@ -67,29 +77,63 @@ class Alliance_of_harmony_title {
 
 
   update() {
+    push();
+    noStroke();
+    rectMode(CENTER);
+    fillHsluv(305, 34.8, 90)
+    rect(400, 400, 800, 800)
+    pop();
+
     if (this.displayPlay) {
       this.movePlayText();
       this.displayPlayText(this.text.play.size, this.text.play.string, this.text.play.x, this.text.play.y, this.text.play.color);
     }
+
+
     this.display();
     this.moveAllianceText();
     this.moveOfText();
     this.moveHarmonyText();
     this.mouseOverPlayText();
     this.fade.update();
-
+    if (this.fade2Appear) {
+      this.fade2.update();
+    }
 
   }
 
   display() {
     push();
-    textAlign(CENTER, CENTER)
-    textSize(this.text.alliance.size);
     textFont(obrigeFONT);
+    textAlign(CENTER, CENTER);
+    textSize(this.text.alliance.size);
     text(this.text.alliance.string, this.text.alliance.x, this.text.alliance.y)
+    pop();
+
+    push();
+    textFont(obrigeFONT);
+    textAlign(CENTER, CENTER);
+    textSize(this.text.of.size);
     text(this.text.of.string, this.text.of.x, this.text.of.y)
+    pop();
+
+    push();
+    textFont(obrigeFONT);
+    textAlign(CENTER, CENTER);
     textSize(this.text.harmony.size);
     text(this.text.harmony.string, this.text.harmony.x, this.text.harmony.y);
+    pop();
+
+    push();
+    if (this.sloganAppear) {
+      this.sloganColor = this.sloganColor + 1;
+      textFont(ibmFONTTypewriter);
+      textAlign(CENTER, CENTER);
+      textSize(15);
+      fill(0, 0, 0, this.sloganColor)
+      text(`Helping you grieve since 2021`, 400, 520);
+      pop();
+    }
   }
 
   displayPlayText(size, string, x, y, color = {
@@ -98,7 +142,7 @@ class Alliance_of_harmony_title {
     b: 0
   }) {
     push();
-    textFont('Futura')
+    textFont('ibmFONTTypewriter')
     fill(color.r, color.g, color.b)
     textAlign(CENTER, CENTER);
     textSize(size);
@@ -181,13 +225,12 @@ class Alliance_of_harmony_title {
 
   mousePressed() {
     if (this.mouseIsOverText(this.text.play.size, this.text.play.string, this.text.play.x, this.text.play.y)) {
-      console.log('PLAY');
+      this.fade2Appear = true;
       setTimeout(() => {
-        currentState = new Loading(loadingCircle);
+        currentState = new Ten_seconds_title(deadRosePNG);
         introSFX.stop();
         introSFX2.stop();
-
-      }, 3000);
+      }, 5000);
 
     }
   }

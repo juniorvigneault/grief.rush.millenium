@@ -60,7 +60,7 @@ class Typewriter {
     push();
     fill(0);
     textFont(ibmFONTTypewriter);
-    textSize(15);
+    textSize(20);
     textAlign(LEFT, BOTTOM);
     text(this.displayText, this.x, this.y);
     pop();

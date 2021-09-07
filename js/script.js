@@ -21,6 +21,9 @@ let world;
 let blood;
 let bloodDrops = [];
 
+let emotion;
+let emotions = [];
+
 // ground variable
 let ground;
 let grounds = [];
@@ -53,6 +56,7 @@ let samIMG;
 let message;
 
 
+
 // loading page loading diamond
 let loadingCircle;
 
@@ -75,6 +79,21 @@ let typewriter2
 
 // backgrounds
 let purpleBG;
+
+// sam gifs
+let neutralSamGIF;
+
+// DENIAL game images
+let deathGIF;
+let heartIMG;
+let smallHeartIMG;
+let smallDeadRosePNG;
+let liveRosePNG;
+let smallDeathIMG;
+let smallBrokenHeartIMG;
+
+let generalPoints;
+
 
 function preload() {
   // IMAGES PRELOAD
@@ -104,6 +123,16 @@ function preload() {
 
   // backgrounds gifss
   // purpleBG = loadImage(`assets/gifs/backgrounds/purple.gif`)
+  neutralSamGIF = loadImage(`assets/gifs/sam_neutral2.gif`)
+
+  // denial game
+  deathGIF = loadImage(`assets/gifs/death1.gif`)
+  heartIMG = loadImage(`assets/images/png/heart.png`);
+  smallHeartIMG = loadImage(`assets/images/png/small_heart.png`);
+  smallDeadRosePNG = loadImage(`assets/images/png/small_rose.png`);
+  liveRosePNG = loadImage(`assets/images/png/live_rose.png`);
+  smallDeathIMG = loadImage(`assets/images/png/small_death.png`);
+  smallBrokenHeartIMG = loadImage(`assets/images/png/small_broken_heart.png`);
 
 }
 
@@ -112,14 +141,7 @@ function setup() {
   let canvas = createCanvas(cnvX, cnvY);
   // Move the canvas within the HTML into the appropriate section
   canvas.parent('p5js-canvas');
-  // currentState = new Ten_seconds_title(deadRosePNG);
-  // currentState = new Alliance_of_harmony_title();
-  // currentState = new Start();
-  // currentState = new Loading(loadingCircle);
-  // currentState = new Meeting_Sam(samIMG, arrowGIF);
-  // currentState = new Meeting_Sam2(samIMG, arrowGIF);
-  // currentState = new Main_Level_Page_1();
-  currentState = new Denial();
+
 
   $("#name_form").hide();
   $("#about_box").hide();
@@ -131,15 +153,28 @@ function setup() {
   Engine.run(engine);
   // create the physics in the world
   world = engine.world;
+
+  // currentState = new Ten_seconds_title(deadRosePNG);
+  // currentState = new Alliance_of_harmony_title();
+  // currentState = new Start();
+  // currentState = new Loading(loadingCircle);
+  // currentState = new Meeting_Sam(neutralSamGIF, arrowGIF);
+  // currentState = new Meeting_Sam2(neutralSamGIF, arrowGIF);
+  // currentState = new Main_Level_Page_1(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
+  // currentState = new Denial(deathGIF, heartIMG, deadRosePNG);
+  currentState = new Anger();
 }
 
 function draw() {
-  background(255);
   currentState.update();
 }
 
 function mousePressed() {
   currentState.mousePressed();
+}
+
+function mouseDragged() {
+  currentState.mouseDragged()
 }
 
 function keyIsDown() {

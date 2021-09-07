@@ -1,20 +1,20 @@
 class Meeting_Sam {
-  constructor(samIMG, arrowGIF) {
+  constructor(samGIF, arrowGIF) {
     this.sam = {
-      image: samIMG,
+      image: samGIF,
       x: 400,
-      y: 900,
+      y: 1000,
       vy: 0,
-      speed: -7,
-      finaleY: 300,
+      speed: -10,
+      finaleY: 310,
       isMoving: false
     }
 
     this.textBox = {
       x: 400,
-      y: 2300,
+      y: 2800,
       vy: 0,
-      speed: -7,
+      speed: -10,
       finaleY: 650,
       back: false,
       speed2: 2
@@ -26,6 +26,23 @@ class Meeting_Sam {
       y: 680,
       isShowing: false
     }
+
+    this.flowers = {
+      x: 1,
+      y: 1,
+      x2: 1,
+      y2: 1,
+      angle: 10,
+      speed: 7,
+      weight: .5,
+      fill: {
+        r: 200,
+        g: 200,
+        b: 200,
+      }
+    }
+
+    this.samIsHappy = false;
 
     this.message1 = false;
     this.message2 = false;
@@ -59,7 +76,7 @@ class Meeting_Sam {
           $(".user_name").text(userName);
           this.message3 = true;
           console.log(this.message3);
-          currentState = new Meeting_Sam2(samIMG, arrowGIF);
+          currentState = new Meeting_Sam2(samGIF, arrowGIF);
         }
       },
       autoOpen: false,
@@ -83,8 +100,11 @@ class Meeting_Sam {
     if (this.sam.isMoving) {
       this.moveSam();
     }
-    this.displaySam();
+
     this.display();
+
+    this.displaySam();
+
     this.moveTextBox();
 
 
@@ -95,14 +115,21 @@ class Meeting_Sam {
     push();
     noStroke();
     rectMode(CENTER);
-    fillHsluv(305, 34.8, 90)
+    fill(40);
+    // fillHsluv(305, 34.8, 90)
     rect(400, 400, 800, 800)
     pop();
-    
+
+if (this.samIsHappy){
+    this.flowerRays();
+  }
+
+
     rectMode(CENTER)
     // noStroke();
     strokeWeight(1);
-    fill(211, 192, 216)
+    // fill(211, 192, 216)
+    fill(250)
     rect(this.textBox.x, this.textBox.y, 550, 150, 0, 0, 0, 0);
     this.typewriter.display();
 
@@ -152,26 +179,44 @@ class Meeting_Sam {
     this.arrow.isShowing = false;
   }
 
-  mousePressed() {
-    if (this.message1) {
-      this.typewriter.typewrite(
-        `I'm Sam.`, 200, 650);
-      this.arrow.isShowing = false;
-      setTimeout(() => {
-        this.arrow.isShowing = true;
-        this.message1 = false;
-        this.message2 = true;
-      }, 1000);
-    }
-    if (this.message2) {
-      this.typewriter.typewrite(
-        `What's your name?`, 200, 650);
-        this.arrow.isShowing = false;
-
-      setTimeout(() => {
-        $("#name_form").dialog("open");
-      }, 1500);
-      this.message2 = false;
+  flowerRays() {
+    for (let i = 0; i < 5; i++) {
+      push();
+      this.flowers.angle = this.flowers.angle + this.flowers.speed
+      translate(400, 310);
+      rotate(this.flowers.angle);
+      stroke(this.flowers.fill.r, this.flowers.fill.g, this.flowers.fill.b);
+      strokeWeight(this.flowers.weight);
+      line(this.flowers.x, this.flowers.y, this.flowers.x2, this.flowers.y2);
+      translate(this.flowers.x, this.flowers.y);
+      rotate(this.flowers.angle);
+      this.flowers.x = this.flowers.x + random(0, width);
+      pop();
     }
   }
-}
+
+    mousePressed() {
+      if (this.message1) {
+        this.typewriter.typewrite(
+          `I'm Sam.`, 200, 650);
+        this.arrow.isShowing = false;
+        this.message1 = false;
+
+        setTimeout(() => {
+          this.arrow.isShowing = true;
+          this.message2 = true;
+        }, 1000);
+      }
+      if (this.message2) {
+        this.typewriter.typewrite(
+          `What's your name?`, 200, 650);
+        this.arrow.isShowing = false;
+        this.message2 = false;
+
+        setTimeout(() => {
+          $("#name_form").dialog("open");
+        }, 1500);
+        this.message2 = false;
+      }
+    }
+  }

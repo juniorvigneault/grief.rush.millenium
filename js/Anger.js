@@ -1,0 +1,9 @@
+class Anger {
+  constructor(){
+
+  }
+
+  update(){
+    
+  }
+}

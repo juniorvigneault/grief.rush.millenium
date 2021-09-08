@@ -1,5 +1,5 @@
 class Ground {
-  constructor(x, y, w, h, world, a) {
+  constructor(x, y, w, h, world, a, r, g, b) {
     let options = {
       // option that makes the ground static
       isStatic: true,
@@ -7,6 +7,12 @@ class Ground {
       friction: 1,
       restitution: 1
     };
+
+    this.fill = {
+      r: r,
+      g: g,
+      b: b
+    }
     this.body = Bodies.rectangle(x, y, w, h, options);
     this.w = w;
     this.h = h;
@@ -26,7 +32,7 @@ class Ground {
     translate(pos.x, pos.y);
     rotate(angle);
     noStroke();
-    fill(255,255,255)
+    fill(this.fill.r, this.fill.g, this.fill.b)
     rect(0, 0, this.w, this.h);
     // textAlign(CENTER);
     // textFont(ibmFONTTypewriter)

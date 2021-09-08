@@ -10,6 +10,7 @@ let Engine = Matter.Engine;
 // let Render = Matter.Render
 let World = Matter.World;
 let Bodies = Matter.Bodies;
+let Constraint = Matter.Constraint;
 
 // create an engine variable for the physics engine
 let engine;

@@ -169,7 +169,6 @@ class Denial {
 
 
   update() {
-    console.log(this.addedPoints)
     this.background();
     if (this.intro) {
       if (this.displayGameElements) {
@@ -352,7 +351,7 @@ class Denial {
     this.displayEmotions()
     if (this.feelingEmotions) {
       if (frameCount % 60 === 0) {
-        emotions.push(new Emotions(this.death.x, this.death.y + 65, 25, 25, world));
+        emotions.push(new Emotions(this.death.x, this.death.y + 65, 25, 25, world, 0.8, 0.8));
       };
     }
   }
@@ -640,7 +639,7 @@ class Denial {
 
   mousePressed() {
     if (this.startGame) {
-      grounds.push(new Ground(mouseX, mouseY, 200, 40, world, 0));
+      grounds.push(new Ground(mouseX, mouseY, 200, 40, world, 0, 255,255,255));
       for (let i = 0; i < grounds.length; i++) {
         if (grounds.length >= 4) {
           grounds[i].removeFromWorld();

@@ -9,7 +9,7 @@ class Emotions {
     }
 
     this.body = Bodies.rectangle(x, y, h, w, options);
-    
+
     this.w = w;
     this.h = h;
 
@@ -19,11 +19,13 @@ class Emotions {
       b: 0,
       alpha: 255
     }
+
     this.color = 0;
 
     this.emotionReady = false;
 
     this.screenLimit = height + 200;
+
     World.add(world, this.body);
 
   }

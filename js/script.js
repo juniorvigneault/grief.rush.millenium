@@ -11,6 +11,8 @@ let Engine = Matter.Engine;
 let World = Matter.World;
 let Bodies = Matter.Bodies;
 let Constraint = Matter.Constraint;
+let MouseConstraint = Matter.MouseConstraint;
+let Mouse = Matter.Mouse;
 
 // create an engine variable for the physics engine
 let engine;
@@ -94,6 +96,9 @@ let smallDeathIMG;
 let smallBrokenHeartIMG;
 
 let generalPoints;
+
+let mConstraint;
+
 
 
 function preload() {

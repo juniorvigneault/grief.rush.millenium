@@ -1,11 +1,12 @@
 class Emotions {
-  constructor(x, y, w, h, world, f, b) {
+  constructor(x, y, w, h, world, f, b, stoic, red, green, blue) {
     let options = {
       // friction against the rectangles 0 = hey slide off each other
       // 1 = they stick more together
       friction: f,
       // restitution = bodies bouncing off 0 = not bouncing 1 = bouncing
-      restitution: b
+      restitution: b,
+      isStatic: stoic
     }
 
     this.body = Bodies.rectangle(x, y, h, w, options);
@@ -14,9 +15,9 @@ class Emotions {
     this.h = h;
 
     this.fill = {
-      r: 0,
-      g: 0,
-      b: 0,
+      r: red,
+      g: green,
+      b: blue,
       alpha: 255
     }
 

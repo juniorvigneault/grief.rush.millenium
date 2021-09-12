@@ -1,8 +1,6 @@
 class Anger {
   constructor() {
 
-
-
     this.head = new Emotions(455, 100, 120, 120, world, 0.5, 0.8);
     this.torso = new Emotions(400, 400, 100, 100, world, 0.5, 0.8);
     this.rightLeg = new Emotions(400, 400, 200, 200, world, 0.5, 0.8);

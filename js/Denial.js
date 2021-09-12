@@ -169,13 +169,14 @@ class Denial {
 
 
   update() {
-    this.background();
+
     if (this.intro) {
       if (this.displayGameElements) {
         this.displayDeath();
         this.displayHearts();
         // this.moveDeath();
       }
+
       this.displayIntro()
       if (this.deadRoseAppear) {
         this.displayDeadRose();

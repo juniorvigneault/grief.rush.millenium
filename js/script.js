@@ -14,6 +14,8 @@ let Constraint = Matter.Constraint;
 let MouseConstraint = Matter.MouseConstraint;
 let Mouse = Matter.Mouse;
 
+
+let canvasMouse;
 // create an engine variable for the physics engine
 let engine;
 
@@ -99,6 +101,8 @@ let generalPoints;
 
 let mConstraint;
 
+// bargaining game img
+let smallDeathGIF;
 
 
 function preload() {
@@ -140,6 +144,8 @@ function preload() {
   smallDeathIMG = loadImage(`assets/images/png/small_death.png`);
   smallBrokenHeartIMG = loadImage(`assets/images/png/small_broken_heart.png`);
 
+  // bargaining game
+  smallDeathGIF = loadImage(`assets/gifs/smalldeath.gif`)
 }
 
 function setup() {
@@ -160,6 +166,7 @@ function setup() {
   // create the physics in the world
   world = engine.world;
 
+
   // currentState = new Ten_seconds_title(deadRosePNG);
   // currentState = new Alliance_of_harmony_title();
   // currentState = new Start();
@@ -168,7 +175,9 @@ function setup() {
   // currentState = new Meeting_Sam2(neutralSamGIF, arrowGIF);
   // currentState = new Main_Level_Page_1(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
   // currentState = new Denial(deathGIF, heartIMG, deadRosePNG);
-  currentState = new Anger();
+  // currentState = new Anger();
+  currentState = new Bargaining(liveRosePNG, smallDeathGIF);
+
 }
 
 function draw() {

@@ -67,7 +67,7 @@ class Ten_seconds_title {
     }, 23000);
 
     setTimeout(() => {
-      currentState = new Meeting_Sam(samIMG, arrowGIF);
+      currentState = new Meeting_Sam(neutralSamGIF, arrowGIF);
     }, 28000);
 
 

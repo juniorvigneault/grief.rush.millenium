@@ -99,7 +99,7 @@ class Start {
     if (this.activateFade) {
       this.fade.update();
     }
-    this.fade2.update();
+    // this.fade2.update();
 
 
 

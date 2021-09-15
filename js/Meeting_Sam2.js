@@ -182,7 +182,7 @@ class Meeting_Sam2 {
       this.arrow.isShowing = false;
       setTimeout(() => {
         // this.arrow.isShowing = true;
-        currentState = new Main_Level_Page_1()
+        currentState = new Main_Level_Page_1(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
         // this.fading = true;
       }, 12000);
 

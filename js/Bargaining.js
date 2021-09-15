@@ -72,8 +72,6 @@ class Bargaining {
     this.letterT = new Emotions(120, 180, 100, 100, world, 1, 0, false, 0, 100, 100);
     this.letterH = new Emotions(400, 100, 100, 100, world, 1, 0, false, 0, 100, 100);
 
-    console.log(this.letterD)
-
     emotions.push(this.letterD);
     emotions.push(this.letterE);
     emotions.push(this.letterA);

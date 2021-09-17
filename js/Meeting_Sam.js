@@ -59,8 +59,8 @@ class Meeting_Sam {
     }, 1000);
 
     setTimeout(() => {
-      this.typewriter.typewrite(
-        `Hi...`, 200, 650);
+      this.typewriter.typewrite(`
+        Hi...`, 80, 650);
       this.message1 = true;
     }, 4500);
 
@@ -197,8 +197,8 @@ if (this.samIsHappy){
 
     mousePressed() {
       if (this.message1) {
-        this.typewriter.typewrite(
-          `I'm Sam.`, 200, 650);
+        this.typewriter.typewrite(`
+          I'm Sam.`, 80, 650);
         this.arrow.isShowing = false;
         this.message1 = false;
 
@@ -208,8 +208,8 @@ if (this.samIsHappy){
         }, 1000);
       }
       if (this.message2) {
-        this.typewriter.typewrite(
-          `What's your name?`, 200, 650);
+        this.typewriter.typewrite(`
+          What's your name?`, 80, 650);
         this.arrow.isShowing = false;
         this.message2 = false;
 

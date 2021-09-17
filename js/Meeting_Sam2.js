@@ -1,5 +1,5 @@
 class Meeting_Sam2 {
-  constructor(samGIF, arrowGIF) {
+  constructor(samGIF, arrowGIF, happySamGIF) {
     this.sam = {
       image: samGIF,
       x: 400,
@@ -7,7 +7,8 @@ class Meeting_Sam2 {
       vy: 0,
       speed: -7,
       finaleY: 300,
-      isMoving: false
+      isMoving: false,
+      imageHappy: happySamGIF
     }
 
     this.textBox = {
@@ -43,6 +44,7 @@ class Meeting_Sam2 {
     }
 
     this.samIsHappy = false;
+    this.samIsSad = false;
 
 
     this.message1 = false;
@@ -58,12 +60,12 @@ class Meeting_Sam2 {
 
     setTimeout(() => {
       this.typewriter.typewrite(`
-        Hello ` + userName + `.`, 70, 650);
+        Hello ` + userName + `.`, 80, 650);
     }, 800);
     setTimeout(() => {
       this.typewriter.typewrite(`
         This might be a difficult time for you,
-        I understand...`, 60, 660);
+        I understand...`, 65, 660);
       setTimeout(() => {
         this.arrow.isShowing = true;
         this.message1 = true;
@@ -73,12 +75,14 @@ class Meeting_Sam2 {
 
   update() {
     this.display();
-    this.displaySam();
+
 
 
     if (this.fading) {
       this.fade.update();
     }
+
+
   }
 
   display() {
@@ -92,7 +96,20 @@ class Meeting_Sam2 {
     pop();
 
     if (this.samIsHappy) {
-      this.flowerRays();
+      this.sam.image = this.sam.imageHappy;
+    }
+
+    //
+    // if (this.samIsHappy) {
+    //   this.sam.imageSad = this.sam.imageHappy
+    //   // this.flowerRays();
+    // }
+
+    this.displaySam();
+
+
+    if (this.samIsSad) {
+      this.bloodDrop();
     }
 
     rectMode(CENTER)
@@ -147,6 +164,10 @@ class Meeting_Sam2 {
     }
   }
 
+  mouseDragged() {
+
+  }
+
   mousePressed() {
     if (this.message1) {
       this.typewriter.typewrite(`
@@ -163,14 +184,12 @@ class Meeting_Sam2 {
         It never gets easy...`, 65, 650);
       this.message2 = false;
       this.arrow.isShowing = false;
+      this.samIsSad = true;
       setTimeout(() => {
         this.arrow.isShowing = true;
         this.message3 = true;
       }, 2000);
-      setTimeout(() => {
-        this.fading = true;
 
-      }, 12000);
     }
 
     if (this.message3) {
@@ -181,11 +200,40 @@ class Meeting_Sam2 {
       this.message3 = false;
       this.arrow.isShowing = false;
       setTimeout(() => {
+        this.fading = true;
+      }, 5000);
+      setTimeout(() => {
         // this.arrow.isShowing = true;
         currentState = new Main_Level_Page_1(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
         // this.fading = true;
       }, 12000);
 
     }
+  }
+
+  // method for the droplets of blood
+  bloodDrop() {
+    this.displayBlood()
+    if (frameCount % 99 === 0) {
+      bloodDrops.push(new Blood(402, 329, 20, 20, world, 120, 120, 200));
+    };
+    setTimeout(() => {
+      this.samIsSad = false;
+    }, 1700);
+  }
+
+  // display the droplets of blood
+  displayBlood() {
+    for (let i = 0; i < bloodDrops.length; i++) {
+      bloodDrops[i].update();
+      if (bloodDrops[i].offScreen()) {
+        // remove drops from the world so the physics engine stops taking care of them when they leave screen
+        bloodDrops[i].removeFromWorld();
+        // remove drops from the array
+        bloodDrops.splice(i, 1);
+        // prevents the skipping of a drop when removed from the array by backing up 1 // Daniel Shiffman tip
+        i--;
+      };
+    };
   }
 }

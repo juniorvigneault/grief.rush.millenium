@@ -82,7 +82,7 @@ class Main_Level_Page_1 {
     }
 
     this.denial = {
-      x: 400,
+      x: 407,
       y: 150,
       h: 40,
       w: 130,
@@ -147,7 +147,7 @@ class Main_Level_Page_1 {
     fill(this.denial.color, 0, 0, 0)
     rectMode(CENTER)
     rect(this.denial.x, this.denial.y, this.denial.w, this.denial.h);
-    fill(0, 0, 0)
+    fill(30,30,30);
     textSize(30)
     textAlign(CENTER, CENTER)
     textFont(ibmFONT)
@@ -461,7 +461,7 @@ class Main_Level_Page_1 {
       mouseY < this.denial.y + this.denial.h / 2) {
         this.denialFade = true;
         setTimeout(() => {
-          currentState = new Denial(deathGIF, heartIMG, deadRosePNG);
+          currentState = new DenialInstructions(smallDeathGIF, smallHeartIMG);
         }, 4500);
     }
     if (mouseX > this.anger.x - this.anger.w / 2 &&

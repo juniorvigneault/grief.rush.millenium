@@ -3,7 +3,7 @@ class Denial {
 
     this.denialText = {
       string: `DENIAL`,
-      size: 200,
+      size: 100,
       x: 400,
       y: 350,
       vx: 0,
@@ -14,7 +14,7 @@ class Denial {
 
     this.level1Text = {
       string: `LEVEL 1`,
-      size: 170,
+      size: 100,
       x: 400,
       y: -450,
       vx: 0,
@@ -82,6 +82,14 @@ class Denial {
       vy: 0,
       speed: 4.8,
       finaleY: 580
+    }
+
+    this.gameOver = {
+      text: 'Game 0ver',
+      x: 400,
+      y: 400,
+      color: 255,
+      alpha: 0
     }
 
     this.deadRoseAppear = true;
@@ -164,17 +172,22 @@ class Denial {
     this.emotionsAreReady = false;
     this.win = false;
     this.grievingPointsTitle = false;
+    this.gainingPointsAllowed = true;
+
+    this.startDisplayingGameOver = false;
 
   }
 
 
   update() {
+    this.background();
 
     if (this.intro) {
       if (this.displayGameElements) {
         this.displayDeath();
         this.displayHearts();
         // this.moveDeath();
+
       }
 
       this.displayIntro()
@@ -192,7 +205,10 @@ class Denial {
 
     if (this.startGame) {
 
-      this.gainPoints();
+      if (this.gainingPointsAllowed) {
+        this.gainPoints();
+      }
+
       this.background();
       this.removeHeart();
       this.endGame();
@@ -201,6 +217,7 @@ class Denial {
       this.moveDeath();
       this.deleteGrounds();
       this.success();
+
 
       if (this.winsBasicPoints) {
         this.displayEarnedPoints();
@@ -221,6 +238,13 @@ class Denial {
 
       if (this.gameFailed) {
         this.fade.update();
+        this.gainingPointsAllowed = false;
+        this.displayGameOver();
+        this.feelingEmotions = false;
+
+        setTimeout(() => {
+          currentState = new Main_Level_Page_1(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
+        }, 6000);
       }
 
       if (this.emotionsAreReady) {
@@ -242,8 +266,9 @@ class Denial {
       if (this.addPoints) {
         this.addFinalPoints();
       }
-      if (this.background3Appear){
+      if (this.background3Appear) {
         this.background3();
+        this.displayGrewToLevel2();
       }
     }
 
@@ -277,6 +302,28 @@ class Denial {
     }
   }
 
+  displayGameOver() {
+    this.gameOver.alpha = this.gameOver.alpha + 1;
+    push();
+    textFont(ibmFONT);
+    fill(150, 150, 150, this.gameOver.alpha)
+    textAlign(CENTER, CENTER);
+    textSize(80);
+    text('Game Over', 400, 400);
+    pop();
+  }
+
+  displayGrewToLevel2(){
+    push();
+    textFont(ibmFONT);
+    fill(150, 150, 150)
+    textAlign(CENTER, CENTER);
+    textSize(80);
+    text('GREW TO LEVEL 2', 400, 400);
+    pop();
+  }
+
+
   displayDeadRose() {
     push();
     imageMode(CENTER);
@@ -289,6 +336,7 @@ class Denial {
     textFont(ibmFONT);
     textAlign(CENTER, CENTER);
     textSize(this.denialText.size);
+    fill(30,30,30);
     text(this.denialText.string, this.denialText.x, this.denialText.y)
     pop();
   }
@@ -311,7 +359,7 @@ class Denial {
     pop();
   }
 
-  background3(){
+  background3() {
     push();
     noStroke();
     rectMode(CENTER);
@@ -462,7 +510,7 @@ class Denial {
     push();
     textAlign(CENTER, CENTER);
     textSize(200);
-    fill(0, 0, 0);
+    fill(30,30,30);
     textFont(ibmFONT);
     text(this.basicPoints, 400, 350);
     pop();
@@ -470,7 +518,7 @@ class Denial {
       push();
       textAlign(CENTER, CENTER);
       textSize(30);
-      fill(0, 0, 0);
+      fill(30,30,30);
       textFont(ibmFONTTypewriter);
       text('Grieving Points', 400, 550);
       pop();
@@ -483,8 +531,7 @@ class Denial {
     if (this.basicPoints <= this.addedPoints) {
       this.basicPoints = this.basicPoints + 100
 
-    }
-    else {
+    } else {
       this.basicPoints = this.basicPoints
       this.grievingPointsTitle = true;
       setTimeout(() => {
@@ -497,8 +544,8 @@ class Denial {
     this.pointsAlpha = constrain(this.pointsAlpha, 0, 255);
     push();
     textAlign(CENTER, CENTER);
-    textSize(70);
-    fill(0, 0, 0, this.pointsAlpha);
+    textSize(50);
+    fill(30, 30, 30, this.pointsAlpha);
     textFont(ibmFONTTypewriter);
     text('+100', 400, 400);
     this.pointsAlpha = this.pointsAlpha - 4;
@@ -522,6 +569,8 @@ class Denial {
       }
     }
   }
+
+
 
   lifeLine() {
     this.fillLifeLine();
@@ -565,6 +614,7 @@ class Denial {
     textSize(this.level1Text.size)
     textAlign(CENTER, CENTER);
     textFont(ibmFONT);
+    fill(30,30,30);
     text(this.level1Text.string, this.level1Text.x, this.level1Text.y)
     pop();
   }
@@ -640,9 +690,9 @@ class Denial {
 
   mousePressed() {
     if (this.startGame) {
-      grounds.push(new Ground(mouseX, mouseY, 200, 40, world, 0, 255,255,255));
+      grounds.push(new Ground(mouseX, mouseY, 200, 40, world, 0, 255, 255, 255));
       for (let i = 0; i < grounds.length; i++) {
-        if (grounds.length >= 4) {
+        if (grounds.length >= 3) {
           grounds[i].removeFromWorld();
           grounds.splice(i, 1);
           // prevents the skipping of a box when removed from the array by backing up 1

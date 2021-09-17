@@ -1,6 +1,6 @@
 class Start {
   // starting state with start and about buttons
-  constructor() {
+  constructor(heartIMG) {
     // start button
     this.start = {
       x: 400,
@@ -43,14 +43,15 @@ class Start {
         of: window
       },
       autoOpen: false,
-      height: 400,
+      height: 480,
       draggable: false,
       closeOnEscape: false,
+      modal: true
     });
 
     this.activateFade = false;
 
-    this.fade = new Fade(0, 2, false, true);
+    this.fade = new Fade(0, 2, false, true, 255, 255, 255);
     this.fade2 = new Fade(255, 2, true, false);
 
     // this.deadRose = {
@@ -69,6 +70,24 @@ class Start {
       speed2: 2
     }
 
+    this.heart = {
+      img: heartIMG,
+      img2: heartIMG,
+      img3: heartIMG,
+      img4: heartIMG,
+      x: 200,
+      y: 310,
+      x2: 600,
+      y2: 310,
+      x3: 200,
+      y3: 510,
+      x4: 600,
+      y4: 510,
+      appear1: false,
+      appear2: false
+    }
+
+
   }
 
 
@@ -85,9 +104,10 @@ class Start {
     // this.bloodDrop();
     push();
     rectMode(CENTER)
-    strokeWeight(1);
+    // strokeWeight(1);
+    noStroke();
     fill(211, 192, 216)
-    rect(this.textBox.x, this.textBox.y, 550, 550, 0, 0, 0, 0);
+    rect(this.textBox.x, this.textBox.y, 800, 800, 0, 0, 0, 0);
     pop();
 
     this.display();
@@ -96,6 +116,7 @@ class Start {
 
     this.mouseOverStartText();
     this.mouseOverAboutText();
+
     if (this.activateFade) {
       this.fade.update();
     }
@@ -107,28 +128,36 @@ class Start {
   // displays the start and about button
   display() {
 
-
+    push();
     textAlign(CENTER, CENTER);
     this.displayText(this.start.size, this.start.string, this.start.x, this.start.y, this.start.color);
     this.displayText(this.about.size, this.about.string, this.about.x, this.about.y, this.about.color);
-
+    pop();
     // this.displayDeadRose();
 
-    if (this.aboutCrossed) {
-      push();
-      // strokeHsluv(305, 34.8, 25.9)
-      strokeWeight(2)
-      line(300, 550, 500, 550)
-      pop();
+    // if (this.aboutCrossed) {
+    //   push();
+    //   // strokeHsluv(305, 34.8, 25.9)
+    //   strokeWeight(2)
+    //   line(300, 550, 500, 550)
+    //   pop();
+    // }
+    //
+    // if (this.startCrossed) {
+    //   push();
+    //   // strokeHsluv(305, 34.8, 25.9)
+    //   strokeWeight(2)
+    //   line(300, 350, 500, 350)
+    //   pop();
+    // }
+
+    if (this.heart.appear1) {
+      this.displayStartHearts()
+    }
+    if (this.heart.appear2) {
+      this.displayAboutHearts()
     }
 
-    if (this.startCrossed) {
-      push();
-      // strokeHsluv(305, 34.8, 25.9)
-      strokeWeight(2)
-      line(300, 350, 500, 350)
-      pop();
-    }
   };
 
   displayText(size, string, x, y, color = {
@@ -137,12 +166,28 @@ class Start {
     b: 0
   }) {
     push();
-    textFont(ibmFONTTypewriter)
+    textFont(ibmFONT)
     textAlign(CENTER, CENTER);
     fill(color.r, color.g, color.b)
     textAlign(CENTER, CENTER);
     textSize(size);
     text(string, x, y);
+    pop();
+  }
+
+  displayStartHearts() {
+    push();
+    imageMode(CENTER)
+    image(this.heart.img, this.heart.x, this.heart.y)
+    image(this.heart.img2, this.heart.x2, this.heart.y2)
+    pop();
+  }
+
+  displayAboutHearts() {
+    push();
+    imageMode(CENTER)
+    image(this.heart.img3, this.heart.x3, this.heart.y3)
+    image(this.heart.img4, this.heart.x4, this.heart.y4)
     pop();
   }
 
@@ -171,9 +216,9 @@ class Start {
     };
     if (this.mouseIsOverText(this.start.size, this.start.string, this.start.x, this.start.y)) {
       startColor = this.start.mouseOverColor;
-      this.startCrossed = true;
+      this.heart.appear1 = true;
     } else {
-      this.startCrossed = false;
+      this.heart.appear1 = false;
     }
     this.displayText(this.start.size, this.start.string, this.start.x, this.start.y, startColor);
 
@@ -195,9 +240,9 @@ class Start {
     };
     if (this.mouseIsOverText(this.about.size, this.about.string, this.about.x, this.about.y)) {
       aboutColor = this.start.mouseOverColor;
-      this.aboutCrossed = true;
+      this.heart.appear2 = true;
     } else {
-      this.aboutCrossed = false;
+      this.heart.appear2 = false;
     }
     this.displayText(this.about.size, this.about.string, this.about.x, this.about.y, aboutColor);
   }
@@ -224,6 +269,10 @@ class Start {
       };
     };
   }
+
+  mouseDragged() {
+
+  }
   // Pressing start begins the simulation
   // Pressing about opens a dialog box with information
   mousePressed() {
@@ -231,7 +280,7 @@ class Start {
       console.log('START');
       this.activateFade = true;
       setTimeout(() => {
-        currentState = new Alliance_of_harmony_title();
+        currentState = new Alliance_of_harmony_title(smallHeartIMG);
       }, 4000);
 
       // currentState = new Alliance_of_harmony_title(flowersPNG);

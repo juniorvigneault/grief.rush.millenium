@@ -58,6 +58,7 @@ let currentState;
 
 let samIMG;
 
+
 let message;
 
 
@@ -87,6 +88,8 @@ let purpleBG;
 
 // sam gifs
 let neutralSamGIF;
+let happySamGIF;
+let sadSamGIF;
 
 // DENIAL game images
 let deathGIF;
@@ -134,6 +137,9 @@ function preload() {
   // backgrounds gifss
   // purpleBG = loadImage(`assets/gifs/backgrounds/purple.gif`)
   neutralSamGIF = loadImage(`assets/gifs/sam_neutral2.gif`)
+  happySamGIF = loadImage(`assets/gifs/happy_sam.gif`)
+  sadSamGIF = loadImage(`assets/gifs/sad_sam.gif`)
+
 
   // denial game
   deathGIF = loadImage(`assets/gifs/death1.gif`)
@@ -145,7 +151,7 @@ function preload() {
   smallBrokenHeartIMG = loadImage(`assets/images/png/small_broken_heart.png`);
 
   // bargaining game
-  smallDeathGIF = loadImage(`assets/gifs/smalldeath.gif`)
+  smallDeathGIF = loadImage(`assets/gifs/smalldeath.gif`);
 }
 
 function setup() {
@@ -168,15 +174,16 @@ function setup() {
 
 
   // currentState = new Ten_seconds_title(deadRosePNG);
-  // currentState = new Alliance_of_harmony_title();
-  // currentState = new Start();
+  // currentState = new Alliance_of_harmony_title(smallHeartIMG, smallDeathIMG);
+  // currentState = new Start(smallHeartIMG);
   // currentState = new Loading(loadingCircle);
   // currentState = new Meeting_Sam(neutralSamGIF, arrowGIF);
-  // currentState = new Meeting_Sam2(neutralSamGIF, arrowGIF);
+  // currentState = new Meeting_Sam2(neutralSamGIF, arrowGIF, happySamGIF);
   // currentState = new Main_Level_Page_1(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
-  // currentState = new Denial(deathGIF, heartIMG, deadRosePNG);
-  currentState = new Anger();
+  currentState = new Denial(deathGIF, heartIMG, deadRosePNG);
+  // currentState = new Anger();
   // currentState = new Bargaining(liveRosePNG, smallDeathGIF);
+  // currentState = new DenialInstructions(smallDeathGIF, smallHeartIMG);
 
 }
 

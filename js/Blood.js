@@ -1,6 +1,6 @@
 class Blood {
   // dripping blood displayed in title poster and in act 2 (if i had gotten there)
-  constructor(x, y, w, h, world) {
+  constructor(x, y, w, h, world, red, green, blue) {
     // Dripping blood
     let options = {
       // friction against the drops 0 = hey slide off each other
@@ -18,9 +18,9 @@ class Blood {
 
     World.add(world, this.body);
     this.fill = {
-      r: 215,
-      g: 6,
-      b: 41
+      r: red,
+      g: green,
+      b: blue
     }
     // stop handling the blood when offscreen limit
     this.screenLimit = height + 200;

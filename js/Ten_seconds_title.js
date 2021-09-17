@@ -43,7 +43,8 @@ class Ten_seconds_title {
 
     setTimeout(() => {
       this.typewriter.typewrite(`
-        A person can stand just about anything for 10 seconds...`, 75, 650);
+        A person can stand just about anything
+        for 10 seconds...`, 75, 660);
     }, 5000);
 
     setTimeout(() => {
@@ -53,7 +54,8 @@ class Ten_seconds_title {
 
     setTimeout(() => {
       this.typewriter.typewrite(`
-        ...then you just start on a new 10 seconds.`, 100, 650);
+        ...then you just start on a new 10
+        seconds.`, 75, 660);
     }, 14000);
 
     setTimeout(() => {
@@ -63,12 +65,12 @@ class Ten_seconds_title {
 
     setTimeout(() => {
       this.textBox.back = true;
-      this.fadeAppear = true;
+      // this.fadeAppear = true;
     }, 23000);
 
     setTimeout(() => {
       currentState = new Meeting_Sam(neutralSamGIF, arrowGIF);
-    }, 28000);
+    }, 29000);
 
 
     // setTimeout(() => {
@@ -131,9 +133,13 @@ class Ten_seconds_title {
     this.bloodDrop();
     rectMode(CENTER)
     // noStroke();
+    push();
+    stroke(110,100,120, 140)
     strokeWeight(1);
     fill(211, 192, 216)
     rect(this.textBox.x, this.textBox.y, 550, 150, 0, 0, 0, 0);
+    pop();
+
     this.typewriter.display();
 
     this.displayDeadRose();
@@ -166,7 +172,7 @@ class Ten_seconds_title {
   bloodDrop() {
     this.displayBlood()
     if (frameCount % 99 === 0) {
-      bloodDrops.push(new Blood(random(355, 380), 330, 10, random(10, 22), world));
+      bloodDrops.push(new Blood(random(355, 380), 330, 10, random(10, 22), world, 215, 6, 41));
     };
   }
 

@@ -58,7 +58,7 @@ class Typewriter {
   // Display the current display text at the correct location
   display() {
     push();
-    fill(0);
+    fill(70,70,70);
     textFont(ibmFONTTypewriter);
     textSize(20);
     textAlign(LEFT, BOTTOM);

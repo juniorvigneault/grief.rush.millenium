@@ -81,7 +81,10 @@ class Denial {
       vx: 0,
       vy: 0,
       speed: 4.8,
-      finaleY: 580
+      finaleY: 580,
+      img2: deadRosePNG,
+      x2: 400,
+      y2: 620
     }
 
     this.gameOver = {
@@ -102,6 +105,8 @@ class Denial {
 
     this.gameFailed = false;
     this.fade = new Fade(0, 1, false, true, 0, 0, 0)
+    this.fade2 = new Fade(0, 1.3, false, true, 255, 255, 255)
+    this.fade2Appears = false;
 
     this.moveDeathBack = false;
     this.lifeLineIsThere = true;
@@ -139,6 +144,8 @@ class Denial {
 
     this.feelingEmotions = true;
 
+    this.toddlerGrieverAppear = false;
+
     setInterval(() => {
       this.emotionsAreReady = true;
     }, 4000);
@@ -146,6 +153,14 @@ class Denial {
     setInterval(() => {
       this.emotionsAreReady = false;
     }, 8000);
+
+    setInterval(() => {
+      this.toddlerGrieverAppear = true;
+    }, 1000);
+
+    setInterval(() => {
+      this.toddlerGrieverAppear = false;
+    }, 2000);
 
     this.paddleX = undefined;
     this.paddleY = undefined;
@@ -269,9 +284,21 @@ class Denial {
       if (this.background3Appear) {
         this.background3();
         this.displayGrewToLevel2();
+        this.displayDeadRoseEnd();
+        if (this.toddlerGrieverAppear) {
+          this.displayToddlerGriever();
+        }
+        setTimeout(() => {
+          this.fade2Appears = true;
+        }, 3000);
+      }
+      if (this.fade2Appears){
+        this.fade2.update();
+        setTimeout(() => {
+          currentState = new Main_Level_Page_1(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
+        }, 4000);
       }
     }
-
   }
 
   displayIntro() {
@@ -303,23 +330,36 @@ class Denial {
   }
 
   displayGameOver() {
-    this.gameOver.alpha = this.gameOver.alpha + 1;
+    // this.gameOver.alpha = this.gameOver.alpha + 1;
+    // push();
+    // textFont(ibmFONT);
+    // fill(150, 150, 150, this.gameOver.alpha)
+    // textAlign(CENTER, CENTER);
+    // textSize(80);
+    // text('Game Over', 400, 400);
+    // pop();
+  }
+
+  displayGrewToLevel2() {
     push();
-    textFont(ibmFONT);
-    fill(150, 150, 150, this.gameOver.alpha)
+    textFont(ibmFONTTypewriter);
+    fill(30, 30, 30)
     textAlign(CENTER, CENTER);
-    textSize(80);
-    text('Game Over', 400, 400);
+    textSize(40);
+    text('YOU ARE NOW', 400, 150);
+    textFont(ibmFONT);
+    textSize(65);
+    text('LEVEL 2 :', 400, 280);
     pop();
   }
 
-  displayGrewToLevel2(){
+  displayToddlerGriever() {
     push();
-    textFont(ibmFONT);
-    fill(150, 150, 150)
+    fill(30, 30, 30)
     textAlign(CENTER, CENTER);
-    textSize(80);
-    text('GREW TO LEVEL 2', 400, 400);
+    textFont(ibmFONT);
+    textSize(75);
+    text('TODDLER GRIEVER', 400, 400);
     pop();
   }
 
@@ -336,7 +376,7 @@ class Denial {
     textFont(ibmFONT);
     textAlign(CENTER, CENTER);
     textSize(this.denialText.size);
-    fill(30,30,30);
+    fill(30, 30, 30);
     text(this.denialText.string, this.denialText.x, this.denialText.y)
     pop();
   }
@@ -510,7 +550,7 @@ class Denial {
     push();
     textAlign(CENTER, CENTER);
     textSize(200);
-    fill(30,30,30);
+    fill(30, 30, 30);
     textFont(ibmFONT);
     text(this.basicPoints, 400, 350);
     pop();
@@ -518,7 +558,7 @@ class Denial {
       push();
       textAlign(CENTER, CENTER);
       textSize(30);
-      fill(30,30,30);
+      fill(30, 30, 30);
       textFont(ibmFONTTypewriter);
       text('Grieving Points', 400, 550);
       pop();
@@ -570,6 +610,13 @@ class Denial {
     }
   }
 
+  displayDeadRoseEnd() {
+    push();
+    imageMode(CENTER);
+    image(this.deadRose.img2, this.deadRose.x2, this.deadRose.y2);
+    pop();
+  }
+
 
 
   lifeLine() {
@@ -614,7 +661,7 @@ class Denial {
     textSize(this.level1Text.size)
     textAlign(CENTER, CENTER);
     textFont(ibmFONT);
-    fill(30,30,30);
+    fill(30, 30, 30);
     text(this.level1Text.string, this.level1Text.x, this.level1Text.y)
     pop();
   }

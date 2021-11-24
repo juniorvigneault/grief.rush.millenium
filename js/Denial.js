@@ -272,15 +272,19 @@ class Denial {
           emotions[i].fill.alpha = 255;
         }
       }
+
       if (this.background2Appear) {
         this.background2();
       }
+
       if (this.win) {
         this.displayFinalPoints();
       }
+
       if (this.addPoints) {
         this.addFinalPoints();
       }
+
       if (this.background3Appear) {
         this.background3();
         this.displayGrewToLevel2();
@@ -634,7 +638,7 @@ class Denial {
   }
 
   fillLifeLine() {
-    this.lifeRect.w = constrain(this.lifeRect.w, 700, 0);
+    this.lifeRect.w = constrain(this.lifeRect.w, 0, 0);
     this.lifeRect.w += 50;
   }
 
@@ -652,7 +656,6 @@ class Denial {
       setTimeout(() => {
         this.addPoints = true;
       }, 6000);
-
     }
   }
 

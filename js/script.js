@@ -181,8 +181,8 @@ function setup() {
   // currentState = new Meeting_Sam2(neutralSamGIF, arrowGIF, happySamGIF);
   // currentState = new Main_Level_Page_1(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
   // currentState = new Denial(deathGIF, heartIMG, deadRosePNG);
-  // currentState = new Anger();
-  currentState = new Bargaining(liveRosePNG, smallDeathGIF);
+  currentState = new Anger();
+  // currentState = new Bargaining(liveRosePNG, smallDeathGIF);
   // currentState = new DenialInstructions(smallDeathGIF, smallHeartIMG);
 
 }

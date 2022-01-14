@@ -80,6 +80,7 @@ class Alliance_of_harmony_title {
     setTimeout(() => {
       this.displayPlay = true;
       this.sloganAppear = true;
+      bell1SFX.play();
     }, 5500);
 
     this.smallHeart = {
@@ -98,6 +99,7 @@ class Alliance_of_harmony_title {
       y: 100,
       appear: false
     }
+
 }
 
   update() {
@@ -106,6 +108,11 @@ class Alliance_of_harmony_title {
     rectMode(CENTER);
     fillHsluv(305, 34.8, 90)
     rect(400, 400, 800, 800)
+    pop();
+
+    // bg img
+    push();
+    image(titleBG, 0,0);
     pop();
 
     if (this.displayPlay) {
@@ -286,11 +293,16 @@ class Alliance_of_harmony_title {
   mousePressed() {
     if (this.mouseIsOverText(this.text.play.size, this.text.play.string, this.text.play.x, this.text.play.y)) {
       this.fade2Appear = true;
+      // bell2SFX.amp(0.5);
+      // bell2SFX.play();
+      waveSFX.amp(0.03);
+      waveSFX.play();
       setTimeout(() => {
-        currentState = new Ten_seconds_title(deadRosePNG);
+        // currentState = new Ten_seconds_title(deadRosePNG);
+        currentState = new Meeting_Sam(samIMG, arrowGIF);
         introSFX.stop();
         introSFX2.stop();
-      }, 5000);
+      }, 7000);
 
     }
   }

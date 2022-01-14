@@ -1,6 +1,8 @@
 class Bargaining {
   constructor(liveRosePNG, deathIMG) {
 
+    this.typewriter = new Typewriter();
+
     this.backgroundColor = {
       h: 305,
       s: 34.8,
@@ -10,23 +12,23 @@ class Bargaining {
 
     this.death = {
       img: deathIMG,
-      x: 80,
-      y: 300,
+      x: 400,
+      y: 80,
       speed: 0.2,
-      vx: 0
+      vy: 0
     }
 
     this.liveRose = {
       img: liveRosePNG,
-      x: 750,
-      y: 300,
+      x: 400,
+      y: 720,
     }
 
     this.upperRect = {
       x: 400,
-      y: 70,
+      y: 300,
       w: 800,
-      h: 400
+      h: 80
     }
 
     this.lowerRect = {
@@ -60,7 +62,7 @@ class Bargaining {
     }
 
     this.displayAnswerPlacementAppear = true;;
-
+    this.instructionsAlpha = 255;
     // grounds.push(new Ground(400, 800, 800, 100, world, 0, 30, 30, 30));
     // tunnel grounds
     // grounds.push(new Ground(this.lowerRect.x, this.lowerRect.y, this.upperRect.w, this.upperRect.h, world, 0, 30, 30, 30));
@@ -79,73 +81,56 @@ class Bargaining {
     emotions.push(this.letterH);
 
 
-    canvasMouse = Mouse.create(canvas.elt);
+    bargainingSONG.amp(0.2);
+    bargainingSONG.loop();
 
-    // canvasMouse.pixelRatio = pixelDensity();
+    this.instructionsAppear = false;
+    this.instructions = undefined;
 
-    let options = {
-      mouse: canvasMouse
-    };
+    this.instructions1 = false;
+    this.instructions2 = false;
+    this.instructions3 = false;
+    this.instructions4 = false;
 
-    mConstraint = MouseConstraint.create(engine, options);
-
-    World.add(world, mConstraint);
-
-
+    // INSTRUCTIONS
+    setTimeout(() => {
+      this.instructions1 = true;
+      this.instructionsAppear = true;
+    }, 2000);
   }
 
   update() {
     this.display();
     this.moveDeath();
 
-
-    this.groundBorders();
-    this.obstacles();
-    this.displayDeathLetters();
-
-    if (this.displayAnswerPlacementAppear) {
-      this.displayAnswerPlacement();
+    if (this.instructions1) {
+      this.instructions = 'Press space bar'
     }
 
-    // Letter D
-    if (this.lettersBecomeStatic(this.letterD.body.position.x, this.letterD.body.position.y, this.answerPlacement.d.x, this.answerPlacement.d.y)) {
-      this.letterD.body.isStatic = true;
-    }
+    if (this.death.y > 700){
+      this.deathEatsHeart();
 
-    // Letter E
-    if (this.lettersBecomeStatic(this.letterE.body.position.x, this.letterE.body.position.y, this.answerPlacement.e.x, this.answerPlacement.e.y)) {
-      this.letterE.body.isStatic = true;
     }
+    // this.groundBorders();
+    // this.obstacles();
+    // this.displayDeathLetters();
 
-    // Letter A
-    if (this.lettersBecomeStatic(this.letterA.body.position.x, this.letterA.body.position.y, this.answerPlacement.a.x, this.answerPlacement.a.y)) {
-      this.letterA.body.isStatic = true;
-    }
-    // Letter T
-    if (this.lettersBecomeStatic(this.letterT.body.position.x, this.letterT.body.position.y, this.answerPlacement.t.x, this.answerPlacement.t.y)) {
-      this.letterT.body.isStatic = true;
-    }
 
-    // Letter H
-    if (this.lettersBecomeStatic(this.letterH.body.position.x, this.letterH.body.position.y, this.answerPlacement.h.x, this.answerPlacement.h.y)) {
-      this.letterH.body.isStatic = true;
-    }
-
-    if (this.letterD.body.isStatic && this.letterE.body.isStatic && this.letterA.body.isStatic && this.letterT.body.isStatic && this.letterH.body.isStatic) {
-      console.log('ANSWER');
-    }
   };
 
   display() {
     this.background();
+    this.displayTunnel();
     this.displayDeath();
     this.displayLiveRose();
-    this.displayTunnel();
+    if (this.instructionsAppear) {
+      this.displayIntructions();
+    }
   };
 
   moveDeath() {
-    this.death.x = this.death.x += this.death.vx;
-    this.death.vx = this.death.speed;
+    this.death.y = this.death.y += this.death.vy;
+    this.death.vy = this.death.speed;
   };
 
   displayDeath() {
@@ -179,19 +164,15 @@ class Bargaining {
   displayTunnel() {
     push();
     noStroke();
-    fill(30)
+    fill(0, 0, 0, 0)
     rectMode(CENTER)
     rect(this.upperRect.x, this.upperRect.y, this.upperRect.w, this.upperRect.h);
-    rect(this.lowerRect.x, this.lowerRect.y, this.lowerRect.w, this.lowerRect.h);
     pop();
   };
 
-  mouseDragged() {
+  mouseDragged() {};
 
-  };
-  mousePressed() {
-
-  };
+  mousePressed() {};
 
   displayDeathLetters() {
     push();
@@ -227,13 +208,97 @@ class Bargaining {
     pop();
   }
 
+  togglePopUp() {
+    this.instructionsAppear = true;
+    setTimeout(() => {
+      // this.instructionsAppear = false;
+
+    }, 1000);
+  }
+
+  deathEatsHeart(){
+    bargainingSONG.stop();
+    this.death.speed = 0;
+    currentState = new BargainingEnd();
+
+  }
+
+  displayIntructions() {
+    push();
+    // push();
+    // fill(0);
+    // rectMode(CENTER);
+    // rect(400,380,400,50);
+    // pop();
+    textAlign(CENTER, CENTER);
+    textSize(30);
+    fill(220, 220, 220);
+    textFont(ibmFONTTypewriter);
+    text(this.instructions, 400, 380);
+
+    // this.instructionsAlpha = this.instructionsAlpha - 4;
+    pop();
+  }
 
   background() {
     push();
-    noStroke();
-    rectMode(CENTER);
-    fillHsluv(this.backgroundColor.h, this.backgroundColor.s, this.backgroundColor.l)
-    rect(400, 400, 800, 800)
+    image(bargainingBG, 0, 0);
     pop();
   };
+
+  mousePressed() {}
+
+  keyPressed() {
+    if (keyIsDown(32) && this.instructions1) {
+      this.instructionsAppear = false;
+      this.instructions1 = false;
+      setTimeout(() => {
+        this.instructionsAppear = true;
+        this.instructions2 = true;
+        this.instructions = 'Press enter'
+      }, 4000);
+    }
+    if (keyIsDown(13) && this.instructions2) {
+      this.instructionsAppear = false;
+      this.instructions2 = false;
+      setTimeout(() => {
+        this.instructionsAppear = true;
+        this.instructions3 = true;
+        this.instructions = 'Press escape'
+      }, 4000);
+    }
+    if (keyIsDown(27) && this.instructions3) {
+      this.instructionsAppear = false;
+      this.instructions3 = false;
+      setTimeout(() => {
+        this.instructionsAppear = true;
+        this.instructions4 = true;
+        this.instructions = 'Press the "L" key'
+      }, 7000);
+
+    }
+    if (keyIsDown(76) && this.instructions4) {
+      console.log('elle')
+      this.instructionsAppear = false;
+      this.instructions4 = false;
+      setTimeout(() => {
+        this.instructionsAppear = true;
+        this.instructions5 = true;
+        this.instructions = 'Press the "A" key'
+      }, 4000);
+    }
+    if (keyIsDown(65) && this.instructions5) {
+      this.instructionsAppear = false;
+      this.instructions5 = false;
+      setTimeout(() => {
+        this.instructionsAppear = true;
+        this.instructions6 = true;
+        this.instructions = 'Press the down arrow'
+      }, 4000);
+    }
+    if (keyIsDown(40) && this.instructions6) {
+      this.instructionsAppear = false;
+      this.instructions6 = false;
+  }
+}
 };

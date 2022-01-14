@@ -1,12 +1,12 @@
 class Start {
   // starting state with start and about buttons
-  constructor(heartIMG) {
+  constructor(heartIMG, smallDeathIMG) {
     // start button
     this.start = {
-      x: 400,
-      y: 300,
-      string: `START`,
-      size: 70,
+      x: 300,
+      y: 200,
+      string: `Start`,
+      size: 40,
       vy: 0,
       speed: -.5,
       stop: 0,
@@ -16,14 +16,14 @@ class Start {
         b: 0,
         a: 70
       },
-      color: 0
+      color: 255
     };
     // about button
     this.about = {
-      x: 400,
-      y: 500,
-      string: `ABOUT`,
-      size: 70,
+      x: 300,
+      y: 300,
+      string: `About`,
+      size: 40,
       vy: 0,
       speed: -.5,
       stop: 0,
@@ -32,7 +32,7 @@ class Start {
         g: 0,
         b: 0
       },
-      color: 0
+      color: 255
     };
 
     $(`#about_box`).dialog({
@@ -75,17 +75,34 @@ class Start {
       img2: heartIMG,
       img3: heartIMG,
       img4: heartIMG,
-      x: 200,
-      y: 310,
-      x2: 600,
-      y2: 310,
-      x3: 200,
-      y3: 510,
-      x4: 600,
-      y4: 510,
+      x: this.start.x - 150,
+      y: this.start.y + 10,
+      x2: this.start.x + 150,
+      y2: this.start.y + 10,
+      x3: this.about.x + 150,
+      y3: this.about.y + 10,
+      x4: this.about.x - 150,
+      y4: this.about.y + 10,
       appear1: false,
       appear2: false
     }
+
+    this.smallDeath = {
+      img: smallDeathIMG,
+      img2: smallDeathIMG,
+      x: 50,
+      y: 50,
+      x2: 750,
+      y2: 750
+    }
+
+    setInterval(() => {
+      this.spaceToStartAppear = true;
+    }, 1000);
+
+    setInterval(() => {
+      this.spaceToStartAppear = false;
+    }, 2000);
 
 
   }
@@ -114,8 +131,8 @@ class Start {
 
 
 
-    this.mouseOverStartText();
-    this.mouseOverAboutText();
+    // this.mouseOverStartText();
+    // this.mouseOverAboutText();
 
     if (this.activateFade) {
       this.fade.update();
@@ -128,11 +145,26 @@ class Start {
   // displays the start and about button
   display() {
 
+    //background image
     push();
-    textAlign(CENTER, CENTER);
-    this.displayText(this.start.size, this.start.string, this.start.x, this.start.y, this.start.color);
-    this.displayText(this.about.size, this.about.string, this.about.x, this.about.y, this.about.color);
+    image(startBG, 0,0);
     pop();
+
+    // push();
+    // imageMode(CENTER);
+    // image(this.smallDeath.img, this.smallDeath.x, this.smallDeath.y);
+    // image(this.smallDeath.img2, this.smallDeath.x2, this.smallDeath.y2);
+    // pop();
+
+    // push();
+    // textAlign(CENTER, CENTER);
+    // this.displayText(this.start.size, this.start.string, this.start.x, this.start.y, this.start.color);
+    // this.displayText(this.about.size, this.about.string, this.about.x, this.about.y, this.about.color);
+    // pop();
+
+    if (this.spaceToStartAppear) {
+      this.displaySpace();
+    }
     // this.displayDeadRose();
 
     // if (this.aboutCrossed) {
@@ -151,12 +183,12 @@ class Start {
     //   pop();
     // }
 
-    if (this.heart.appear1) {
-      this.displayStartHearts()
-    }
-    if (this.heart.appear2) {
-      this.displayAboutHearts()
-    }
+    // if (this.heart.appear1) {
+    //   this.displayStartHearts()
+    // }
+    // if (this.heart.appear2) {
+    //   this.displayAboutHearts()
+    // }
 
   };
 
@@ -172,6 +204,16 @@ class Start {
     textAlign(CENTER, CENTER);
     textSize(size);
     text(string, x, y);
+    pop();
+  }
+
+  displaySpace() {
+    push();
+    fill(30, 30, 30);
+    textSize(30);
+    textAlign(CENTER, CENTER);
+    textFont(ibmFONTTypewriter);
+    text('press space to start', 400, 720);
     pop();
   }
 
@@ -238,6 +280,7 @@ class Start {
       g: 0,
       b: 0
     };
+
     if (this.mouseIsOverText(this.about.size, this.about.string, this.about.x, this.about.y)) {
       aboutColor = this.start.mouseOverColor;
       this.heart.appear2 = true;
@@ -270,6 +313,18 @@ class Start {
     };
   }
 
+  keyPressed(){
+    if (keyIsDown(32)){
+      console.log('START');
+      this.activateFade = true;
+      waveSFX.amp(0.03);
+      waveSFX.play();
+      setTimeout(() => {
+        currentState = new Alliance_of_harmony_title(smallHeartIMG, smallDeathIMG);
+      }, 4000);
+    }
+  }
+
   mouseDragged() {
 
   }
@@ -277,11 +332,7 @@ class Start {
   // Pressing about opens a dialog box with information
   mousePressed() {
     if (this.mouseIsOverText(this.start.size, this.start.string, this.start.x, this.start.y)) {
-      console.log('START');
-      this.activateFade = true;
-      setTimeout(() => {
-        currentState = new Alliance_of_harmony_title(smallHeartIMG);
-      }, 4000);
+
 
       // currentState = new Alliance_of_harmony_title(flowersPNG);
 

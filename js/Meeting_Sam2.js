@@ -1,5 +1,5 @@
 class Meeting_Sam2 {
-  constructor(samGIF, arrowGIF, happySamGIF) {
+  constructor(samGIF, arrowGIF, bigSam) {
     this.sam = {
       image: samGIF,
       x: 400,
@@ -8,7 +8,7 @@ class Meeting_Sam2 {
       speed: -7,
       finaleY: 300,
       isMoving: false,
-      imageHappy: happySamGIF
+      imageHappy: bigSam
     }
 
     this.textBox = {
@@ -55,8 +55,10 @@ class Meeting_Sam2 {
     this.fading = false;
 
     this.typewriter = new Typewriter();
+    // roomToneSFX.amp(0.1)
+    roomToneSFX.loop();
 
-    this.fade = new Fade(0, 1, false, true, 255, 255, 255)
+    this.fade = new Fade(0, 1, false, true, 255, 255, 255);
 
     setTimeout(() => {
       this.typewriter.typewrite(`
@@ -95,6 +97,10 @@ class Meeting_Sam2 {
     rect(400, 400, 800, 800)
     pop();
 
+    push();
+    image(samBG, 0, 0);
+    pop();
+
     if (this.samIsHappy) {
       this.sam.image = this.sam.imageHappy;
     }
@@ -117,7 +123,7 @@ class Meeting_Sam2 {
     strokeWeight(1);
     fill(250);
     // fill(211, 192, 216)
-    rect(this.textBox.x, this.textBox.y, 550, 150, 0, 0, 0, 0);
+    // rect(this.textBox.x, this.textBox.y, 550, 150, 0, 0, 0, 0);
     this.typewriter.display();
 
     if (this.arrow.isShowing)
@@ -171,7 +177,7 @@ class Meeting_Sam2 {
   mousePressed() {
     if (this.message1) {
       this.typewriter.typewrite(`
-        I have lost countless people in my life...`, 60, 650);
+        I lost countless people in my life...`, 60, 650);
       this.arrow.isShowing = false;
       this.message1 = false;
       setTimeout(() => {
@@ -197,10 +203,14 @@ class Meeting_Sam2 {
         Together, we'll make it through your
         grieveing journey, I promise.`, 60, 660);
       this.samIsHappy = true;
+      bell1SFX.amp(0.5);
+      bell1SFX.play();
       this.message3 = false;
       this.arrow.isShowing = false;
       setTimeout(() => {
         this.fading = true;
+        waveSFX.amp(0.1);
+        waveSFX.play();
       }, 5000);
       setTimeout(() => {
         // this.arrow.isShowing = true;
@@ -215,7 +225,7 @@ class Meeting_Sam2 {
   bloodDrop() {
     this.displayBlood()
     if (frameCount % 99 === 0) {
-      bloodDrops.push(new Blood(402, 329, 20, 20, world, 120, 120, 200));
+      bloodDrops.push(new Blood(402, 329, 10, 20, world, 120, 120, 200));
     };
     setTimeout(() => {
       this.samIsSad = false;

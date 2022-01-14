@@ -125,7 +125,7 @@ class Main_Level_Page_1 {
       showing: false
     }
 
-    this.fade = new Fade(0, 1.5, false, true, 233, 223, 235);
+    this.fade = new Fade(0, 1.5, false, true, 255,255,255);
     this.denialFade = false;
   }
 
@@ -141,13 +141,17 @@ class Main_Level_Page_1 {
     rect(400, 400, 800, 800)
     pop();
 
+    push();
+    imageMode(CORNER)
+    image(mainLevelBG, 0, 0);
+    pop();
 
     push();
     noStroke();
     fill(this.denial.color, 0, 0, 0)
     rectMode(CENTER)
     rect(this.denial.x, this.denial.y, this.denial.w, this.denial.h);
-    fill(30,30,30);
+    fill(30, 30, 30);
     textSize(30)
     textAlign(CENTER, CENTER)
     textFont(ibmFONT)
@@ -228,25 +232,23 @@ class Main_Level_Page_1 {
 
     this.moveTextBox();
 
-    push();
-
-    pop();
-    imageMode(CENTER);
-    image(this.death.img, this.death.x, this.death.y)
-    image(this.death.img2, this.death.x2, this.death.y2)
-    push();
-
-    imageMode(CENTER);
-    image(this.deadRose.img, this.deadRose.x, this.deadRose.y)
-    image(this.deadRose.img2, this.deadRose.x2, this.deadRose.y2)
-
-    pop();
-
-    push();
-    imageMode(CENTER);
-    image(this.liveRose.img, this.liveRose.x, this.liveRose.y)
-    image(this.liveRose.img2, this.liveRose.x2, this.liveRose.y2)
-    pop();
+    // push();
+    // imageMode(CENTER);
+    // image(this.death.img, this.death.x, this.death.y)
+    // image(this.death.img2, this.death.x2, this.death.y2)
+    // pop();
+    //
+    // push();
+    // imageMode(CENTER);
+    // image(this.deadRose.img, this.deadRose.x, this.deadRose.y)
+    // image(this.deadRose.img2, this.deadRose.x2, this.deadRose.y2)
+    // pop();
+    //
+    // push();
+    // imageMode(CENTER);
+    // image(this.liveRose.img, this.liveRose.x, this.liveRose.y)
+    // image(this.liveRose.img2, this.liveRose.x2, this.liveRose.y2)
+    // pop();
 
 
     if (this.denial.showing) {
@@ -257,16 +259,16 @@ class Main_Level_Page_1 {
       this.angerLocked();
     }
 
-    if (this.bargainingIsLocked){
+    if (this.bargainingIsLocked) {
       this.bargainingLocked();
     }
-    if (this.depressionIsLocked){
+    if (this.depressionIsLocked) {
       this.depressionLocked();
     }
-    if (this.acceptanceIsLocked){
+    if (this.acceptanceIsLocked) {
       this.acceptanceLocked();
     }
-    if (this.denialFade){
+    if (this.denialFade) {
       this.fade.update();
     }
   }
@@ -459,10 +461,13 @@ class Main_Level_Page_1 {
       mouseX < this.denial.x + this.denial.w / 2 &&
       mouseY > this.denial.y - this.denial.h / 2 &&
       mouseY < this.denial.y + this.denial.h / 2) {
-        this.denialFade = true;
-        setTimeout(() => {
-          currentState = new DenialInstructions(smallDeathGIF, smallHeartIMG);
-        }, 4500);
+      this.denialFade = true;
+      waveSFX.amp(0.03);
+      waveSFX.play();
+      setTimeout(() => {
+        currentState = new Denial(deathGIF, heartIMG, deadRosePNG);
+        // currentState = new DenialInstructions(smallDeathGIF, smallHeartIMG);
+      }, 4500);
     }
     if (mouseX > this.anger.x - this.anger.w / 2 &&
       mouseX < this.anger.x + this.anger.w / 2 &&

@@ -81,17 +81,21 @@ class DenialInstructions {
     fillHsluv(this.backgroundColor.h, this.backgroundColor.s, this.backgroundColor.l);
     rect(400, 400, 800, 800);
     pop();
+
+    push();
+    image(denialInstructionsBG, 0,0);
+    pop();
   }
 
   display() {
     this.background();
     this.displayInstructionsTitle();
-    this.displayColoredSquare();
-    this.displayDenialExplanation();
+    // this.displayColoredSquare();
+    // this.displayDenialExplanation();
     this.displayBlackSquares();
     this.displaySmallDeathGif();
     this.displayHeartGif();
-    this.displayWhiteRect();
+    // this.displayWhiteRect();
 
     if (this.clickToStartAppear) {
       this.displayClickToStart();
@@ -106,6 +110,8 @@ class DenialInstructions {
 
   }
 
+
+
   displayInstructionsTitle() {
     push();
     fill(30, 30, 30);
@@ -114,7 +120,6 @@ class DenialInstructions {
     textFont(ibmFONTTypewriter);
     text('Instructions', 400, 60);
     line(300, 125, 500, 125);
-    line(300, 248, 500, 248);
     pop();
   }
 

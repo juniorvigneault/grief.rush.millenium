@@ -54,7 +54,7 @@ class Ten_seconds_title {
 
     setTimeout(() => {
       this.typewriter.typewrite(`
-        ...then you just start on a new 10
+        ...then just start on a new 10
         seconds.`, 75, 660);
     }, 14000);
 
@@ -69,7 +69,7 @@ class Ten_seconds_title {
     }, 23000);
 
     setTimeout(() => {
-      currentState = new Meeting_Sam(neutralSamGIF, arrowGIF);
+      currentState = new Meeting_Sam(samIMG, arrowGIF);
     }, 29000);
 
 
@@ -128,6 +128,10 @@ class Ten_seconds_title {
     fillHsluv(305, 34.8, 90)
     rect(400, 400, 800, 800)
     pop();
+
+push();
+image(tenSecondsBG, 0,0)
+pop();
 
 
     this.bloodDrop();

@@ -3,7 +3,7 @@ class Meeting_Sam {
     this.sam = {
       image: samGIF,
       x: 400,
-      y: 1000,
+      y: 300,
       vy: 0,
       speed: -10,
       finaleY: 310,
@@ -42,6 +42,8 @@ class Meeting_Sam {
       }
     }
 
+    this.samIsThere = false;
+
     this.samIsHappy = false;
 
     this.message1 = false;
@@ -51,12 +53,14 @@ class Meeting_Sam {
     this.typewriter = new Typewriter();
 
     typewriter2 = new Typewriter();
-
-
+    waveSFX.amp(0.1);
+    roomToneSFX.loop();
 
     setTimeout(() => {
-      this.sam.isMoving = true;
-    }, 1000);
+      this.samIsThere = true;
+      bell3SFX.play();
+    }, 3000);
+
 
     setTimeout(() => {
       this.typewriter.typewrite(`
@@ -76,7 +80,7 @@ class Meeting_Sam {
           $(".user_name").text(userName);
           this.message3 = true;
           console.log(this.message3);
-          currentState = new Meeting_Sam2(samGIF, arrowGIF);
+          currentState = new Meeting_Sam2(samIMG, arrowGIF, bigSam);
         }
       },
       autoOpen: false,
@@ -97,15 +101,16 @@ class Meeting_Sam {
   }
 
   update() {
-    if (this.sam.isMoving) {
-      this.moveSam();
-    }
+    // if (this.sam.isMoving) {
+    //   this.moveSam();
+    // }
 
     this.display();
 
-    this.displaySam();
-
-    this.moveTextBox();
+    if (this.samIsThere) {
+      this.displaySam();
+    }
+    // this.moveTextBox();
 
 
   }
@@ -120,9 +125,13 @@ class Meeting_Sam {
     rect(400, 400, 800, 800)
     pop();
 
-if (this.samIsHappy){
-    this.flowerRays();
-  }
+    push();
+    image(samBG, 0, 0);
+    pop();
+
+    if (this.samIsHappy) {
+      this.flowerRays();
+    }
 
 
     rectMode(CENTER)
@@ -195,28 +204,28 @@ if (this.samIsHappy){
     }
   }
 
-    mousePressed() {
-      if (this.message1) {
-        this.typewriter.typewrite(`
+  mousePressed() {
+    if (this.message1) {
+      this.typewriter.typewrite(`
           I'm Sam.`, 80, 650);
-        this.arrow.isShowing = false;
-        this.message1 = false;
+      this.arrow.isShowing = false;
+      this.message1 = false;
 
-        setTimeout(() => {
-          this.arrow.isShowing = true;
-          this.message2 = true;
-        }, 1000);
-      }
-      if (this.message2) {
-        this.typewriter.typewrite(`
+      setTimeout(() => {
+        this.arrow.isShowing = true;
+        this.message2 = true;
+      }, 1000);
+    }
+    if (this.message2) {
+      this.typewriter.typewrite(`
           What's your name?`, 80, 650);
-        this.arrow.isShowing = false;
-        this.message2 = false;
+      this.arrow.isShowing = false;
+      this.message2 = false;
 
-        setTimeout(() => {
-          $("#name_form").dialog("open");
-        }, 1500);
-        this.message2 = false;
-      }
+      setTimeout(() => {
+        $("#name_form").dialog("open");
+      }, 1500);
+      this.message2 = false;
     }
   }
+}

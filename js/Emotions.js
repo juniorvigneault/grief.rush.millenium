@@ -1,12 +1,12 @@
 class Emotions {
-  constructor(x, y, w, h, world, f, b, stoic, red, green, blue) {
+  constructor(x, y, w, h, world, f, b, red, green, blue) {
     let options = {
       // friction against the rectangles 0 = hey slide off each other
       // 1 = they stick more together
       friction: f,
       // restitution = bodies bouncing off 0 = not bouncing 1 = bouncing
       restitution: b,
-      isStatic: stoic
+      isStatic: false
     }
 
     this.body = Bodies.rectangle(x, y, h, w, options);
@@ -55,7 +55,6 @@ class Emotions {
   offScreen() {
     let pos = this.body.position;
     return (pos.y > this.screenLimit);
-
   }
 
   changeColor() {

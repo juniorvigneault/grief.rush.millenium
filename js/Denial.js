@@ -1,31 +1,35 @@
 class Denial {
   constructor(deathGIF, heartGIF, deadRose) {
-
+    roomToneSFX.amp();
+    roomToneSFX.loop();
+    this.gameTime = 1;
+    this.textColorLight = 220;
+    console.log(currentState)
     this.denialText = {
       string: `DENIAL`,
       size: 100,
       x: 400,
-      y: 350,
+      y: 130,
       vx: 0,
       vy: 0,
       speed: 5,
-      finaleY: 350
+      finaleY: 130
     };
 
     this.level1Text = {
       string: `LEVEL 1`,
       size: 100,
       x: 400,
-      y: -450,
+      y: -550,
       vx: 0,
       vy: 0,
       speed: 5,
-      finaleY: 260
+      finaleY: 130
     };
 
     this.goTitleText = {
-      string: `GO`,
-      size: 200,
+      string: `START`,
+      size: 150,
       x: 400,
       y: 320,
       font: ibmFONTTypewriter,
@@ -74,6 +78,8 @@ class Denial {
       alpha: 0
     }
 
+    this.playTime = false;
+
     this.deadRose = {
       img: deadRosePNG,
       x: 400,
@@ -95,6 +101,11 @@ class Denial {
       alpha: 0
     }
 
+    this.gift = {
+      x: 410,
+      y: 300
+    }
+
     this.deadRoseAppear = true;
     this.displayGameElements = false;
 
@@ -111,6 +122,19 @@ class Denial {
     this.moveDeathBack = false;
     this.lifeLineIsThere = true;
 
+    this.background4appear = false;
+    this.giftAppear = false;
+    this.giftTitleAppear = false;
+
+    this.openGift = false;
+    this.background5appear = false;
+    this.finalFade = false;
+
+    setTimeout(() => {
+      bell1SFX.amp(0.5);
+      bell1SFX.play()
+    }, 2000);
+
     setTimeout(() => {
       this.denialTitleAppear = true;
     }, 2000);
@@ -124,10 +148,14 @@ class Denial {
       this.level1TextAppear = false;
       this.deadRoseAppear = false;
       this.displayGameElements = true;
+      denialSONG.amp(0.1);
+      denialSONG.loop();
     }, 8000);
 
     setTimeout(() => {
       this.GoTitleTextAppear = true;
+      // startSFX.amp(0.05);
+      // startSFX.play();
     }, 8700);
     setTimeout(() => {
       this.GoTitleFontChange = true;
@@ -139,20 +167,23 @@ class Denial {
       this.backgroundColor.l = 90;
 
       this.startGame = true;
+      this.groundAppear = true;
 
     }, 9200);
 
     this.feelingEmotions = true;
 
     this.toddlerGrieverAppear = false;
+    // TURNS EMOTIONS INTO SHINY BLUE
+    // setInterval(() => {
+    //   this.emotionsAreReady = true;
+    // }, 4000);
+    //
+    // setInterval(() => {
+    //   this.emotionsAreReady = false;
+    // }, 8000);
 
-    setInterval(() => {
-      this.emotionsAreReady = true;
-    }, 4000);
 
-    setInterval(() => {
-      this.emotionsAreReady = false;
-    }, 8000);
 
     setInterval(() => {
       this.toddlerGrieverAppear = true;
@@ -190,7 +221,7 @@ class Denial {
     this.gainingPointsAllowed = true;
 
     this.startDisplayingGameOver = false;
-
+    this.endScene = false;
   }
 
 
@@ -202,13 +233,12 @@ class Denial {
         this.displayDeath();
         this.displayHearts();
         // this.moveDeath();
-
       }
 
       this.displayIntro()
-      if (this.deadRoseAppear) {
-        this.displayDeadRose();
-      }
+      // if (this.deadRoseAppear) {
+      //   this.displayDeadRose();
+      // }
       if (this.denialTextMoving) {
         this.moveDenialText();
         this.moveLevel1Text();
@@ -220,9 +250,9 @@ class Denial {
 
     if (this.startGame) {
 
-      if (this.gainingPointsAllowed) {
-        this.gainPoints();
-      }
+      // if (this.gainingPointsAllowed) {
+      //   this.gainPoints();
+      // }
 
       this.background();
       this.removeHeart();
@@ -232,11 +262,11 @@ class Denial {
       this.moveDeath();
       this.deleteGrounds();
       this.success();
+      this.playTime = true;
 
-
-      if (this.winsBasicPoints) {
-        this.displayEarnedPoints();
-      }
+      // if (this.winsBasicPoints) {
+      //   this.displayEarnedPoints();
+      // }
       // draw the ground
 
 
@@ -249,17 +279,19 @@ class Denial {
 
       this.emotionsDrop();
       this.displayLifeLine();
-      this.lifeRect.w = this.lifeRect.w - .5
+      //
+      this.lifeRect.w = this.lifeRect.w - this.gameTime;
 
       if (this.gameFailed) {
         this.fade.update();
         this.gainingPointsAllowed = false;
         this.displayGameOver();
         this.feelingEmotions = false;
-
         setTimeout(() => {
           currentState = new Main_Level_Page_1(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
         }, 6000);
+        this.gameFailed == false;
+
       }
 
       if (this.emotionsAreReady) {
@@ -288,19 +320,88 @@ class Denial {
       if (this.background3Appear) {
         this.background3();
         this.displayGrewToLevel2();
-        this.displayDeadRoseEnd();
+        // this.displayDeadRoseEnd();
         if (this.toddlerGrieverAppear) {
           this.displayToddlerGriever();
         }
+
         setTimeout(() => {
-          this.fade2Appears = true;
+          currentState = new Main_Level_Page_2(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
+        }, 7000);
+        setTimeout(() => {
+          this.finalFade = true;
         }, 3000);
+
+        if (this.finalFade) {
+          this.fade2.update();
+
+        }
+
+        // setTimeout(() => {
+        //   this.background4appear = true;
+        //   setTimeout(() => {
+        //     this.giftAppear = true;
+        //     setTimeout(() => {
+        //       this.giftTitleAppear = true;
+        //     }, 1000);
+        //   }, 2000);
+        // }, 5000);
       }
-      if (this.fade2Appears){
-        this.fade2.update();
+      if (this.background4appear) {
+        push();
+        image(denialBG, 0, 0);
+        pop();
+
+        if (this.giftAppear) {
+          push();
+          imageMode(CENTER);
+          this.gift.x = random(390, 410);
+          image(giftPNG, this.gift.x, this.gift.y);
+          pop();
+
+          if (this.giftTitleAppear) {
+            this.endScene = true;
+            push();
+            fill(this.textColorLight)
+            textAlign(CENTER, CENTER);
+            textFont(ibmFONTTypewriter);
+            textSize(25);
+            text('You found an item', 400, 500);
+            pop();
+          }
+        }
+
+      }
+      if (this.openGift) {
+
+        push();
+        image(denialBG, 0, 0);
+        pop();
+
+        push();
+        imageMode(CENTER);
+        image(hatPNG, 400, 300);
+        pop();
+        push();
+        fill(this.textColorLight)
+        textAlign(CENTER, CENTER);
+        textFont(ibmFONTTypewriter);
+        textSize(25);
+        text('A blue festive glitter hat', 400, 500);
+        text('was added to your inventory', 400, 550);
+        pop();
+
         setTimeout(() => {
-          currentState = new Main_Level_Page_1(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
-        }, 4000);
+          currentState = new Main_Level_Page_2(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
+        }, 7000);
+        setTimeout(() => {
+          this.finalFade = true;
+        }, 3000);
+
+        if (this.finalFade) {
+          this.fade2.update();
+
+        }
       }
     }
   }
@@ -325,7 +426,7 @@ class Denial {
 
     if (this.GoTitleFontChange) {
       this.goTitleText.font = ibmFONT;
-      this.goTitleText.size = 300;
+      this.goTitleText.size = 150;
       this.goTitleText.color = random(0, 150);
       if (this.flashingBackground) {
         this.backgroundColor.l = random(90, 100);
@@ -347,23 +448,23 @@ class Denial {
   displayGrewToLevel2() {
     push();
     textFont(ibmFONTTypewriter);
-    fill(30, 30, 30)
+    fill(this.textColorLight)
     textAlign(CENTER, CENTER);
     textSize(40);
     text('YOU ARE NOW', 400, 150);
     textFont(ibmFONT);
     textSize(65);
-    text('LEVEL 2 :', 400, 280);
+    text('LEVEL 2 :', 400, 300);
     pop();
   }
 
   displayToddlerGriever() {
     push();
-    fill(30, 30, 30)
+    fill(this.textColorLight)
     textAlign(CENTER, CENTER);
     textFont(ibmFONT);
     textSize(75);
-    text('TODDLER GRIEVER', 400, 400);
+    text('TODDLER GRIEVER', 400, 450);
     pop();
   }
 
@@ -392,23 +493,21 @@ class Denial {
     fillHsluv(this.backgroundColor.h, this.backgroundColor.s, this.backgroundColor.l)
     rect(400, 400, 800, 800)
     pop();
+
+    push();
+    image(denialBG, 0, 0);
+    pop();
   }
 
   background2() {
     push();
-    noStroke();
-    rectMode(CENTER);
-    fillHsluv(this.backgroundColor.h, this.backgroundColor.s, this.backgroundColor.l)
-    rect(400, 400, 800, 800)
+    image(denialBG, 0, 0);
     pop();
   }
 
   background3() {
     push();
-    noStroke();
-    rectMode(CENTER);
-    fillHsluv(this.backgroundColor.h, this.backgroundColor.s, this.backgroundColor.l, this.backgroundColor.alpha)
-    rect(400, 400, 800, 800)
+    image(denialBG, 0, 0)
     pop();
   }
 
@@ -443,7 +542,7 @@ class Denial {
   emotionsDrop() {
     this.displayEmotions()
     if (this.feelingEmotions) {
-      if (frameCount % 60 === 0) {
+      if (frameCount % 30 === 0) {
         emotions.push(new Emotions(this.death.x, this.death.y + 65, 25, 25, world, 0.8, 0.8));
       };
     }
@@ -501,18 +600,22 @@ class Denial {
       if (this.emotionsAreReady == false) {
         if (this.touchesHeart(this.heart.x1, this.heart.y1)) {
           this.heart.life1 = true;
+          this.heart.x1 = 2000;
           // LINE
           this.lifeLine();
         } else if (this.touchesHeart(this.heart.x2, this.heart.y2)) {
           this.heart.life2 = true;
+          this.heart.x2 = 2000;
           // LINE
           this.lifeLine();
         } else if (this.touchesHeart(this.heart.x3, this.heart.y3)) {
           this.heart.life3 = true;
+          this.heart.x3 = 2000;
           // LINE
           this.lifeLine();
         } else if (this.touchesHeart(this.heart.x4, this.heart.y4)) {
           this.heart.life4 = true;
+          this.heart.x4 = 2000;
           // LINE
           this.lifeLine();
         }
@@ -522,7 +625,7 @@ class Denial {
 
   gainPoints() {
     for (let i = 0; i < emotions.length; i++) {
-      if (this.emotionsAreReady) {
+      if (this.emotionsAreReady == false) {
         if (this.touchesHeart(this.heart.x1, this.heart.y1)) {
           this.pointsAlpha = 255;
           this.winsBasicPoints = true;
@@ -551,30 +654,28 @@ class Denial {
   }
 
   displayFinalPoints() {
+
     push();
     textAlign(CENTER, CENTER);
     textSize(200);
-    fill(30, 30, 30);
+    fill(this.textColorLight);
     textFont(ibmFONT);
-    text(this.basicPoints, 400, 350);
+    text(this.basicPoints, 400, 300);
     pop();
     if (this.grievingPointsTitle) {
       push();
       textAlign(CENTER, CENTER);
       textSize(30);
-      fill(30, 30, 30);
+      fill(this.textColorLight);
       textFont(ibmFONTTypewriter);
-      text('Grieving Points', 400, 550);
-      pop();
+      text('Grieving Points', 400, 500);
       pop();
     }
   }
 
   addFinalPoints() {
-
     if (this.basicPoints <= this.addedPoints) {
       this.basicPoints = this.basicPoints + 100
-
     } else {
       this.basicPoints = this.basicPoints
       this.grievingPointsTitle = true;
@@ -624,7 +725,7 @@ class Denial {
 
 
   lifeLine() {
-    this.fillLifeLine();
+    this.lifeRect.w = constrain(this.lifeRect.w, 0, width)
     this.lifeRect.flashes = true;
     setTimeout(() => {
       this.lifeRect.flashes = false;
@@ -638,7 +739,6 @@ class Denial {
   }
 
   fillLifeLine() {
-    this.lifeRect.w = constrain(this.lifeRect.w, 0, 0);
     this.lifeRect.w += 50;
   }
 
@@ -649,6 +749,8 @@ class Denial {
       this.lifeLineIsThere = false;
       setTimeout(() => {
         this.background2Appear = true;
+        denialSONG.stop();
+        this.playTime == false;
       }, 4000);
       setTimeout(() => {
         this.win = true;
@@ -739,9 +841,12 @@ class Denial {
   }
 
   mousePressed() {
-    if (this.startGame) {
+    if (this.startGame && this.groundAppear) {
       grounds.push(new Ground(mouseX, mouseY, 200, 40, world, 0, 255, 255, 255));
+      stoneSFX.amp(0.7);
+      stoneSFX.play();
       for (let i = 0; i < grounds.length; i++) {
+        this.addedPoints = this.addedPoints + 100;
         if (grounds.length >= 3) {
           grounds[i].removeFromWorld();
           grounds.splice(i, 1);
@@ -749,6 +854,23 @@ class Denial {
           i--;
         }
       }
+    }
+
+    if (this.endScene) {
+      if (mouseX > this.gift.x - giftPNG.width / 2 &&
+        mouseX < this.gift.x + giftPNG.width / 2 &&
+        mouseY > this.gift.y - giftPNG.height / 2 &&
+        mouseY < this.gift.y + giftPNG.height / 2) {
+        // opens the pop up
+        console.log('gift')
+        this.openGift = true;
+        setTimeout(() => {
+          waveSFX.amp(0.03);
+          waveSFX.play();
+        }, 2500);
+
+      }
+
     }
   }
 }

@@ -209,7 +209,7 @@ class Anger {
 
 
     grounds.push(new Ground(0, 0, 1600, 50, world, 0, 0, 200, 200, 0));
-    grounds.push(new Ground(0, 300, 1600, 50, world, 1.574, 0, 0, 200, 0));
+    grounds.push(new Ground(0, 300, 1600, 50, world, 1.574, 0, 0, 200, 200));
     grounds.push(new Ground(800, 200, 50, 1600, world, 3.14, 0, 0, 200, 0));
     grounds.push(new Ground(800, 800, 50, 1600, world, 1.57, 0, 0, 200, 0));
 
@@ -253,7 +253,7 @@ class Anger {
       this.background();
       for (let i = 0; i < particleObjects.length; i++) {
         particleObjects[i].display();
-        console.log(particleObjects[i])
+        //console.log(particleObjects[i])
       this.displayDeath(particleObjects[i].particles[0].body.position.x,particleObjects[i].particles[0].body.position.y)
       }
 
@@ -830,18 +830,29 @@ class Anger {
   }
 
   mouseDragged() {
-    for (let i = 0; i < particleObjects.length; i++) {
-      if (this.worm.collision(400, 400)) {
-        console.log('collision')
+      // if (this.worm.collision(400, 400)) {
+      //   console.log('collision')
+      //   if (frameCount % 4 === 0) {
+      //   //  gruntSFX.amp(0.1)
+      //   //  gruntSFX.play();
+      //     this.lifeRect.w -= 10;
+      //     this.addedPoints = this.addedPoints + 100;
+      //     console.log(this.lifeRect.w)
+      //   };
+      //   this.lifeLine();
+      // }
+    //  console.log(grounds[0].body)
+    for (let i = 0; i < grounds.length; i++) {
+      if(this.worm.groundCollision(grounds[i])){
         if (frameCount % 4 === 0) {
-          gruntSFX.amp(0.1)
-          gruntSFX.play();
-          this.lifeRect.w -= 10;
-          this.addedPoints = this.addedPoints + 100;
-
-        };
-        this.lifeLine();
-      }
+         //  gruntSFX.amp(0.1)
+         //  gruntSFX.play();
+           this.lifeRect.w -= 10;
+           this.addedPoints = this.addedPoints + 100;
+           console.log(this.lifeRect.w)
+         };
+         this.lifeLine();
+      };
     }
   }
 

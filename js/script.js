@@ -256,16 +256,16 @@ function setup() {
   // currentState = new Main_Level_Page_3(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
   // currentState = new Main_Level_Page_2(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
   // currentState = new Main_Level_Page_1(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
-  // currentState = new Denial(deathGIF, heartIMG, deadRosePNG);
-  // currentState = new Anger(mediumDeathGIF, heartIMG, deadRosePNG);
 
-  // currentState = new Anger();
+  // currentState = new Denial(deathGIF, heartIMG, deadRosePNG);
+  currentState = new Anger(mediumDeathGIF, heartIMG, deadRosePNG);
+
   // currentState = new BargainingIntro(samIMG, arrowGIF, bigSam);
   // currentState = new Bargaining(smallHeartIMG, smallDeathGIF);
   // currentState = new BargainingEnd();
 
   // currentState = new DenialInstructions(smallDeathGIF, smallHeartIMG);
-currentState = new Depression();
+// currentState = new Depression();
   // add mouse control
   canvasMouse = Mouse.create(p5.canvas);
 

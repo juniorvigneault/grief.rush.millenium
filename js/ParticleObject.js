@@ -341,11 +341,20 @@ class ParticleObject {
   }
 
   collision(x, y) {
-    for (let i = 0; i < this.particles.length; i++) {
-      let pos = this.particles[i].body.position;
+  //  for (let i = 0; i < this.particles.length; i++) {
+      let pos = this.particles[0].body.position;
       let d = dist(pos.x, pos.y, x, y)
       return (d < 100)
-    }
+    //}
+  }
+
+  groundCollision(g){
+    let pos = this.particles[0].body.position;
+    if(pos.x > g.body.position.x && pos.x < g.body.position.x + g.w/2
+      && (pos.y -30 ) > g.body.position.y && (pos.y-30) < g.body.position.y + g.h/2){
+        return true;
+      }
+      return false;
   }
 
 //   makeTriangle(){

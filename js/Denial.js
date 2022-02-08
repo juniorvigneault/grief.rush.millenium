@@ -564,12 +564,12 @@ class Denial {
     }
   }
 
-  touchesHeart(heartX, heartY) {
-    for (let i = 0; i < emotions.length; i++) {
-      let pos = emotions[i].body.position;
+  touchesHeart(heartX, heartY,currentEmotion) {
+  //  for (let i = 0; i < emotions.length; i++) {
+      let pos = currentEmotion.body.position;
       let d = dist(pos.x, pos.y, heartX, heartY)
       return (d < 70)
-    }
+    //}
   }
 
   endGame() {
@@ -598,22 +598,22 @@ class Denial {
   removeHeart() {
     for (let i = 0; i < emotions.length; i++) {
       if (this.emotionsAreReady == false) {
-        if (this.touchesHeart(this.heart.x1, this.heart.y1)) {
+        if (this.touchesHeart(this.heart.x1, this.heart.y1,emotions[i])) {
           this.heart.life1 = true;
           this.heart.x1 = 2000;
           // LINE
           this.lifeLine();
-        } else if (this.touchesHeart(this.heart.x2, this.heart.y2)) {
+        } else if (this.touchesHeart(this.heart.x2, this.heart.y2,emotions[i])) {
           this.heart.life2 = true;
           this.heart.x2 = 2000;
           // LINE
           this.lifeLine();
-        } else if (this.touchesHeart(this.heart.x3, this.heart.y3)) {
+        } else if (this.touchesHeart(this.heart.x3, this.heart.y3,emotions[i])) {
           this.heart.life3 = true;
           this.heart.x3 = 2000;
           // LINE
           this.lifeLine();
-        } else if (this.touchesHeart(this.heart.x4, this.heart.y4)) {
+        } else if (this.touchesHeart(this.heart.x4, this.heart.y4,emotions[i])) {
           this.heart.life4 = true;
           this.heart.x4 = 2000;
           // LINE

@@ -194,8 +194,8 @@ class Anger {
 
 
     this.flashingBackground = false;
-    this.startGame = true;
-    this.intro = false;
+    this.startGame = false;
+    this.intro = true;
 
     this.emotionsAreReady = false;
     this.win = false;
@@ -208,8 +208,8 @@ class Anger {
 
 
 
-    grounds.push(new Ground(0, 0, 1600, 50, world, 0, 0, 200, 200, 0));
-    grounds.push(new Ground(0, 300, 1600, 50, world, 1.574, 0, 0, 200, 200));
+    grounds.push(new Ground(0, 0, 1600, 50, world, 0, 0, 200, 0, 0));
+    grounds.push(new Ground(0, 300, 1600, 50, world, 1.574, 0, 0, 200, 0));
     grounds.push(new Ground(800, 200, 50, 1600, world, 3.14, 0, 0, 200, 0));
     grounds.push(new Ground(800, 800, 50, 1600, world, 1.57, 0, 0, 200, 0));
 
@@ -290,7 +290,7 @@ class Anger {
         this.displayGameOver();
         this.feelingEmotions = false;
         setTimeout(() => {
-          currentState = new Main_Level_Page_1(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
+          currentState = new Main_Level_Page_2(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
         }, 6000);
         this.gameFailed == false;
 
@@ -328,7 +328,7 @@ class Anger {
         }
 
         setTimeout(() => {
-          currentState = new Main_Level_Page_2(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
+          currentState = new Main_Level_Page_3(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
         }, 7000);
         setTimeout(() => {
           this.finalFade = true;
@@ -847,7 +847,7 @@ class Anger {
         if (frameCount % 4 === 0) {
          //  gruntSFX.amp(0.1)
          //  gruntSFX.play();
-           this.lifeRect.w -= 10;
+           this.lifeRect.w -= 50;
            this.addedPoints = this.addedPoints + 100;
            console.log(this.lifeRect.w)
          };

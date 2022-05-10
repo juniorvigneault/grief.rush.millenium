@@ -24,6 +24,7 @@ class Anger {
 
     this.canvasMouse = Mouse.create(canvas.elt);
     // this.canvasMouse.pixelRatio = pixelDensity();
+    
     let options3 = {
       mouse: this.canvasMouse
     }

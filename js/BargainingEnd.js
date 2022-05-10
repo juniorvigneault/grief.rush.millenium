@@ -12,7 +12,7 @@ class BargainingEnd {
 
     setTimeout(() => {
       this.typewriter.typewrite(
-        userName + '...', 150, 380);
+        'April White...', 150, 380);
       this.message1 = true;
     }, 2000);
 

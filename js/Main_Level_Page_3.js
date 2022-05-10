@@ -472,7 +472,7 @@ class Main_Level_Page_3 {
       mouseY > this.bargaining.y - this.bargaining.h / 2 &&
       mouseY < this.bargaining.y + this.bargaining.h / 2) {
         setTimeout(() => {
-          currentState = new BargainingIntro(samIMG, arrowGIF);
+           currentState = new BargainingIntro(samIMG, arrowGIF, bigSam);
         }, 1500);
         sineSFX.amp(0.1);
         sineSFX.play();

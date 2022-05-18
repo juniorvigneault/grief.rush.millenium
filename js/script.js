@@ -56,6 +56,8 @@ let flowersPNG;
 let decorationPNG;
 let starGIF;
 let obrigeFONT;
+let depressionBG;
+let acceptanceBG;
 
 // classic font
 let robotoFONT;
@@ -146,7 +148,7 @@ let giftPNG;
 let hatPNG;
 let soundIsPlaying = false;
 
-
+let depressionSONG;
 
 function preload() {
   // IMAGES PRELOAD
@@ -226,6 +228,10 @@ function preload() {
   angerSONG = loadSound(`assets/sounds/music_samples/angersong.mp3`);
   bargainingSONG = loadSound(`assets/sounds/music_samples/bargainingsong.mp3`);
   sineSFX = loadSound(`assets/sounds/music_samples/sine.wav`);
+  depressionSONG = loadSound(`assets/sounds/music_samples/depressionsong.wav`);
+  depressionBG = loadImage('assets/images/xmas_break/depressionBG.png');
+  acceptanceBG = loadImage('assets/images/xmas_break/acceptanceBG.png');
+
 }
 
 function setup() {
@@ -260,12 +266,14 @@ function setup() {
   // currentState = new Denial(deathGIF, heartIMG, deadRosePNG);
   // currentState = new Anger(mediumDeathGIF, heartIMG, deadRosePNG);
 
-  // currentState = new BargainingIntro(samIMG, arrowGIF, bigSam);
+  //currentState = new BargainingIntro(samIMG, arrowGIF, bigSam);
   // currentState = new Bargaining(smallHeartIMG, smallDeathGIF);
-   currentState = new BargainingEnd();
+   //currentState = new BargainingEnd();
 
   // currentState = new DenialInstructions(smallDeathGIF, smallHeartIMG);
-  // currentState = new Depression();
+   //currentState = new Depression();
+   currentState = new Acceptance();
+
   // add mouse control
   canvasMouse = Mouse.create(p5.canvas);
 

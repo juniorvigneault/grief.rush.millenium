@@ -1,17 +1,7 @@
-class Depression {
-  constructor(samGIF) {
+class Acceptance {
+  constructor() {
 
 
-    this.sam = {
-      image: samGIF,
-      x: 400,
-      y: 300,
-      vy: 0,
-      speed: -10,
-      finaleY: 310,
-      isMoving: false,
-      imageHappy: bigSam
-    }
 
     this.rectHint = {
       x: 0,
@@ -38,7 +28,7 @@ class Depression {
     this.gameTime = 0;
     this.textColorLight = 220;
     this.denialText = {
-      string: `DEPRESSION`,
+      string: `ACCEPTANCE`,
       size: 100,
       x: 400,
       y: 130,
@@ -49,7 +39,7 @@ class Depression {
     };
 
     this.level1Text = {
-      string: `LEVEL 4`,
+      string: `FINAL LEVEL`,
       size: 100,
       x: 400,
       y: -550,
@@ -400,7 +390,7 @@ class Depression {
       }
       if (this.background4appear) {
         push();
-        image(depressionBG, 0, 0);
+        image(acceptanceBG, 0, 0);
         pop();
 
         if (this.giftAppear) {
@@ -430,7 +420,7 @@ class Depression {
       if (this.openGift) {
 
         push();
-        image(depressionBG, 0, 0);
+        image(acceptanceBG, 0, 0);
         pop();
 
         push();
@@ -627,19 +617,19 @@ class Depression {
     pop();
 
     push();
-    image(depressionBG, 0, 0);
+    image(acceptanceBG, 0, 0);
     pop();
   }
 
   background2() {
     push();
-    image(depressionBG, 0, 0);
+    image(acceptanceBG, 0, 0);
     pop();
   }
 
   background3() {
     push();
-    image(depressionBG, 0, 0)
+    image(acceptanceBG, 0, 0)
     pop();
   }
 

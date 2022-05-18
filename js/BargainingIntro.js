@@ -38,7 +38,7 @@ class BargainingIntro {
 
     setTimeout(() => {
       this.typewriter.typewrite(`
-        Hello April White,`, 80, 650);
+        Hello `+ userName + `,`, 80, 650);
       setTimeout(() => {
         this.message1 = true;
         this.arrow.isShowing = true;

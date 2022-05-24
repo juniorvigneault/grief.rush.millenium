@@ -2,12 +2,20 @@ class Acceptance {
   constructor() {
 
 
+    this.passcode = '4475'
+    this.correct = undefined;
+    this.currentInput = ``;
 
     this.rectHint = {
       x: 0,
       y: 0,
       w: 100,
       h: 50
+    }
+
+    this.key = {
+      x: 400,
+      y: 600
     }
 
     this.hint = {
@@ -20,6 +28,27 @@ class Acceptance {
       text: 'I',
       size: 32
     }
+
+    this.pendant = {
+      x: 100,
+      y: 630
+    }
+
+    this.book = {
+      x: 300,
+      y: 630
+    }
+
+    this.lamp = {
+      x: 500,
+      y: 630
+    }
+
+    this.hat = {
+      x: 700,
+      y: 630
+    }
+
     this.typewriter = new Typewriter();
 
     engine.world.gravity.scale = 0.00001;
@@ -48,6 +77,16 @@ class Acceptance {
       speed: 5,
       finaleY: 130
     };
+
+    this.safe = {
+      x: this.level1Text.x,
+      y: this.level1Text.y
+    }
+
+    this.door = {
+      x: 400,
+      y: 300
+    }
 
     this.goTitleText = {
       string: `START`,
@@ -79,6 +118,8 @@ class Acceptance {
       alpha: 0
     }
 
+    this.keyCursor = false;
+
     this.playTime = false;
 
 
@@ -106,7 +147,7 @@ class Acceptance {
 
     this.gameFailed = false;
     this.fade = new Fade(0, 1, false, true, 0, 0, 0)
-    this.fade2 = new Fade(0, 1.3, false,true, 255, 255, 255)
+    this.fade2 = new Fade(0, 1.3, false, true, 255, 255, 255)
     this.fade2Appears = false;
 
     this.moveDeathBack = false;
@@ -132,6 +173,10 @@ class Acceptance {
     this.answertext3 = false;
     this.answertext4 = false;
     this.answertext5 = false;
+    this.clickable = true;
+    this.passcodeFound = false;
+    this.keyAppear = false;
+    this.backgroundEnd = false;
     // create ragdoll
 
     setTimeout(() => {
@@ -212,8 +257,8 @@ class Acceptance {
 
 
     this.flashingBackground = false;
-    this.startGame = false;
-    this.intro = true;
+    this.startGame = true;
+    this.intro = false;
 
     this.emotionsAreReady = false;
     this.win = false;
@@ -265,20 +310,78 @@ class Acceptance {
       // }
 
       this.background();
-      this.displayHints();
-
-      for (let i = 0; i < particleObjects.length; i++) {
-        particleObjects[i].display();
-        //console.log(particleObjects[i])
-        // this.displayDeath(particleObjects[i].particles[0].body.position.x,particleObjects[i].particles[0].body.position.y)
+      if (this.passcodeFound == false) {
+        this.displaySafeAndObjects();
+        this.enterPassword();
       }
+      //for (let i = 0; i < particleObjects.length; i++) {
+      //    particleObjects[i].display();
+      //console.log(particleObjects[i])
+      // this.displayDeath(particleObjects[i].particles[0].body.position.x,particleObjects[i].particles[0].body.position.y)
+      //    }
 
       // this.removeHeart();
       // this.endGame();
       // this.displayHearts();
       // this.moveDeath();
 
-      this.deleteGrounds();
+      //    this.deleteGrounds();
+      if (this.displayPendant) {
+        this.displayBigPendant();
+        setTimeout(() => {
+          this.displayPendant = false
+          this.clickable = true;
+        }, 1500);
+      }
+
+      if (this.displayBook) {
+        this.displayBigBook();
+        setTimeout(() => {
+          this.displayBook = false
+          this.clickable = true;
+        }, 1500);
+      }
+
+      if (this.displayLamp) {
+        this.displayBigLamp();
+        setTimeout(() => {
+          this.displayLamp = false
+          this.clickable = true;
+        }, 1500);
+      }
+
+      if (this.displayHat) {
+        this.displayBigHat();
+        setTimeout(() => {
+          this.displayHat = false
+          this.clickable = true;
+        }, 1500);
+      }
+
+      push();
+      this.correct = this.checkInput();
+      if (this.correct) {}
+      pop();
+
+      if (this.keyAppear) {
+        if (this.keyCursor) {
+          this.key.x = mouseX;
+          this.key.y = mouseY;
+          push();
+          imageMode(CENTER, CENTER);
+          image(doorIMG, this.door.x, this.door.y)
+          pop();
+        }
+        push();
+        imageMode(CENTER);
+        image(keyIMG, this.key.x, this.key.y)
+        pop();
+
+      }
+      if (this.backgroundEnd) {
+        this.backgroundEndAppear();
+      }
+
       this.success();
       this.playTime = true;
 
@@ -290,14 +393,14 @@ class Acceptance {
 
 
 
-      for (let i = 0; i < grounds.length; i++) {
-        grounds[i].update();
-      }
+      //    for (let i = 0; i < grounds.length; i++) {
+      //      grounds[i].update();
+      //    }
       if (this.samIsThere) {
         // this.displaySam();
       }
 
-      this.emotionsDrop();
+      //    this.emotionsDrop();
 
       if (this.answertext1) {
         this.displayAnswer();
@@ -310,11 +413,11 @@ class Acceptance {
           engine.world.gravity.scale = 0.001;
           this.answer = '';
           setTimeout(() => {
-        this.endFade = true;
-        this.finalFade = true;
-        setTimeout(() => {
-      currentState = new Meeting_Sam2(samIMG, arrowGIF, bigSam)
-    }, 6000);
+            this.endFade = true;
+            this.finalFade = true;
+            setTimeout(() => {
+              currentState = new Meeting_Sam2(samIMG, arrowGIF, bigSam)
+            }, 6000);
           }, 2000);
         }, 1000);
       }
@@ -365,7 +468,7 @@ class Acceptance {
           this.displayToddlerGriever();
         }
 
-        if(this.endFade){
+        if (this.endFade) {
 
         }
 
@@ -448,13 +551,32 @@ class Acceptance {
     }
     if (this.finalFade) {
       push();
-      fill(255,255,255,this.whiteFade)
+      fill(255, 255, 255, this.whiteFade)
       this.whiteFade = this.whiteFade + 1;
       noStroke();
-      rect(0,0,800,800)
+      rect(0, 0, 800, 800)
       pop();
       console.log(this.whiteFade);
-      }
+    }
+  }
+
+
+
+  displaySafe() {
+    push();
+    imageMode(CENTER);
+    image(safeIMG, 400, 300);
+    pop();
+  }
+
+  displayObjects() {
+    push();
+    imageMode(CENTER);
+    image(pendantSmallIMG, this.pendant.x, this.pendant.y)
+    image(bookSmallIMG, this.book.x, this.book.y)
+    image(lampSmallIMG, this.lamp.x, this.lamp.y)
+    image(hatSmallIMG, this.hat.x, this.hat.y)
+    pop();
   }
 
   displayAnswer() {
@@ -631,6 +753,13 @@ class Acceptance {
     push();
     image(acceptanceBG, 0, 0)
     pop();
+  }
+
+  backgroundEndAppear() {
+    push();
+    image(acceptanceBG, 0, 0)
+    pop();
+
   }
 
 
@@ -988,49 +1117,154 @@ class Acceptance {
   }
 
 
+  // enter password pop up
+  enterPassword() {
+    this.checkInput();
+    this.displayPassword();
+  }
+
+  // lower case
+  checkInput() {
+    let lowerCaseInput = this.currentInput.toLowerCase();
+
+    if (lowerCaseInput === this.passcode) {
+      this.clickable = false;
+      setTimeout(() => {
+        this.passcodeFound = true;
+        setTimeout(() => {
+          this.keyAppear = true;
+        }, 1000);
+      }, 1000);
+
+    }
+  }
+
+
+  keyTyped() {
+    this.currentInput += key;
+  }
+  keyPressed() {
+    if (keyCode === BACKSPACE) {
+      this.currentInput = ``;
+    }
+  }
+
+  displayPassword() {
+    push();
+    fill(255);
+    textSize(32)
+    textAlign(CENTER, CENTER)
+    text(this.currentInput, 400, 520);
+    pop();
+  }
+
+  displaySafeAndObjects() {
+    this.displaySafe();
+    this.displayObjects();
+  }
+
+  displayBigPendant() {
+    push();
+    noStroke();
+    fill(10)
+    rectMode(CENTER)
+    rect(400, 300, 400, 400)
+    imageMode(CENTER);
+    image(pendantBigIMG, 400, 300)
+    pop();
+  }
+  displayBigBook() {
+    push();
+    noStroke();
+    fill(10)
+    rectMode(CENTER)
+    rect(400, 300, 400, 400)
+    imageMode(CENTER);
+    image(bookBigIMG, 400, 300)
+    pop();
+  }
+  displayBigLamp() {
+    push();
+    noStroke();
+    fill(10)
+    rectMode(CENTER)
+    rect(400, 300, 400, 400)
+    imageMode(CENTER);
+    image(lampBigIMG, 400, 300)
+    pop();
+  }
+
+  displayBigHat() {
+    push();
+    noStroke();
+    fill(10)
+    rectMode(CENTER)
+    rect(400, 300, 400, 400)
+    imageMode(CENTER);
+    image(hatBigIMG, 400, 300)
+    pop();
+  }
 
   mousePressed() {
-    if (mouseX > this.hint.x - this.rectHint.w / 2 &&
-      mouseX < this.hint.x + this.rectHint.w / 2 &&
-      mouseY > this.hint.y - this.rectHint.h / 2 &&
-      mouseY < this.hint.y + this.rectHint.h / 2) {
-      // opens the pop up
-      this.hint1found = true;
+    if (mouseX > this.pendant.x - pendantSmallIMG.width / 2 &&
+      mouseX < this.pendant.x + pendantSmallIMG.width / 2 &&
+      mouseY > this.pendant.y - pendantSmallIMG.height / 2 &&
+      mouseY < this.pendant.y + pendantSmallIMG.height / 2 &&
+      this.clickable) {
+      console.log('pendant')
 
-      if (this.hint1found) {
-        this.hint.text = 'want'
-        this.hint1found = false;
-        this.answertext1 = true;
-        setTimeout(() => {
-          this.hint2found = true;
-        }, 200);
-      }
-      if (this.hint2found) {
-        this.hint.text = 'to';
-        this.answertext2 = true;
-        setTimeout(() => {
-          this.hint3found = true;
-        }, 200);
-      }
-      if (this.hint3found) {
-        this.hint.text = 'be';
-        this.answertext3 = true;
-        setTimeout(() => {
-          this.hint4found = true;
-        }, 200);
-      }
-      if (this.hint4found) {
-        this.hint.text = 'free';
-        this.answertext4 = true;
-        setTimeout(() => {
-          this.hint5found = true;
-        }, 200);
-      }
-      if (this.hint5found) {
-        console.log('OVER')
-        this.depressionOver = true;
-        this.answertext5 = true;
-      }
+      this.displayPendant = true;
+      this.clickable = false;
+    }
+
+    if (mouseX > this.book.x - bookSmallIMG.width / 2 &&
+      mouseX < this.book.x + bookSmallIMG.width / 2 &&
+      mouseY > this.book.y - bookSmallIMG.height / 2 &&
+      mouseY < this.book.y + bookSmallIMG.height / 2 &&
+      this.clickable) {
+      console.log('book')
+      this.displayBook = true;
+      this.clickable = false;
+
+    }
+
+    if (mouseX > this.lamp.x - lampSmallIMG.width / 2 &&
+      mouseX < this.lamp.x + lampSmallIMG.width / 2 &&
+      mouseY > this.lamp.y - lampSmallIMG.height / 2 &&
+      mouseY < this.lamp.y + lampSmallIMG.height / 2 &&
+      this.clickable) {
+      console.log('lamp')
+      this.displayLamp = true;
+      this.clickable = false;
+
+    }
+
+    if (mouseX > this.hat.x - hatSmallIMG.width / 2 &&
+      mouseX < this.hat.x + hatSmallIMG.width / 2 &&
+      mouseY > this.hat.y - hatSmallIMG.height / 2 &&
+      mouseY < this.hat.y + hatSmallIMG.height / 2 &&
+      this.clickable) {
+      console.log('hat')
+      this.displayHat = true;
+      this.clickable = false;
+    }
+
+    if (mouseX > this.key.x - keyIMG.width / 2 &&
+      mouseX < this.key.x + keyIMG.width / 2 &&
+      mouseY > this.key.y - keyIMG.height / 2 &&
+      mouseY < this.key.y + keyIMG.height / 2 &&
+      this.keyAppear) {
+      this.keyCursor = true;
+    }
+
+    if (mouseX > this.door.x - doorIMG.width / 2 &&
+      mouseX < this.door.x + doorIMG.width / 2 &&
+      mouseY > this.door.y - doorIMG.height / 2 &&
+      mouseY < this.door.y + doorIMG.height / 2 &&
+      this.keyCursor) {
+      setTimeout(() => {
+        currentState = new EndSam(samIMG, arrowGIF, bigSam)
+      }, 2000);
     }
 
 

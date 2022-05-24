@@ -58,6 +58,17 @@ let starGIF;
 let obrigeFONT;
 let depressionBG;
 let acceptanceBG;
+let safeIMG;
+
+// objects
+let hatSmallIMG;
+let hatBigIMG;
+let bookSmallIMG;
+let bookBigIMG;
+let pendantSmallIMG;
+let pendantBigIMG;
+let lampSmallIMG;
+let lampBigIMG;
 
 // classic font
 let robotoFONT;
@@ -133,6 +144,8 @@ let smallDeadRosePNG;
 let liveRosePNG;
 let smallDeathIMG;
 let smallBrokenHeartIMG;
+let keyIMG;
+let endBoardBG;
 
 let generalPoints;
 
@@ -147,8 +160,17 @@ let bigSam;
 let giftPNG;
 let hatPNG;
 let soundIsPlaying = false;
+let doorIMG;
 
 let depressionSONG;
+
+let denialPoints = 0;
+let angerPoints = 0;
+let bargainingPoints = 0;
+let depressionPoints = 0;
+let acceptancePoints = 0;
+let totalPoints = 0;
+
 
 function preload() {
   // IMAGES PRELOAD
@@ -196,6 +218,7 @@ function preload() {
 
 
 
+
   // backgrounds gifss
   // purpleBG = loadImage(`assets/gifs/backgrounds/purple.gif`)
   neutralSamGIF = loadImage(`assets/gifs/sam_neutral2.gif`)
@@ -231,7 +254,20 @@ function preload() {
   depressionSONG = loadSound(`assets/sounds/music_samples/depressionsong.wav`);
   depressionBG = loadImage('assets/images/xmas_break/depressionBG.png');
   acceptanceBG = loadImage('assets/images/xmas_break/acceptanceBG.png');
+  safeIMG = loadImage('assets/images/xmas_break/safe.png');
 
+
+  hatSmallIMG = loadImage('assets/images/xmas_break/hatSmall.png');
+  hatBigIMG = loadImage('assets/images/xmas_break/hatBig.png');
+  bookSmallIMG = loadImage('assets/images/xmas_break/bookSmall.png');
+  bookBigIMG = loadImage('assets/images/xmas_break/bookBig.png');
+  pendantSmallIMG = loadImage('assets/images/xmas_break/pendantSmall.png');
+  pendantBigIMG = loadImage('assets/images/xmas_break/pendantBig.png');
+  lampSmallIMG = loadImage('assets/images/xmas_break/lampSmall.png');
+  lampBigIMG = loadImage('assets/images/xmas_break/lampBig.png');
+  keyIMG = loadImage('assets/images/xmas_break/key.png');
+  doorIMG = loadImage('assets/images/xmas_break/door.png');
+  endBoardBG = loadImage('assets/images/xmas_break/denialBG.png');
 }
 
 function setup() {
@@ -258,7 +294,8 @@ function setup() {
   // currentState = new Loading(loadingCircle);
   // currentState = new Meeting_Sam(samIMG, arrowGIF);
   // currentState = new Meeting_Sam2(samIMG, arrowGIF, bigSam);
-  // currentState = new Main_Level_Page_4(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
+   // currentState = new Main_Level_Page_5(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
+  currentState = new Main_Level_Page_4(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
   // currentState = new Main_Level_Page_3(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
   // currentState = new Main_Level_Page_2(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
   // currentState = new Main_Level_Page_1(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
@@ -268,11 +305,14 @@ function setup() {
 
   //currentState = new BargainingIntro(samIMG, arrowGIF, bigSam);
   // currentState = new Bargaining(smallHeartIMG, smallDeathGIF);
-   //currentState = new BargainingEnd();
+  // currentState = new BargainingEnd();
 
   // currentState = new DenialInstructions(smallDeathGIF, smallHeartIMG);
-   //currentState = new Depression();
-   currentState = new Acceptance();
+  //currentState = new Depression();
+  // currentState = new Acceptance();
+  // currentState = new EndSam(samIMG, arrowGIF, bigSam)
+  // currentState = new EndBoard(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
+
 
   // add mouse control
   canvasMouse = Mouse.create(p5.canvas);
@@ -294,6 +334,7 @@ function setup() {
 
 function draw() {
   currentState.update();
+  console.log(totalPoints)
 }
 
 function mousePressed() {
@@ -310,6 +351,10 @@ function keyIsDown() {
 
 function keyPressed() {
   currentState.keyPressed();
+}
+
+function keyTyped() {
+  currentState.keyTyped();
 }
 // functions to translate RGB to HSLuv for fill and stroke
 function fillHsluv(h, s, l) {

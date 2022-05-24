@@ -2,7 +2,7 @@ class Main_Level_Page_1 {
   constructor(heartIMG, deadRosePNG, liveRosePNG, deathIMG, smallBrokenHeartIMG) {
     $("#name_form").hide();
     $("#about_box").hide();
-
+    roomToneSFX.stop();
     this.textBox = {
       x: 400,
       y: 1000,
@@ -13,7 +13,10 @@ class Main_Level_Page_1 {
       speed2: 2
     }
 
+    this.clickable = true;
+
     this.typewriter = new Typewriter();
+    this.angerState = false;
 
     this.heart = {
       img: heartIMG,
@@ -232,6 +235,9 @@ class Main_Level_Page_1 {
 
     this.moveTextBox();
 
+    if(this.denialState){
+      currentState = new Denial(deathGIF, heartIMG, deadRosePNG);
+    }
     // push();
     // imageMode(CENTER);
     // image(this.death.img, this.death.x, this.death.y)
@@ -460,12 +466,14 @@ class Main_Level_Page_1 {
     if (mouseX > this.denial.x - this.denial.w / 2 &&
       mouseX < this.denial.x + this.denial.w / 2 &&
       mouseY > this.denial.y - this.denial.h / 2 &&
-      mouseY < this.denial.y + this.denial.h / 2) {
+      mouseY < this.denial.y + this.denial.h / 2 &&
+    this.clickable) {
       this.denialFade = true;
-      waveSFX.amp(0.03);
+      this.clickable = false;
+      waveSFX.amp(0.02);
       waveSFX.play();
       setTimeout(() => {
-        currentState = new Denial(deathGIF, heartIMG, deadRosePNG);
+        this.denialState = true;
         // currentState = new DenialInstructions(smallDeathGIF, smallHeartIMG);
       }, 4500);
     }

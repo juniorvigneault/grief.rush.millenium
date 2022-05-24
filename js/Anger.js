@@ -1,12 +1,12 @@
 class Anger {
   constructor(deathGIF, heartGIF, deadRose) {
-    roomToneSFX.amp();
-    roomToneSFX.loop();
+    // roomToneSFX.amp();
+    // roomToneSFX.loop();
 
     engine.world.gravity.scale = 0.0001;
 
     this.gameTime = 0;
-    this.textColorLight = 220;
+    this.textColorLight = 255;
     this.denialText = {
       string: `ANGER`,
       size: 100,
@@ -117,7 +117,7 @@ class Anger {
     this.openGift = false;
     this.background5appear = false;
     this.finalFade = false;
-
+    this.willWin = true;
     // create ragdoll
 
     setTimeout(() => {
@@ -254,7 +254,7 @@ class Anger {
       for (let i = 0; i < particleObjects.length; i++) {
         particleObjects[i].display();
         //console.log(particleObjects[i])
-      this.displayDeath(particleObjects[i].particles[0].body.position.x,particleObjects[i].particles[0].body.position.y)
+        this.displayDeath(particleObjects[i].particles[0].body.position.x, particleObjects[i].particles[0].body.position.y)
       }
 
       // this.removeHeart();
@@ -285,13 +285,14 @@ class Anger {
       this.lifeRect.w = this.lifeRect.w - this.gameTime;
 
       if (this.gameFailed) {
+        this.willWin = false;
         this.fade.update();
         this.gainingPointsAllowed = false;
         this.displayGameOver();
         this.feelingEmotions = false;
         setTimeout(() => {
-          currentState = new Main_Level_Page_2(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
-        }, 6000);
+          currentState = new Main_Level_Page_1(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
+        }, 5000);
         this.gameFailed == false;
 
       }
@@ -327,27 +328,27 @@ class Anger {
           this.displayToddlerGriever();
         }
 
-        setTimeout(() => {
-          currentState = new Main_Level_Page_3(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
-        }, 7000);
-        setTimeout(() => {
-          this.finalFade = true;
-        }, 3000);
-
-        if (this.finalFade) {
-          this.fade2.update();
-
-        }
-
         // setTimeout(() => {
-        //   this.background4appear = true;
-        //   setTimeout(() => {
-        //     this.giftAppear = true;
-        //     setTimeout(() => {
-        //       this.giftTitleAppear = true;
-        //     }, 1000);
-        //   }, 2000);
-        // }, 5000);
+        //   currentState = new Main_Level_Page_3(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
+        // }, 7000);
+        // setTimeout(() => {
+        //   this.finalFade = true;
+        // }, 3000);
+        //
+        // if (this.finalFade) {
+        //   this.fade2.update();
+        //
+        // }
+
+        setTimeout(() => {
+          this.background4appear = true;
+          setTimeout(() => {
+            this.openGift = true;
+            setTimeout(() => {
+              this.giftTitleAppear = true;
+            }, 1000);
+          }, 2000);
+        }, 5000);
       }
       if (this.background4appear) {
         push();
@@ -382,15 +383,15 @@ class Anger {
 
         push();
         imageMode(CENTER);
-        image(hatPNG, 400, 300);
+        image(bookBigIMG, 400, 300);
         pop();
         push();
         fill(this.textColorLight)
         textAlign(CENTER, CENTER);
         textFont(ibmFONTTypewriter);
         textSize(25);
-        text('A blue festive glitter hat', 400, 500);
-        text('was added to your inventory', 400, 550);
+        text('You found an old book!', 400, 500);
+        text('It was added to your inventory', 400, 550);
         pop();
 
         setTimeout(() => {
@@ -649,7 +650,7 @@ class Anger {
   }
 
   displayFinalPoints() {
-
+    angerPoints = this.basicPoints;
     push();
     textAlign(CENTER, CENTER);
     textSize(200);
@@ -734,11 +735,11 @@ class Anger {
   }
 
   fillLifeLine() {
-    this.lifeRect.w += 50;
+    this.lifeRect.w += 10;
   }
 
   success() {
-    if (this.lifeRect.w == 0) {
+    if (this.lifeRect.w == 0 && this.willWin) {
       this.feelingEmotions = false;
       this.death.speed = 0;
       this.lifeLineIsThere = false;
@@ -783,7 +784,7 @@ class Anger {
     pop();
   }
 
-  displayDeath(x,y) {
+  displayDeath(x, y) {
     push();
     imageMode(CENTER);
     image(this.death.gif, x, y)
@@ -830,28 +831,28 @@ class Anger {
   }
 
   mouseDragged() {
-      // if (this.worm.collision(400, 400)) {
-      //   console.log('collision')
-      //   if (frameCount % 4 === 0) {
-      //   //  gruntSFX.amp(0.1)
-      //   //  gruntSFX.play();
-      //     this.lifeRect.w -= 10;
-      //     this.addedPoints = this.addedPoints + 100;
-      //     console.log(this.lifeRect.w)
-      //   };
-      //   this.lifeLine();
-      // }
+    // if (this.worm.collision(400, 400)) {
+    //   console.log('collision')
+    //   if (frameCount % 4 === 0) {
+    //   //  gruntSFX.amp(0.1)
+    //   //  gruntSFX.play();
+    //     this.lifeRect.w -= 10;
+    //     this.addedPoints = this.addedPoints + 100;
+    //     console.log(this.lifeRect.w)
+    //   };
+    //   this.lifeLine();
+    // }
     //  console.log(grounds[0].body)
     for (let i = 0; i < grounds.length; i++) {
-      if(this.worm.groundCollision(grounds[i])){
+      if (this.worm.groundCollision(grounds[i])) {
         if (frameCount % 4 === 0) {
-         //  gruntSFX.amp(0.1)
-         //  gruntSFX.play();
-           this.lifeRect.w -= 50;
-           this.addedPoints = this.addedPoints + 100;
-           console.log(this.lifeRect.w)
-         };
-         this.lifeLine();
+          //  gruntSFX.amp(0.1)
+          //  gruntSFX.play();
+          this.lifeRect.w -= 10;
+          this.addedPoints = this.addedPoints + 100;
+          console.log(this.lifeRect.w)
+        };
+        this.lifeLine();
       };
     }
   }

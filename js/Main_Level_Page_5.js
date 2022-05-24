@@ -1,4 +1,4 @@
-class Main_Level_Page_2 {
+class Main_Level_Page_5 {
   constructor(heartIMG, deadRosePNG, liveRosePNG, deathIMG, smallBrokenHeartIMG) {
     console.log(currentState)
 
@@ -14,14 +14,8 @@ class Main_Level_Page_2 {
       back: false,
       speed2: 2
     }
+    this.acceptanceState = false;
 
-    this.angerState = false;
-
-    this.angerFade = false;
-    this.fadeOpacity = 0;
-    this.clickable = true;
-    this.rectFadeOpacity = 0;
-    this.fadeON = false;
     this.typewriter = new Typewriter();
 
     this.heart = {
@@ -134,7 +128,8 @@ class Main_Level_Page_2 {
       showing: false
     }
 
-    this.fade = new Fade(0, 1.5, true, false, 255,255,255);
+    this.fade = new Fade(0, 1.5, false, true, 255,255,255);
+    this.denialFade = false;
   }
 
   update() {
@@ -176,11 +171,14 @@ class Main_Level_Page_2 {
     rectMode(CENTER)
     fill(this.denial.color, 0, 0, 0)
     rect(this.anger.x, this.anger.y, this.anger.w, this.anger.h);
-    fill(30,30,30);
+    fill(0,0,0,100);
     textSize(30)
     textAlign(CENTER, CENTER)
     textFont(ibmFONT)
     text('ANGER', this.anger.x, this.anger.y - 7)
+    pop();
+    push();
+    // line(this.anger.x - 70, this.anger.y-2, this.anger.x +70, this.anger.y-2);
     pop();
 
 
@@ -190,11 +188,14 @@ class Main_Level_Page_2 {
     rectMode(CENTER)
     fill(this.denial.color, 0, 0, 0)
     rect(this.bargaining.x, this.bargaining.y, this.bargaining.w, this.bargaining.h);
-    fill(0, 0, 0, 100)
+    fill(0,0,0,100)
     textSize(30)
     textAlign(CENTER, CENTER)
     textFont(ibmFONT)
     text('BARGAINING', this.bargaining.x, this.bargaining.y - 7)
+    pop();
+    push();
+    // line(this.bargaining.x - 70, this.bargaining.y-2, this.bargaining.x +70, this.bargaining.y-2);
     pop();
 
 
@@ -204,7 +205,7 @@ class Main_Level_Page_2 {
     rectMode(CENTER)
     fill(this.denial.color, 0, 0, 0)
     rect(this.depression.x, this.depression.y, this.depression.w, this.depression.h);
-    fill(0, 0, 0, 100)
+    fill(0,0,0,100)
     textSize(30)
     textAlign(CENTER, CENTER)
     textFont(ibmFONT)
@@ -216,7 +217,7 @@ class Main_Level_Page_2 {
     rectMode(CENTER);
     fill(this.denial.color, 0, 0, 0)
     rect(this.acceptance.x, this.acceptance.y, this.acceptance.w, this.acceptance.h);
-    fill(0, 0, 0, 100)
+    fill(30,30,30)
     textSize(30)
     textAlign(CENTER, CENTER)
     textFont(ibmFONT)
@@ -228,7 +229,7 @@ class Main_Level_Page_2 {
     textSize(17)
     textAlign(CENTER, CENTER)
     textFont(ibmFONTTypewriter);
-    text('Level 2 : Toddler Griever', 400, 690)
+    text('Level 4 : Fledgling Griever', 400, 690)
     pop();
 
     push();
@@ -261,10 +262,7 @@ class Main_Level_Page_2 {
     // image(this.liveRose.img2, this.liveRose.x2, this.liveRose.y2)
     // pop();
 
-if (this.angerState){
-  currentState = new Anger(mediumDeathGIF, heartIMG, deadRosePNG);
 
-}
     if (this.denial.showing) {
       this.displayDenialText();
     }
@@ -282,8 +280,12 @@ if (this.angerState){
     if (this.acceptanceIsLocked) {
       this.acceptanceLocked();
     }
-    if (this.angerFade) {
+    if (this.denialFade) {
       this.fade.update();
+    }
+
+    if (this.acceptanceState){
+      currentState = new Acceptance();
     }
   }
 
@@ -312,16 +314,6 @@ if (this.angerState){
     if (this.heart.appear5) {
       this.displayAcceptanceHearts()
     }
-
-if(this.fadeON){
-    push();
-    rectMode(CENTER);
-    noStroke();
-    fill(255,255,255,this.rectFadeOpacity);
-    rect(400,400,width,height)
-    this.rectFadeOpacity = this.rectFadeOpacity +1.5;
-    pop();
-  }
   }
 
   displayDenialHearts() {
@@ -482,38 +474,17 @@ if(this.fadeON){
 
   mousePressed() {
 
-    if (mouseX > this.anger.x - this.anger.w / 2 &&
-      mouseX < this.anger.x + this.anger.w / 2 &&
-      mouseY > this.anger.y - this.anger.h / 2 &&
-      mouseY < this.anger.y + this.anger.h / 2 &&
-    this.clickable) {
-        this.clickable = false;
-        this.fadeON = true;
-        // waveSFX.amp(0.03);
-        // waveSFX.play();
-        setTimeout(() => {
-          this.angerState = true;
-        }, 4500);
-    }
-    if (mouseX > this.bargaining.x - this.bargaining.w / 2 &&
-      mouseX < this.bargaining.x + this.bargaining.w / 2 &&
-      mouseY > this.bargaining.y - this.bargaining.h / 2 &&
-      mouseY < this.bargaining.y + this.bargaining.h / 2) {
-      this.bargainingIsLocked = true;
-    }
-    if (mouseX > this.depression.x - this.depression.w / 2 &&
-      mouseX < this.depression.x + this.depression.w / 2 &&
-      mouseY > this.depression.y - this.depression.h / 2 &&
-      mouseY < this.depression.y + this.depression.h / 2) {
-      this.depressionIsLocked = true;
-
-    }
     if (mouseX > this.acceptance.x - this.acceptance.w / 2 &&
       mouseX < this.acceptance.x + this.acceptance.w / 2 &&
       mouseY > this.acceptance.y - this.acceptance.h / 2 &&
       mouseY < this.acceptance.y + this.acceptance.h / 2) {
-      this.acceptanceIsLocked = true;
-
+      waveSFX.amp(0.03);
+      waveSFX.play();
+      this.denialFade = true;
+      setTimeout(() => {
+        this.acceptanceState = true;
+        // currentState = new DenialInstructions(smallDeathGIF, smallHeartIMG);
+      }, 4500);
     }
   }
 }

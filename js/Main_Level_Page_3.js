@@ -1,7 +1,7 @@
 class Main_Level_Page_3 {
   constructor(heartIMG, deadRosePNG, liveRosePNG, deathIMG, smallBrokenHeartIMG) {
     console.log(currentState)
-
+    totalPoints = denialPoints + angerPoints;
     $("#name_form").hide();
     $("#about_box").hide();
 
@@ -14,7 +14,7 @@ class Main_Level_Page_3 {
       back: false,
       speed2: 2
     }
-
+    this.bargainingState = false;
     this.typewriter = new Typewriter();
 
     this.heart = {
@@ -153,14 +153,14 @@ class Main_Level_Page_3 {
     fill(this.denial.color, 0, 0, 0)
     rectMode(CENTER)
     rect(this.denial.x, this.denial.y, this.denial.w, this.denial.h);
-    fill(30, 30, 30);
+    fill(0,0,0,100);
     textSize(30)
     textAlign(CENTER, CENTER)
     textFont(ibmFONT)
     text('DENIAL', this.denial.x, this.denial.y - 7)
     pop();
     push();
-    line(this.denial.x - 70, this.denial.y-2, this.denial.x +70, this.denial.y-2);
+    // line(this.denial.x - 70, this.denial.y-2, this.denial.x +70, this.denial.y-2);
     pop();
 
 
@@ -170,14 +170,14 @@ class Main_Level_Page_3 {
     rectMode(CENTER)
     fill(this.denial.color, 0, 0, 0)
     rect(this.anger.x, this.anger.y, this.anger.w, this.anger.h);
-    fill(30,30,30);
+    fill(0,0,0,100);
     textSize(30)
     textAlign(CENTER, CENTER)
     textFont(ibmFONT)
     text('ANGER', this.anger.x, this.anger.y - 7)
     pop();
     push();
-    line(this.anger.x - 70, this.anger.y-2, this.anger.x +70, this.anger.y-2);
+    // line(this.anger.x - 70, this.anger.y-2, this.anger.x +70, this.anger.y-2);
     pop();
 
 
@@ -225,7 +225,7 @@ class Main_Level_Page_3 {
     textSize(17)
     textAlign(CENTER, CENTER)
     textFont(ibmFONTTypewriter);
-    text('Level 1 : Baby Griever', 400, 690)
+    text('Level 3 : Fledgling Griever', 400, 690)
     pop();
 
     push();
@@ -233,7 +233,7 @@ class Main_Level_Page_3 {
     textSize(17)
     textAlign(CENTER, CENTER)
     textFont(ibmFONTTypewriter);
-    text('0 pts', 400, 660)
+    text(totalPoints +' pts', 400, 660)
     pop();
 
     this.display();
@@ -305,6 +305,10 @@ class Main_Level_Page_3 {
     }
     if (this.heart.appear5) {
       this.displayAcceptanceHearts()
+    }
+
+    if (this.bargainingState) {
+      currentState = new BargainingIntro(samIMG, arrowGIF, bigSam);
     }
   }
 
@@ -472,7 +476,7 @@ class Main_Level_Page_3 {
       mouseY > this.bargaining.y - this.bargaining.h / 2 &&
       mouseY < this.bargaining.y + this.bargaining.h / 2) {
         setTimeout(() => {
-           currentState = new BargainingIntro(samIMG, arrowGIF, bigSam);
+          this.bargainingState = true;
         }, 1500);
         sineSFX.amp(0.1);
         sineSFX.play();

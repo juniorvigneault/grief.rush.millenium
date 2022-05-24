@@ -1,5 +1,5 @@
-class Meeting_Sam2 {
-  constructor(samGIF, arrowGIF, bigSam) {
+class EndSam {
+  constructor(samGIF, arrowGIF, bigSam){
     this.sam = {
       image: samGIF,
       x: 400,
@@ -53,7 +53,7 @@ class Meeting_Sam2 {
     this.message4 = false;
 
     this.fading = false;
-
+    this.displayEndSam = false;
     this.typewriter = new Typewriter();
     // roomToneSFX.amp(0.1)
     roomToneSFX.loop();
@@ -62,21 +62,33 @@ class Meeting_Sam2 {
 
     setTimeout(() => {
       this.typewriter.typewrite(`
-        Hello ` + userName + `.`, 80, 650);
-    }, 800);
+        ` + userName + `.`, 80, 650);
+    }, 1800);
     setTimeout(() => {
       this.typewriter.typewrite(`
-        This might be a difficult time for you,
-        I understand...`, 65, 660);
+        Congratulations, you made it through all
+        the stages of grief!`, 65, 660);
       setTimeout(() => {
         this.arrow.isShowing = true;
         this.message1 = true;
-      }, 5000);
-    }, 4000);
+      }, 6000);
+    }, 5000);
   }
 
   update() {
-    this.display();
+
+    push();
+    fill(0);
+    rect(0,0,800,800)
+    pop();
+
+    setTimeout(() => {
+      this.displayEndSam = true;
+    }, 1800);
+
+    if(this.displayEndSam){
+      this.display();
+    }
 
 
 
@@ -88,18 +100,21 @@ class Meeting_Sam2 {
   }
 
   display() {
-
     push();
-    noStroke();
-    rectMode(CENTER);
-    fill(40);
-    // fillHsluv(305, 34.8, 90)
-    rect(400, 400, 800, 800)
+    fill(0);
+    rect(0,0,2000,2000)
     pop();
+    // push();
+    // noStroke();
+    // rectMode(CENTER);
+    // fill(40);
+    // // fillHsluv(305, 34.8, 90)
+    // rect(400, 400, 800, 800)
+    // pop();
 
-    push();
-    image(samBG, 0, 0);
-    pop();
+    // push();
+    // image(samBG, 0, 0);
+    // pop();
 
     if (this.samIsHappy) {
       this.sam.image = this.sam.imageHappy;
@@ -177,7 +192,7 @@ class Meeting_Sam2 {
   mousePressed() {
     if (this.message1) {
       this.typewriter.typewrite(`
-        I lost countless people in my life...`, 60, 650);
+        You are now completely free.` , 60, 650);
       this.arrow.isShowing = false;
       this.message1 = false;
       setTimeout(() => {
@@ -187,21 +202,20 @@ class Meeting_Sam2 {
     }
     if (this.message2) {
       this.typewriter.typewrite(`
-        It never gets easy...`, 65, 650);
+        If you ever need me again, I'll
+        be here.`, 65, 650);
       this.message2 = false;
       this.arrow.isShowing = false;
-      this.samIsSad = true;
       setTimeout(() => {
         this.arrow.isShowing = true;
         this.message3 = true;
-      }, 2000);
+      }, 3000);
 
     }
 
     if (this.message3) {
       this.typewriter.typewrite(`
-        Together, we'll make it through your
-        grieveing journey, I promise.`, 60, 660);
+        I'll miss you, `+ userName +`.`, 60, 660);
       this.samIsHappy = true;
       bell1SFX.amp(0.5);
       bell1SFX.play();
@@ -209,12 +223,12 @@ class Meeting_Sam2 {
       this.arrow.isShowing = false;
       setTimeout(() => {
         this.fading = true;
-        waveSFX.amp(0.02);
+        waveSFX.amp(0.1);
         waveSFX.play();
       }, 5000);
       setTimeout(() => {
         // this.arrow.isShowing = true;
-         currentState = new Main_Level_Page_1(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
+        currentState = new EndBoard();
         // this.fading = true;
       }, 12000);
 
@@ -246,4 +260,4 @@ class Meeting_Sam2 {
       };
     };
   }
-}
+  }

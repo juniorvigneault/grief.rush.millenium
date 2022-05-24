@@ -1,9 +1,10 @@
 class Denial {
   constructor(deathGIF, heartGIF, deadRose) {
-    roomToneSFX.amp();
-    roomToneSFX.loop();
-    this.gameTime = 1;
-    this.textColorLight = 220;
+    // roomToneSFX.amp();
+    // roomToneSFX.loop();
+    this.gameTime = .6;
+    this.willWin = true;
+    this.textColorLight = 255;
     console.log(currentState)
     this.denialText = {
       string: `DENIAL`,
@@ -15,6 +16,7 @@ class Denial {
       speed: 5,
       finaleY: 130
     };
+
 
     this.level1Text = {
       string: `LEVEL 1`,
@@ -106,6 +108,8 @@ class Denial {
       y: 300
     }
 
+    this.playerWon = false;
+
     this.deadRoseAppear = true;
     this.displayGameElements = false;
 
@@ -149,7 +153,7 @@ class Denial {
       this.deadRoseAppear = false;
       this.displayGameElements = true;
       denialSONG.amp(0.1);
-      denialSONG.loop();
+    //  denialSONG.loop();
     }, 8000);
 
     setTimeout(() => {
@@ -282,13 +286,17 @@ class Denial {
       //
       this.lifeRect.w = this.lifeRect.w - this.gameTime;
 
-      if (this.gameFailed) {
+      if (this.gameFailed && this.playerWon == false) {
+        this.willWin = false;
         this.fade.update();
+        this.removeGround();
         this.gainingPointsAllowed = false;
         this.displayGameOver();
         this.feelingEmotions = false;
         setTimeout(() => {
           currentState = new Main_Level_Page_1(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
+          denialSONG.stop();
+
         }, 6000);
         this.gameFailed == false;
 
@@ -309,8 +317,10 @@ class Denial {
         this.background2();
       }
 
-      if (this.win) {
+      if (this.win && this.willWin) {
         this.displayFinalPoints();
+        this.playerWon = true;
+        this.removeGround();
       }
 
       if (this.addPoints) {
@@ -324,29 +334,30 @@ class Denial {
         if (this.toddlerGrieverAppear) {
           this.displayToddlerGriever();
         }
-
-        setTimeout(() => {
-          currentState = new Main_Level_Page_2(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
-        }, 7000);
-        setTimeout(() => {
-          this.finalFade = true;
-        }, 3000);
-
-        if (this.finalFade) {
-          this.fade2.update();
-
-        }
-
+        //
         // setTimeout(() => {
-        //   this.background4appear = true;
-        //   setTimeout(() => {
-        //     this.giftAppear = true;
-        //     setTimeout(() => {
-        //       this.giftTitleAppear = true;
-        //     }, 1000);
-        //   }, 2000);
-        // }, 5000);
+        //   currentState = new Main_Level_Page_2(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
+        // }, 7000);
+        // setTimeout(() => {
+        //   this.finalFade = true;
+        // }, 3000);
+        //
+        // if (this.finalFade) {
+        //   this.fade2.update();
+        //
+        // }
+
+        setTimeout(() => {
+          this.background4appear = true;
+          setTimeout(() => {
+            this.openGift = true;
+            setTimeout(() => {
+              this.giftTitleAppear = true;
+            }, 1000);
+          }, 2000);
+        }, 5000);
       }
+
       if (this.background4appear) {
         push();
         image(denialBG, 0, 0);
@@ -355,7 +366,7 @@ class Denial {
         if (this.giftAppear) {
           push();
           imageMode(CENTER);
-          this.gift.x = random(390, 410);
+          // this.gift.x = random(390, 410);
           image(giftPNG, this.gift.x, this.gift.y);
           pop();
 
@@ -380,15 +391,15 @@ class Denial {
 
         push();
         imageMode(CENTER);
-        image(hatPNG, 400, 300);
+        image(pendantBigIMG, 400, 300);
         pop();
         push();
         fill(this.textColorLight)
         textAlign(CENTER, CENTER);
         textFont(ibmFONTTypewriter);
         textSize(25);
-        text('A blue festive glitter hat', 400, 500);
-        text('was added to your inventory', 400, 550);
+        text('You found a silver pendant!', 400, 500);
+        text('It was added to your inventory', 400, 550);
         pop();
 
         setTimeout(() => {
@@ -654,10 +665,11 @@ class Denial {
   }
 
   displayFinalPoints() {
-
+totalPoints = this.basicPoints;
+denialPoints = this.basicPoints;
     push();
     textAlign(CENTER, CENTER);
-    textSize(200);
+    textSize(255);
     fill(this.textColorLight);
     textFont(ibmFONT);
     text(this.basicPoints, 400, 300);
@@ -743,7 +755,8 @@ class Denial {
   }
 
   success() {
-    if (this.lifeRect.w == 0) {
+    console.log(this.lifeRect.w)
+    if (this.lifeRect.w < 0) {
       this.feelingEmotions = false;
       this.death.speed = 0;
       this.lifeLineIsThere = false;
@@ -843,6 +856,7 @@ class Denial {
   mousePressed() {
     if (this.startGame && this.groundAppear) {
       grounds.push(new Ground(mouseX, mouseY, 200, 40, world, 0, 255, 255, 255));
+      this.addedPoints = this.addedPoints + 275;
       stoneSFX.amp(0.7);
       stoneSFX.play();
       for (let i = 0; i < grounds.length; i++) {

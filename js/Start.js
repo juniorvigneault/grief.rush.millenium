@@ -69,6 +69,7 @@ class Start {
       back: false,
       speed2: 2
     }
+    this.clickable = true;
 
     this.heart = {
       img: heartIMG,
@@ -314,10 +315,11 @@ class Start {
   }
 
   keyPressed(){
-    if (keyIsDown(32)){
+    if (keyIsDown(32) && this.clickable){
       console.log('START');
+      this.clickable = false;
       this.activateFade = true;
-      waveSFX.amp(0.03);
+      waveSFX.amp(0.02);
       waveSFX.play();
       setTimeout(() => {
         currentState = new Alliance_of_harmony_title(smallHeartIMG, smallDeathIMG);

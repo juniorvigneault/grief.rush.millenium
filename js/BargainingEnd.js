@@ -2,7 +2,7 @@ class BargainingEnd {
   constructor(){
 
     this.typewriter = new Typewriter();
-
+    this.mainLevelPage4State = false;
     this.arrow = {
       gif: arrowGIF,
       x: 630,
@@ -38,6 +38,10 @@ class BargainingEnd {
   }
   if (this.fading) {
     this.fade.update();
+  }
+
+  if (this.mainLevelPage4State){
+    currentState = new Main_Level_Page_4(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
   }
   }
 
@@ -77,6 +81,9 @@ mousePressed(){
       // this.arrow.isShowing = true;
       // this.message3 = true;
       // currentState = new Main_Level_Page_1(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
+      setTimeout(() => {
+        this.mainLevelPage4State = true;
+      }, 4500);
       waveSFX.amp(0.1);
         waveSFX.play();
       this.fading = true;

@@ -77,6 +77,8 @@ class Alliance_of_harmony_title {
     this.rectWidth = 30;
     this.rectHeight = 30;
 
+    this.clickable = true;
+
     setTimeout(() => {
       this.displayPlay = true;
       this.sloganAppear = true;
@@ -291,11 +293,12 @@ class Alliance_of_harmony_title {
   }
 
   mousePressed() {
-    if (this.mouseIsOverText(this.text.play.size, this.text.play.string, this.text.play.x, this.text.play.y)) {
+    if (this.mouseIsOverText(this.text.play.size, this.text.play.string, this.text.play.x, this.text.play.y) && this.clickable) {
       this.fade2Appear = true;
+      this.clickable = false;
       // bell2SFX.amp(0.5);
       // bell2SFX.play();
-      waveSFX.amp(0.03);
+      waveSFX.amp(0.02);
       waveSFX.play();
       setTimeout(() => {
         // currentState = new Ten_seconds_title(deadRosePNG);

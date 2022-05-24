@@ -123,7 +123,7 @@ class BargainingIntro {
     }
     if (this.message4) {
       this.typewriter.typewrite(`
-        This is extremely important April White.`, 65, 650);
+        This is extremely important ` + userName +'.', 65, 650);
       this.message4 = false;
       this.arrow.isShowing = false;
       setTimeout(() => {

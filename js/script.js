@@ -17,7 +17,6 @@ let Mouse = Matter.Mouse;
 //BG IMAGES
 let startBG;
 let titleBG;
-// let tenSecondsBG;
 let samBG;
 let mainLevelBG;
 let denialBG;

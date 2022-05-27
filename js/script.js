@@ -209,8 +209,8 @@ let keySFX;
 function preload() {
   // IMAGES PRELOAD
   // Alliance of harmony title png
-  flowersPNG = loadImage(`assets/images/png/flowers.png`);
-  starGIF = loadImage(`assets/gifs/star1.gif`);
+  // flowersPNG = loadImage(`assets/images/png/flowers.png`);
+  // starGIF = loadImage(`assets/gifs/star1.gif`);
 
   obrigeFONT = loadFont(`assets/fonts/obrige.otf`)
   robotoFONT = loadFont(`assets/fonts/roboto.ttf`)
@@ -218,13 +218,13 @@ function preload() {
   ibmFONTTypewriter = loadFont(`assets/fonts/ibm_typewriter.ttf`)
 
   // diamond for fake loading page
-  loadingCircle = loadImage(`assets/gifs/loader.gif`);
+  // loadingCircle = loadImage(`assets/gifs/loader.gif`);
   // sam avatar neutral
   samIMG = loadImage(`assets/images/xmas_break/sam.png`);
 
   // load white arrow gif
   arrowGIF = loadImage(`assets/gifs/arrow3.gif`);
-  mediumDeathGIF = loadImage(`assets/gifs/meddeath.gif`);
+  // mediumDeathGIF = loadImage(`assets/gifs/meddeath.gif`);
 
   // LOAD intro sound
   introSFX = loadSound(`assets/sounds/music_samples/allianceTitle.wav`)
@@ -238,7 +238,7 @@ function preload() {
 
   titleBG = loadImage('assets/images/png/titlebg.png');
 
-  tenSecondsBG = loadImage('assets/images/png/tenSecondsBG.png');
+  // tenSecondsBG = loadImage('assets/images/png/tenSecondsBG.png');
   bargainingBG = loadImage('assets/images/xmas_break/bargainingBG.png');
 
   samBG = loadImage('assets/images/xmas_break/samBG.png');
@@ -256,17 +256,17 @@ function preload() {
 
   // backgrounds gifss
   // purpleBG = loadImage(`assets/gifs/backgrounds/purple.gif`)
-  neutralSamGIF = loadImage(`assets/gifs/sam_neutral2.gif`)
-  happySamGIF = loadImage(`assets/gifs/happy_sam.gif`)
-  sadSamGIF = loadImage(`assets/gifs/sad_sam.gif`)
-  thunderGIF = loadImage(`assets/gifs/thunder.gif`)
+  // neutralSamGIF = loadImage(`assets/gifs/sam_neutral2.gif`)
+  // happySamGIF = loadImage(`assets/gifs/happy_sam.gif`)
+  // sadSamGIF = loadImage(`assets/gifs/sad_sam.gif`)
+  // thunderGIF = loadImage(`assets/gifs/thunder.gif`)
   bigSam = loadImage('assets/images/xmas_break/bigSam.png');
   roomToneSFX = loadSound(`assets/sounds/music_samples/room.wav`);
   stoneSFX = loadSound(`assets/sounds/music_samples/stone.wav`)
   hissSFX = loadSound(`assets/sounds/music_samples/hiss.wav`);
   thunderSFX = loadSound(`assets/sounds/music_samples/thunder.wav`);
   bellIntroSFX = loadSound(`assets/sounds/music_samples/bellIntro.wav`);
-  clickSFX = loadSound(`assets/sounds/music_samples/click.mp3`);
+  // clickSFX = loadSound(`assets/sounds/music_samples/click.mp3`);
   foundObjectSFX = loadSound(`assets/sounds/music_samples/object.wav`);
   angerHitSFX = loadSound(`assets/sounds/music_samples/angerHit.wav`);
   deepSFX = loadSound(`assets/sounds/music_samples/deep.wav`)

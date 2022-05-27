@@ -2,7 +2,7 @@ class Bargaining {
   constructor(liveRosePNG, deathIMG) {
 
     this.typewriter = new Typewriter();
-
+    roomToneSFX.stop();
     this.backgroundColor = {
       h: 305,
       s: 34.8,

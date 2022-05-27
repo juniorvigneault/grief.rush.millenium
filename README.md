@@ -1,7 +1,5 @@
-# V00717
+# Grief Rush Millenium
 #### by Junior
-
-This is a project about the future of grief and gamification. More to come SOON.
 
 #### Where I'm at -
 

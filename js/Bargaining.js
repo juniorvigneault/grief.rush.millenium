@@ -81,7 +81,6 @@ class Bargaining {
     emotions.push(this.letterH);
 
 
-    bargainingSONG.amp(0.2);
     bargainingSONG.loop();
 
     this.instructionsAppear = false;
@@ -242,12 +241,19 @@ class Bargaining {
 
   background() {
     push();
+    imageMode(CORNER);
     image(bargainingBG, 0, 0);
     pop();
   };
 
   mousePressed() {}
+  keyTyped(){
 
+  }
+
+  mouseReleased(){
+
+  }
   keyPressed() {
     if (keyIsDown(32) && this.instructions1) {
       this.instructionsAppear = false;

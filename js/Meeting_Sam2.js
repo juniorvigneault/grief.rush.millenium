@@ -56,22 +56,30 @@ class Meeting_Sam2 {
 
     this.typewriter = new Typewriter();
     // roomToneSFX.amp(0.1)
-    roomToneSFX.loop();
+    // roomToneSFX.loop();
 
     this.fade = new Fade(0, 1, false, true, 255, 255, 255);
 
     setTimeout(() => {
       this.typewriter.typewrite(`
         Hello ` + userName + `.`, 80, 650);
+        keyboardSFX.play();
+        setTimeout(() => {
+            keyboardSFX.stop();
+        }, 1500);
     }, 800);
     setTimeout(() => {
       this.typewriter.typewrite(`
         This might be a difficult time for you,
         I understand...`, 65, 660);
+        setTimeout(() => {
+          keyboardSFX.play();
+        }, 500);
       setTimeout(() => {
         this.arrow.isShowing = true;
         this.message1 = true;
-      }, 5000);
+        keyboardSFX.stop();
+      }, 3500);
     }, 4000);
   }
 
@@ -174,23 +182,39 @@ class Meeting_Sam2 {
 
   }
 
+  keyPressed() {
+
+  }
+  keyTyped() {}
+
+  mouseReleased(){
+
+  }
+
   mousePressed() {
     if (this.message1) {
       this.typewriter.typewrite(`
         I lost countless people in my life...`, 60, 650);
       this.arrow.isShowing = false;
+      keyboardSFX.play();
       this.message1 = false;
       setTimeout(() => {
         this.arrow.isShowing = true;
         this.message2 = true;
-      }, 3000);
+        keyboardSFX.stop();
+      }, 2400);
     }
     if (this.message2) {
       this.typewriter.typewrite(`
         It never gets easy...`, 65, 650);
+        keyboardSFX.play();
       this.message2 = false;
       this.arrow.isShowing = false;
-      this.samIsSad = true;
+      // this.samIsSad = true;
+      setTimeout(() => {
+
+        keyboardSFX.stop();
+      }, 1500);
       setTimeout(() => {
         this.arrow.isShowing = true;
         this.message3 = true;
@@ -202,14 +226,16 @@ class Meeting_Sam2 {
       this.typewriter.typewrite(`
         Together, we'll make it through your
         grieveing journey, I promise.`, 60, 660);
+        keyboardSFX.play();
       this.samIsHappy = true;
-      bell1SFX.amp(0.5);
-      bell1SFX.play();
+      bell3SFX.play();
       this.message3 = false;
       this.arrow.isShowing = false;
       setTimeout(() => {
+        keyboardSFX.stop();
+      }, 4000);
+      setTimeout(() => {
         this.fading = true;
-        waveSFX.amp(0.02);
         waveSFX.play();
       }, 5000);
       setTimeout(() => {

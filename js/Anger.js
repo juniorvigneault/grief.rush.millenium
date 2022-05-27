@@ -5,7 +5,7 @@ class Anger {
 
     engine.world.gravity.scale = 0.0001;
 
-    this.gameTime = 0;
+    this.gameTime = 25;
     this.textColorLight = 255;
     this.denialText = {
       string: `ANGER`,
@@ -17,6 +17,10 @@ class Anger {
       speed: 5,
       finaleY: 130
     };
+
+    this.clickable2 = false;
+
+    this.backToMain = false;
 
     this.level1Text = {
       string: `LEVEL 2`,
@@ -37,6 +41,8 @@ class Anger {
       font: ibmFONTTypewriter,
       color: 0
     };
+
+    this.nextMain = false;
 
     this.denialTitleAppear = false;
     this.denialTextMoving = false;
@@ -94,9 +100,11 @@ class Anger {
       y: 300
     }
 
+    fireSFX.loop();
+
     this.deadRoseAppear = true;
     this.displayGameElements = false;
-
+    this.soundOff = false;
     this.basicPoints = 0;
     this.addedPoints = 0;
     this.winsBasicPoints = false;
@@ -121,8 +129,7 @@ class Anger {
     // create ragdoll
 
     setTimeout(() => {
-      bell1SFX.amp(0.5);
-      bell1SFX.play()
+      bell3SFX.play()
     }, 2000);
 
     setTimeout(() => {
@@ -138,8 +145,9 @@ class Anger {
       this.level1TextAppear = false;
       this.deadRoseAppear = false;
       this.displayGameElements = true;
-      angerSONG.amp(0.1);
-      angerSONG.loop();
+      creatureSFX.loop();
+      // angerSONG.amp(0.1);
+      // angerSONG.loop();
     }, 8000);
 
     setTimeout(() => {
@@ -158,7 +166,7 @@ class Anger {
 
       this.startGame = true;
       this.groundAppear = true;
-
+      this.clickable2 = true;
     }, 9200);
 
     this.feelingEmotions = true;
@@ -282,7 +290,7 @@ class Anger {
       // this.emotionsDrop();
       this.displayLifeLine();
       //
-      this.lifeRect.w = this.lifeRect.w - this.gameTime;
+      // this.lifeRect.w = this.lifeRect.w - this.gameTime;
 
       if (this.gameFailed) {
         this.willWin = false;
@@ -291,9 +299,15 @@ class Anger {
         this.displayGameOver();
         this.feelingEmotions = false;
         setTimeout(() => {
-          currentState = new Main_Level_Page_1(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
+          this.backToMain = true;
+          fireSFX.stop();
+          creatureSFX.stop();
         }, 5000);
         this.gameFailed == false;
+
+        if(this.backToMain){
+          currentState = new Main_Level_Page_1(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
+        }
 
       }
 
@@ -318,6 +332,10 @@ class Anger {
 
       if (this.addPoints) {
         this.addFinalPoints();
+
+        }
+
+
       }
 
       if (this.background3Appear) {
@@ -352,6 +370,7 @@ class Anger {
       }
       if (this.background4appear) {
         push();
+        imageMode(CORNER);
         image(angerBG, 0, 0);
         pop();
 
@@ -378,6 +397,7 @@ class Anger {
       if (this.openGift) {
 
         push();
+        imageMode(CORNER)
         image(angerBG, 0, 0);
         pop();
 
@@ -390,12 +410,24 @@ class Anger {
         textAlign(CENTER, CENTER);
         textFont(ibmFONTTypewriter);
         textSize(25);
-        text('You found an old book!', 400, 500);
-        text('It was added to your inventory', 400, 550);
+        text('You found an old book!', 400, 550);
+        text('It was added to your inventory', 400, 600);
         pop();
 
+
+        if (!foundObjectSFX.isPlaying()) {
+          foundObjectSFX.play();
+          setTimeout(() => {
+            this.soundOff = true;
+          }, 1000);
+        }
+
+        if(this.soundOff){
+          foundObjectSFX.stop();
+        }
+
         setTimeout(() => {
-          currentState = new Main_Level_Page_3(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
+          this.nextMain = true;
         }, 7000);
         setTimeout(() => {
           this.finalFade = true;
@@ -405,9 +437,13 @@ class Anger {
           this.fade2.update();
 
         }
+        if(this.nextMain){
+          currentState = new Main_Level_Page_3(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
+          fireSFX.stop();
+        }
       }
     }
-  }
+
 
   displayIntro() {
 
@@ -498,18 +534,21 @@ class Anger {
     pop();
 
     push();
+    imageMode(CORNER)
     image(angerBG, 0, 0);
     pop();
   }
 
   background2() {
     push();
+    imageMode(CORNER)
     image(angerBG, 0, 0);
     pop();
   }
 
   background3() {
     push();
+    imageMode(CORNER)
     image(angerBG, 0, 0)
     pop();
   }
@@ -672,9 +711,13 @@ class Anger {
   addFinalPoints() {
     if (this.basicPoints <= this.addedPoints) {
       this.basicPoints = this.basicPoints + 100
-    } else {
+      if (!pointsSFX.isPlaying()) {
+        pointsSFX.play();
+
+    }} else {
       this.basicPoints = this.basicPoints
       this.grievingPointsTitle = true;
+      pointsSFX.stop();
       setTimeout(() => {
         this.background3Appear = true;
       }, 3000);
@@ -699,6 +742,7 @@ class Anger {
     if (this.lifeLineIsThere) {
       push();
       noStroke();
+      rectMode(CORNER);
       fill(this.lifeRect.color.r, this.lifeRect.color.g, this.lifeRect.color.b);
       rect(this.lifeRect.x, this.lifeRect.y, this.lifeRect.w, this.lifeRect.h)
       pop();
@@ -746,10 +790,10 @@ class Anger {
       angerSONG.stop();
       this.removeGround();
       if (!hissSFX.isPlaying()) {
-        hissSFX.amp(0.1);
         hissSFX.play();
         engine.world.gravity.scale = 0.005;
       }
+      creatureSFX.stop();
 
       setTimeout(() => {
         this.background2Appear = true;
@@ -844,17 +888,22 @@ class Anger {
     // }
     //  console.log(grounds[0].body)
     for (let i = 0; i < grounds.length; i++) {
-      if (this.worm.groundCollision(grounds[i])) {
+      if (this.worm.groundCollision(grounds[i]) && this.clickable2) {
         if (frameCount % 4 === 0) {
           //  gruntSFX.amp(0.1)
           //  gruntSFX.play();
-          this.lifeRect.w -= 10;
+          this.lifeRect.w -= this.gameTime;
           this.addedPoints = this.addedPoints + 100;
           console.log(this.lifeRect.w)
+          angerHitSFX.play();
         };
         this.lifeLine();
       };
     }
+  }
+
+  mouseReleased(){
+
   }
 
   mousePressed() {

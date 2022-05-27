@@ -23,7 +23,8 @@ let mainLevelBG;
 let denialBG;
 let angerBG;
 let bargainingBG;
-
+let millisecond;
+let timePassed;
 let canvasMouse;
 // create an engine variable for the physics engine
 let engine;
@@ -59,7 +60,10 @@ let obrigeFONT;
 let depressionBG;
 let acceptanceBG;
 let safeIMG;
-
+let clickSFX;
+let bipSFX;
+let impactSFX;
+let pointsSFX;
 // objects
 let hatSmallIMG;
 let hatBigIMG;
@@ -69,7 +73,9 @@ let pendantSmallIMG;
 let pendantBigIMG;
 let lampSmallIMG;
 let lampBigIMG;
-
+let mainLevel4BG;
+let endSamBG;
+let spotSFX;
 // classic font
 let robotoFONT;
 let ibmFONT;
@@ -93,6 +99,11 @@ let arrowGIF;
 
 // sound for intro
 let introSFX;
+let bellIntroSFX;
+let denialEmotionSFX;
+let denialHeartSFX;
+
+
 
 //SOUNDS
 let bell1SFX;
@@ -103,13 +114,18 @@ let angelSFX;
 let denialSONG;
 let angerSONG;
 let bargainingSONG;
+let thunderGIF;
 
 let stoneSFX;
 let startSFX;
 let gruntSFX;
 let hissSFX;
 let sineSFX;
-
+let fireSFX;
+let creatureSFX;
+let deepSFX;
+let unlockSFX;
+let doorSFX;
 
 let particleObjects = [];
 
@@ -118,6 +134,7 @@ let roomToneSFX;
 
 
 let introSFX2;
+let introTransitionSFX;
 
 // name of the player
 let userName;
@@ -134,6 +151,7 @@ let purpleBG;
 // sam gifs
 let neutralSamGIF;
 let happySamGIF;
+let frameIMG;
 let sadSamGIF;
 
 // DENIAL game images
@@ -146,6 +164,10 @@ let smallDeathIMG;
 let smallBrokenHeartIMG;
 let keyIMG;
 let endBoardBG;
+let keyboardSFX;
+let kickReverbSFX;
+let depressionSFX;
+let flashSFX;
 
 let generalPoints;
 
@@ -156,11 +178,15 @@ let smallDeathGIF;
 let mediumDeathGIF;
 
 let bigSam;
+let velvetIMG;
 
 let giftPNG;
 let hatPNG;
 let soundIsPlaying = false;
 let doorIMG;
+let foundObjectSFX;
+let angerHitSFX;
+let depressionBlocksSFX;
 
 let depressionSONG;
 
@@ -170,7 +196,15 @@ let bargainingPoints = 0;
 let depressionPoints = 0;
 let acceptancePoints = 0;
 let totalPoints = 0;
-
+let ghostIMG;
+let noEnterSFX;
+let windSFX;
+let bigSamSFX;
+let ghostSFX;
+let birdsSFX;
+let frameSFX;
+let thunderSFX;
+let keySFX;
 
 function preload() {
   // IMAGES PRELOAD
@@ -193,7 +227,7 @@ function preload() {
   mediumDeathGIF = loadImage(`assets/gifs/meddeath.gif`);
 
   // LOAD intro sound
-  introSFX = loadSound(`assets/sounds/music_samples/introSFX.wav`)
+  introSFX = loadSound(`assets/sounds/music_samples/allianceTitle.wav`)
   introSFX2 = loadSound(`assets/sounds/music_samples/introSFX2.wav`)
 
   // start page
@@ -211,6 +245,7 @@ function preload() {
   mainLevelBG = loadImage('assets/images/xmas_break/mainlevel2BG.png');
   denialBG = loadImage('assets/images/xmas_break/denialmountainBG.png');
   angerBG = loadImage('assets/images/xmas_break/angerBG.png');
+  mainLevel4BG = loadImage('assets/images/xmas_break/mainLevel4bg.png');
 
 
   giftPNG = loadImage('assets/images/xmas_break/gift4.png');
@@ -224,10 +259,33 @@ function preload() {
   neutralSamGIF = loadImage(`assets/gifs/sam_neutral2.gif`)
   happySamGIF = loadImage(`assets/gifs/happy_sam.gif`)
   sadSamGIF = loadImage(`assets/gifs/sad_sam.gif`)
+  thunderGIF = loadImage(`assets/gifs/thunder.gif`)
   bigSam = loadImage('assets/images/xmas_break/bigSam.png');
   roomToneSFX = loadSound(`assets/sounds/music_samples/room.wav`);
   stoneSFX = loadSound(`assets/sounds/music_samples/stone.wav`)
-  hissSFX = loadSound(`assets/sounds/music_samples/hiss.wav`)
+  hissSFX = loadSound(`assets/sounds/music_samples/hiss.wav`);
+  thunderSFX = loadSound(`assets/sounds/music_samples/thunder.wav`);
+  bellIntroSFX = loadSound(`assets/sounds/music_samples/bellIntro.wav`);
+  clickSFX = loadSound(`assets/sounds/music_samples/click.mp3`);
+  foundObjectSFX = loadSound(`assets/sounds/music_samples/object.wav`);
+  angerHitSFX = loadSound(`assets/sounds/music_samples/angerHit.wav`);
+  deepSFX = loadSound(`assets/sounds/music_samples/deep.wav`)
+  kickReverbSFX = loadSound(`assets/sounds/music_samples/kickReverb.wav`);
+  bigSamSFX = loadSound(`assets/sounds/music_samples/bigSam2.wav`);
+  depressionSFX = loadSound('assets/sounds/music_samples/depression.wav');
+  depressionBlocksSFX = loadSound('assets/sounds/music_samples/depressionBlocks.wav');
+  bipSFX = loadSound('assets/sounds/music_samples/bip.wav');
+  unlockSFX = loadSound('assets/sounds/music_samples/unlock.wav');
+  doorSFX = loadSound('assets/sounds/music_samples/door.wav');
+  spotSFX = loadSound('assets/sounds/music_samples/spot.wav');
+  endSamBG = loadImage(`assets/images/xmas_break/endSam.png`);
+  ghostSFX = loadSound('assets/sounds/music_samples/ghost.wav');
+  birdsSFX = loadSound('assets/sounds/music_samples/birds.wav');
+  frameSFX = loadSound('assets/sounds/music_samples/frames.wav');
+  flashSFX = loadSound('assets/sounds/music_samples/flash.wav');
+  pointsSFX = loadSound('assets/sounds/music_samples/points.wav');
+  keySFX = loadSound('assets/sounds/music_samples/key.wav');
+
   // denial game
   deathGIF = loadImage(`assets/gifs/death1.gif`)
   heartIMG = loadImage(`assets/images/png/heart.png`);
@@ -236,26 +294,35 @@ function preload() {
   liveRosePNG = loadImage(`assets/images/png/live_rose.png`);
   smallDeathIMG = loadImage(`assets/images/png/small_death.png`);
   smallBrokenHeartIMG = loadImage(`assets/images/png/small_broken_heart.png`);
-
+  velvetIMG = loadImage(`assets/images/xmas_break/velvet.png`);
   // bargaining game
   smallDeathGIF = loadImage(`assets/gifs/smalldeath.gif`);
 
   bell1SFX = loadSound(`assets/sounds/music_samples/bell_1.wav`);
-  bell2SFX = loadSound(`assets/sounds/music_samples/bell_2.wav`);
-  bell3SFX = loadSound(`assets/sounds/music_samples/bell_3.wav`);
+  bell2SFX = loadSound(`assets/sounds/music_samples/bell2.wav`);
+  bell3SFX = loadSound(`assets/sounds/music_samples/bell3.wav`);
+  impactSFX = loadSound(`assets/sounds/music_samples/impact.wav`);
+  noEnterSFX = loadSound(`assets/sounds/music_samples/noEnter.wav`);
+  windSFX = loadSound(`assets/sounds/music_samples/wind.wav`);
+  denialEmotionSFX = loadSound(`assets/sounds/music_samples/denialEmotions.wav`);
+  denialHeartSFX = loadSound(`assets/sounds/music_samples/denialHeart.wav`);
+  fireSFX = loadSound(`assets/sounds/music_samples/fire.wav`);
+  creatureSFX = loadSound(`assets/sounds/music_samples/creature.wav`);
+  keyboardSFX = loadSound(`assets/sounds/music_samples/keyboard.wav`);
   waveSFX = loadSound(`assets/sounds/music_samples/wave.wav`);
-  angelSFX = loadSound(`assets/sounds/music_samples/angel.wav`);
+  angelSFX = loadSound(`assets/sounds/music_samples/angels.wav`);
   denialSONG = loadSound(`assets/sounds/music_samples/denialsong.mp3`);
   startSFX = loadSound(`assets/sounds/music_samples/start.wav`);
   gruntSFX = loadSound(`assets/sounds/music_samples/grunt.wav`);
+  introTransitionSFX = loadSound(`assets/sounds/music_samples/introTransition.wav`);
   angerSONG = loadSound(`assets/sounds/music_samples/angersong.mp3`);
   bargainingSONG = loadSound(`assets/sounds/music_samples/bargainingsong.mp3`);
-  sineSFX = loadSound(`assets/sounds/music_samples/sine.wav`);
+  sineSFX = loadSound(`assets/sounds/music_samples/bug.wav`);
   depressionSONG = loadSound(`assets/sounds/music_samples/depressionsong.wav`);
   depressionBG = loadImage('assets/images/xmas_break/depressionBG.png');
   acceptanceBG = loadImage('assets/images/xmas_break/acceptanceBG.png');
   safeIMG = loadImage('assets/images/xmas_break/safe.png');
-
+  frameIMG = loadImage('assets/images/xmas_break/frame.png')
 
   hatSmallIMG = loadImage('assets/images/xmas_break/hatSmall.png');
   hatBigIMG = loadImage('assets/images/xmas_break/hatBig.png');
@@ -268,6 +335,8 @@ function preload() {
   keyIMG = loadImage('assets/images/xmas_break/key.png');
   doorIMG = loadImage('assets/images/xmas_break/door.png');
   endBoardBG = loadImage('assets/images/xmas_break/denialBG.png');
+  ghostIMG = loadImage('assets/images/xmas_break/ghost.png');
+
 }
 
 function setup() {
@@ -288,14 +357,14 @@ function setup() {
   // create the physics in the world
   world = engine.world;
 
-  // currentState = new Start(smallHeartIMG, smallDeathIMG);
+  currentState = new Start(smallHeartIMG, smallDeathIMG);
   // currentState = new Alliance_of_harmony_title(smallHeartIMG, smallDeathIMG);
   // currentState = new Ten_seconds_title(deadRosePNG);
   // currentState = new Loading(loadingCircle);
   // currentState = new Meeting_Sam(samIMG, arrowGIF);
   // currentState = new Meeting_Sam2(samIMG, arrowGIF, bigSam);
-   // currentState = new Main_Level_Page_5(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
-  currentState = new Main_Level_Page_4(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
+  // currentState = new Main_Level_Page_5(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
+  // currentState = new Main_Level_Page_4(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
   // currentState = new Main_Level_Page_3(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
   // currentState = new Main_Level_Page_2(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
   // currentState = new Main_Level_Page_1(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
@@ -303,16 +372,16 @@ function setup() {
   // currentState = new Denial(deathGIF, heartIMG, deadRosePNG);
   // currentState = new Anger(mediumDeathGIF, heartIMG, deadRosePNG);
 
-  //currentState = new BargainingIntro(samIMG, arrowGIF, bigSam);
+  // currentState = new BargainingIntro(samIMG, arrowGIF, bigSam);
   // currentState = new Bargaining(smallHeartIMG, smallDeathGIF);
   // currentState = new BargainingEnd();
 
   // currentState = new DenialInstructions(smallDeathGIF, smallHeartIMG);
-  //currentState = new Depression();
+  // currentState = new Depression();
   // currentState = new Acceptance();
   // currentState = new EndSam(samIMG, arrowGIF, bigSam)
   // currentState = new EndBoard(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
-
+  // currentState = new GhostScare();
 
   // add mouse control
   canvasMouse = Mouse.create(p5.canvas);
@@ -327,14 +396,72 @@ function setup() {
     }
   });
 
-  canvasMouse.pixelRatio = pixelDensity();
+  // canvasMouse.pixelRatio = pixelDensity();
   World.add(world, mConstraint);
 
+
+  waveSFX.amp(0.02);
+  pointsSFX.amp(0.05);
+  foundObjectSFX.amp(0.12);
+
+  introSFX.amp(0.1);
+  bellIntroSFX.amp(0.04);
+  introTransitionSFX.amp(0.15);
+
+  roomToneSFX.amp(0.3)
+  bell2SFX.amp(0.2);
+  keyboardSFX.amp(0.2);
+  bell3SFX.amp(0.1);
+
+  noEnterSFX.amp(0.05)
+
+  windSFX.amp(0.02);
+  denialEmotionSFX.amp(0.1);
+  denialHeartSFX.amp(0.3);
+  stoneSFX.amp(0.2);
+
+  fireSFX.amp(0.04)
+  angerHitSFX.amp(0.1)
+  creatureSFX.amp(0.3)
+  hissSFX.amp(0.06);
+  deepSFX.amp(0.2);
+
+  sineSFX.amp(0.14);
+  bigSamSFX.amp(0.06);
+  kickReverbSFX.amp(0.1);
+
+  bargainingSONG.amp(0.05);
+
+  thunderSFX.amp(0.1);
+  depressionSFX.amp(0.06);
+  depressionBlocksSFX.amp(0.1);
+  ghostSFX.amp(0.4);
+
+  bipSFX.amp(0.1);
+  unlockSFX.amp(0.2);
+  doorSFX.amp(0.1);
+  angelSFX.amp(0.1);
+  spotSFX.amp(0.2);
+  impactSFX.amp(0.1);
+
+  birdsSFX.amp(0.03);
+  keySFX.amp(0.1);
+  frameSFX.amp(0.1);
+  flashSFX.amp(0.5);
 }
 
 function draw() {
   currentState.update();
-  console.log(totalPoints)
+  //  console.log(totalPoints)
+  timePassed = millisToMinutesAndSeconds();
+  // console.log(timePassed)
+}
+
+function millisToMinutesAndSeconds() {
+  millisecond = millis();
+  var minutes = Math.floor(millisecond / 60000);
+  var seconds = ((millisecond % 60000) / 1000).toFixed(0);
+  return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 }
 
 function mousePressed() {
@@ -355,6 +482,10 @@ function keyPressed() {
 
 function keyTyped() {
   currentState.keyTyped();
+}
+
+function mouseReleased() {
+  currentState.mouseReleased();
 }
 // functions to translate RGB to HSLuv for fill and stroke
 function fillHsluv(h, s, l) {

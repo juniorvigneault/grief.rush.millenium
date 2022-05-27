@@ -369,9 +369,9 @@ if(this.fadeON){
       mouseX < this.denial.x + this.denial.w / 2 &&
       mouseY > this.denial.y - this.denial.h / 2 &&
       mouseY < this.denial.y + this.denial.h / 2) {
-      this.heart.appear = true;
+      // this.heart.appear = true;
     } else {
-      this.heart.appear = false;
+      // this.heart.appear = false;
     }
 
     if (mouseX > this.anger.x - this.anger.w / 2 &&
@@ -479,6 +479,17 @@ if(this.fadeON){
   mouseDragged() {
 
   }
+  mouseReleased(){
+
+
+  }
+
+  keyTyped(){
+
+  }
+  keyPressed(){
+    
+  }
 
   mousePressed() {
 
@@ -487,10 +498,11 @@ if(this.fadeON){
       mouseY > this.anger.y - this.anger.h / 2 &&
       mouseY < this.anger.y + this.anger.h / 2 &&
     this.clickable) {
+      bell2SFX.play();
         this.clickable = false;
         this.fadeON = true;
         // waveSFX.amp(0.03);
-        // waveSFX.play();
+        waveSFX.play();
         setTimeout(() => {
           this.angerState = true;
         }, 4500);
@@ -500,12 +512,14 @@ if(this.fadeON){
       mouseY > this.bargaining.y - this.bargaining.h / 2 &&
       mouseY < this.bargaining.y + this.bargaining.h / 2) {
       this.bargainingIsLocked = true;
+      noEnterSFX.play();
     }
     if (mouseX > this.depression.x - this.depression.w / 2 &&
       mouseX < this.depression.x + this.depression.w / 2 &&
       mouseY > this.depression.y - this.depression.h / 2 &&
       mouseY < this.depression.y + this.depression.h / 2) {
       this.depressionIsLocked = true;
+      noEnterSFX.play();
 
     }
     if (mouseX > this.acceptance.x - this.acceptance.w / 2 &&
@@ -513,6 +527,8 @@ if(this.fadeON){
       mouseY > this.acceptance.y - this.acceptance.h / 2 &&
       mouseY < this.acceptance.y + this.acceptance.h / 2) {
       this.acceptanceIsLocked = true;
+      noEnterSFX.play();
+
 
     }
   }

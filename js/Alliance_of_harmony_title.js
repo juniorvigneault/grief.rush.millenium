@@ -3,9 +3,9 @@ class Alliance_of_harmony_title {
   constructor(heartIMG, smallDeathIMG) {
     this.text = {
       alliance: {
-        string: `ALLIANCE`,
+        string: `GRIEF`,
         size: 70,
-        x: 360,
+        x: 410,
         y: -100,
         vx: 0,
         vy: 0,
@@ -13,7 +13,7 @@ class Alliance_of_harmony_title {
         finaleY: 200
       },
       of: {
-        string: `OF`,
+        string: `RUSH`,
         size: 30,
         x: 1500,
         y: 310,
@@ -23,9 +23,9 @@ class Alliance_of_harmony_title {
         finaleX: 400
       },
       harmony: {
-        string: `HARMONY`,
+        string: `MILLENIUM`,
         size: 75,
-        x: 410,
+        x: 360,
         y: 900,
         vx: 0,
         vy: 0,
@@ -64,6 +64,8 @@ class Alliance_of_harmony_title {
       appear: false
     }
 
+    introSFX.loop();
+
     this.sloganColor = 0;
     this.sloganAppear = false;
 
@@ -79,10 +81,26 @@ class Alliance_of_harmony_title {
 
     this.clickable = true;
 
+    setInterval(() => {
+      this.move1 = true;
+      this.move2 = false;
+      this.move3 = false;
+    }, 1000);
+    setInterval(() => {
+      this.move1 = false;
+      this.move2 = true;
+      this.move3 = false;
+    }, 2000);
+    setInterval(() => {
+      this.move1 = false;
+      this.move2 = false;
+      this.move3 = true;
+    }, 3000);
+
     setTimeout(() => {
       this.displayPlay = true;
       this.sloganAppear = true;
-      bell1SFX.play();
+       bellIntroSFX .play();
     }, 5500);
 
     this.smallHeart = {
@@ -112,8 +130,35 @@ class Alliance_of_harmony_title {
     rect(400, 400, 800, 800)
     pop();
 
+    if(this.move1){
+      this.heart.x = 200;
+      this.heart.y = 310;
+      this.heart.x2 = 600;
+      this.heart.y2 = 310
+      this.smallDeath.x = 400;
+      this.smallDeath.y = 100;
+    }
+
+    if(this.move2){
+      this.heart.x = 400;
+      this.heart.y = 100;
+      this.heart.x2 = 200;
+      this.heart.y2 = 310;
+      this.smallDeath.x = 600;
+      this.smallDeath.y = 310;
+    }
+    if(this.move3){
+      this.heart.x = 600;
+      this.heart.y = 310;
+      this.heart.x2 = 400;
+      this.heart.y2 = 100;
+      this.smallDeath.x = 200;
+      this.smallDeath.y = 310;
+    }
+
     // bg img
     push();
+    imageMode(CORNER);
     image(titleBG, 0,0);
     pop();
 
@@ -139,6 +184,7 @@ class Alliance_of_harmony_title {
 
   display() {
     push();
+    fill(255);
     textFont(obrigeFONT);
     textAlign(CENTER, CENTER);
     textSize(this.text.alliance.size);
@@ -146,6 +192,7 @@ class Alliance_of_harmony_title {
     pop();
 
     push();
+    fill(255);
     textFont(obrigeFONT);
     textAlign(CENTER, CENTER);
     textSize(this.text.of.size);
@@ -153,6 +200,7 @@ class Alliance_of_harmony_title {
     pop();
 
     push();
+    fill(255);
     textFont(obrigeFONT);
     textAlign(CENTER, CENTER);
     textSize(this.text.harmony.size);
@@ -165,9 +213,12 @@ class Alliance_of_harmony_title {
       this.heart.appear = true;
       textFont(ibmFONTTypewriter);
       textAlign(CENTER, CENTER);
+      fill(220,220,220, this.sloganColor);
+      // textSize(30);
+      // text('5000', 400, 500);
+
       textSize(15);
-      fill(0, 0, 0, this.sloganColor)
-      text(`The Grieving Experience`, 400, 520);
+      text(`The Ultimate Grieving Experience`, 400, 490);
       pop();
     }
 
@@ -182,7 +233,6 @@ class Alliance_of_harmony_title {
       image(this.smallHeart.img, this.smallHeart.x, this.smallHeart.y)
       image(this.smallHeart.img2, this.smallHeart.x2, this.smallHeart.y2)
       pop();
-      console.log(this.heart.appear)
     }
 
     if(this.smallDeath.appear){
@@ -246,9 +296,9 @@ class Alliance_of_harmony_title {
   // turns the start button red if mouse is over
   mouseOverPlayText() {
     let startColor = {
-      r: 0,
-      g: 0,
-      b: 0
+      r: 240,
+      g: 240,
+      b: 240
     };
 
     if (this.mouseIsOverText(this.text.play.size, this.text.play.string, this.text.play.x, this.text.play.y)) {
@@ -292,20 +342,41 @@ class Alliance_of_harmony_title {
     }
   }
 
+  keyPressed(){
+
+  }
+  keyTyped(){
+
+  }
+  mouseReleased(){
+
+  }
+  mouseDragged(){
+
+  }
+
   mousePressed() {
     if (this.mouseIsOverText(this.text.play.size, this.text.play.string, this.text.play.x, this.text.play.y) && this.clickable) {
       this.fade2Appear = true;
       this.clickable = false;
+      // clickSFX.play()
       // bell2SFX.amp(0.5);
       // bell2SFX.play();
-      waveSFX.amp(0.02);
+      // waveSFX.amp(0.01);
+      introSFX.stop();
+      setTimeout(() => {
+        introTransitionSFX.play();
+      }, 100);
       waveSFX.play();
       setTimeout(() => {
         // currentState = new Ten_seconds_title(deadRosePNG);
         currentState = new Meeting_Sam(samIMG, arrowGIF);
+        roomToneSFX.loop();
+
         introSFX.stop();
         introSFX2.stop();
       }, 7000);
+
 
     }
   }

@@ -39,7 +39,8 @@ class Particle {
     // fill(this.red, this.green, this.blue, this.alpha)
     ellipse(0, 0, this.r);
     pop();
-    this.letterP();
+
+
   }
 
   letterP() {

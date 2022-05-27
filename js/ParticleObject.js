@@ -344,7 +344,7 @@ class ParticleObject {
   //  for (let i = 0; i < this.particles.length; i++) {
       let pos = this.particles[0].body.position;
       let d = dist(pos.x, pos.y, x, y)
-      return (d < 100)
+      return (d < 30)
     //}
   }
 
@@ -407,7 +407,7 @@ class ParticleObject {
     let fixed=false;
     let prev=null;
 
-    for(let x =this.startX;x<this.startX+200; x+=2){
+    for(let x =this.startX;x<this.startX+150; x+=2){
 
     if(prev ===null){
       fixed =true;
@@ -416,7 +416,7 @@ class ParticleObject {
       fixed=false;
     }
 
-    let p = new Particle(x,this.startY,30,5,fixed);
+    let p = new Particle(x,this.startY,28,5,fixed);
     this.particles.push(p);
     if(prev!==null){
         let options = {

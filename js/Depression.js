@@ -13,6 +13,8 @@ class Depression {
       imageHappy: bigSam
     }
 
+    this.canPlay = true;
+
     this.rectHint = {
       x: 0,
       y: 0,
@@ -20,10 +22,11 @@ class Depression {
       h: 50
     }
 
+    windSFX.loop();
     this.hint = {
       text: 'I',
-      x: 0,
-      y: 0,
+      x: 400,
+      y: 400,
       vx: 0,
       vy: 0,
       speed: 10,
@@ -116,7 +119,7 @@ class Depression {
 
     this.gameFailed = false;
     this.fade = new Fade(0, 1, false, true, 0, 0, 0)
-    this.fade2 = new Fade(0, 1.3, false,true, 255, 255, 255)
+    this.fade2 = new Fade(0, 1.3, false, true, 255, 255, 255)
     this.fade2Appears = false;
 
     this.moveDeathBack = false;
@@ -147,6 +150,8 @@ class Depression {
     setTimeout(() => {
       // bell1SFX.amp(0.5);
       // bell1SFX.play()
+      bell3SFX.play()
+
     }, 2000);
 
     setTimeout(() => {
@@ -182,7 +187,7 @@ class Depression {
       this.startGame = true;
       this.groundAppear = true;
       this.samIsThere = true;
-
+      depressionBlocksSFX.loop();
 
     }, 9200);
 
@@ -220,7 +225,7 @@ class Depression {
       flashes: false
     }
 
-
+    this.clickable = true;
     this.flashingBackground = false;
     this.startGame = false;
     this.intro = true;
@@ -234,15 +239,7 @@ class Depression {
     this.endScene = false;
     this.endFade = false;
 
-    // grounds.push(new Ground(0, 0, 1600, 50, world, 0, 0, 200, 0, 0));
-    // grounds.push(new Ground(0, 300, 1600, 50, world, 1.574, 0, 0, 200, 0));
-    // grounds.push(new Ground(800, 200, 50, 1600, world, 3.14, 0, 0, 200, 0));
-    //  grounds.push(new Ground(800, 800, 50, 1600, world, 1.57, 0, 0, 200, 200));
 
-    // this.worm = new ParticleObject(400, 200);
-    // particleObjects.push(new ParticleObject(100, 200));
-    // particleObjects.push(this.worm)
-    emotions.push(new Emotions(100, 100, 25, 25, world, 0.8, 0.8));
   }
 
 
@@ -273,7 +270,7 @@ class Depression {
       // if (this.gainingPointsAllowed) {
       //   this.gainPoints();
       // }
-
+      this.removeGround();
       this.background();
       this.displayHints();
 
@@ -288,7 +285,6 @@ class Depression {
       // this.displayHearts();
       // this.moveDeath();
 
-      this.deleteGrounds();
       this.success();
       this.playTime = true;
 
@@ -320,11 +316,18 @@ class Depression {
           engine.world.gravity.scale = 0.001;
           this.answer = '';
           setTimeout(() => {
-        this.endFade = true;
-        this.finalFade = true;
-        setTimeout(() => {
-      currentState = new Meeting_Sam2(samIMG, arrowGIF, bigSam)
-    }, 6000);
+            this.endFade = true;
+            this.finalFade = true;
+            setTimeout(() => {
+              this.win = true;
+            }, 5000);
+            setTimeout(() => {
+              this.addPoints = true;
+              this.canPlay = false;
+            }, 6000);
+            setTimeout(() => {
+              this.openGift = true;
+            }, 15000);
           }, 2000);
         }, 1000);
       }
@@ -359,32 +362,44 @@ class Depression {
         this.background2();
       }
 
-      if (this.win) {
-        this.displayFinalPoints();
-      }
+
 
       if (this.addPoints) {
         this.addFinalPoints();
       }
+      if (this.finalFade) {
+        push();
+        fill(255, 255, 255, this.whiteFade)
+        this.whiteFade = this.whiteFade + 1;
+        rectMode(CORNER);
+        noStroke();
+        rect(0, 0, 800, 800)
+        pop();
+      }
+      if (this.win) {
+        this.displayFinalPoints();
+      }
 
       if (this.background3Appear) {
-        this.background3();
+        // this.background3();
         this.displayGrewToLevel2();
+        // this.win = true;
         // this.displayDeadRoseEnd();
         if (this.toddlerGrieverAppear) {
           this.displayToddlerGriever();
         }
 
-        if(this.endFade){
 
-        }
 
-        setTimeout(() => {
-          currentState = new Main_Level_Page_3(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
-        }, 7000);
-        setTimeout(() => {
-          this.finalFade = true;
-        }, 3000);
+        // setTimeout(() => {
+        //   currentState = new Main_Level_Page_3(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
+        // }, 7000);
+        // setTimeout(() => {
+        //   this.finalFade = true;
+        //   setTimeout(() => {
+        //     this.background3Appear = true;
+        //   }, 6000);
+        // }, 3000);
 
 
 
@@ -400,6 +415,7 @@ class Depression {
       }
       if (this.background4appear) {
         push();
+        imageMode(CORNER);
         image(depressionBG, 0, 0);
         pop();
 
@@ -430,47 +446,50 @@ class Depression {
       if (this.openGift) {
 
         push();
-        image(depressionBG, 0, 0);
+        rectMode(CENTER);
+        noStroke();
+        fill(255);
+        rect(400, 400, width, height);
         pop();
+
+        if (!foundObjectSFX.isPlaying()) {
+          foundObjectSFX.play();
+          setTimeout(() => {
+            this.soundOff = true;
+          }, 1000);
+        }
+        if (this.soundOff) {
+          foundObjectSFX.stop();
+        }
 
         push();
         imageMode(CENTER);
-        image(hatPNG, 400, 300);
+        image(hatBigIMG, 400, 300);
         pop();
         push();
-        fill(this.textColorLight)
+        fill(0)
         textAlign(CENTER, CENTER);
         textFont(ibmFONTTypewriter);
         textSize(25);
-        text('A blue festive glitter hat', 400, 500);
-        text('was added to your inventory', 400, 550);
+        text(`You found a purple party hat!`, 400, 550);
+        text('It was added to your inventory', 400, 600);
         pop();
 
         setTimeout(() => {
-          currentState = new Main_Level_Page_3(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
-        }, 7000);
-        setTimeout(() => {
-          this.finalFade = true;
-        }, 3000);
+          currentState = new GhostScare();
+        }, 5000);
 
 
       }
     }
-    if (this.finalFade) {
-      push();
-      fill(255,255,255,this.whiteFade)
-      this.whiteFade = this.whiteFade + 1;
-      noStroke();
-      rect(0,0,800,800)
-      pop();
-      console.log(this.whiteFade);
-      }
+
   }
 
   displayAnswer() {
     push();
     fill(255, 0, 0);
     textSize(50);
+    textFont(ibmFONT)
     textAlign(CENTER, CENTER);
     text(this.answer, 400, 700);
     pop();
@@ -500,7 +519,7 @@ class Depression {
 
     push();
     fill(255);
-    // textFont('Impact');
+    textFont(ibmFONTTypewriter);
 
     textSize(this.hint.size);
 
@@ -554,24 +573,30 @@ class Depression {
 
   displayGrewToLevel2() {
     push();
+    push();
+    fill(255);
+    noStroke();
+    rectMode(CENTER);
+    rect(400, 400, width, height)
+    pop();
     textFont(ibmFONTTypewriter);
-    fill(this.textColorLight)
+    fill(0)
     textAlign(CENTER, CENTER);
     textSize(40);
     text('YOU ARE NOW', 400, 150);
     textFont(ibmFONT);
     textSize(65);
-    text('LEVEL 3 :', 400, 300);
+    text('LEVEL 4 :', 400, 300);
     pop();
   }
 
   displayToddlerGriever() {
     push();
-    fill(this.textColorLight)
+    fill(0)
     textAlign(CENTER, CENTER);
     textFont(ibmFONT);
     textSize(70);
-    text('FLEDGLING GRIEVER', 400, 450);
+    text('BUDDING GRIEVER', 400, 450);
     pop();
   }
 
@@ -627,18 +652,21 @@ class Depression {
     pop();
 
     push();
+    imageMode(CORNER)
     image(depressionBG, 0, 0);
     pop();
   }
 
   background2() {
     push();
+    imageMode(CORNER)
     image(depressionBG, 0, 0);
     pop();
   }
 
   background3() {
     push();
+    imageMode(CORNER)
     image(depressionBG, 0, 0)
     pop();
   }
@@ -710,11 +738,11 @@ class Depression {
     }
   }
 
-  deleteGrounds() {
-    if (keyIsDown(32)) {
-      this.removeGround();
-    }
-  }
+  // deleteGrounds() {
+  //   if (keyIsDown(32)) {
+  //     this.removeGround();
+  //   }
+  // }
 
   emotionsReady() {
     for (let i = 0; i < emotions.length; i++) {
@@ -790,11 +818,11 @@ class Depression {
   }
 
   displayFinalPoints() {
-
+    depressionPoints = this.basicPoints;
     push();
     textAlign(CENTER, CENTER);
     textSize(200);
-    fill(this.textColorLight);
+    fill(0);
     textFont(ibmFONT);
     text(this.basicPoints, 400, 300);
     pop();
@@ -802,7 +830,7 @@ class Depression {
       push();
       textAlign(CENTER, CENTER);
       textSize(30);
-      fill(this.textColorLight);
+      fill(0);
       textFont(ibmFONTTypewriter);
       text('Grieving Points', 400, 500);
       pop();
@@ -812,15 +840,18 @@ class Depression {
   addFinalPoints() {
     if (this.basicPoints <= this.addedPoints) {
       this.basicPoints = this.basicPoints + 100
-    } else {
+      if (!pointsSFX.isPlaying()) {
+        pointsSFX.play();
+
+    }} else {
       this.basicPoints = this.basicPoints
       this.grievingPointsTitle = true;
+      pointsSFX.stop();
       setTimeout(() => {
         this.background3Appear = true;
       }, 3000);
     }
   }
-
   displayEarnedPoints() {
     this.pointsAlpha = constrain(this.pointsAlpha, 0, 255);
     push();
@@ -879,20 +910,13 @@ class Depression {
   }
 
   success() {
-    if (this.lifeRect.w == 0) {
+    if (this.lifeRect.w < 0) {
       this.feelingEmotions = false;
       this.death.speed = 0;
       this.lifeLineIsThere = false;
-      angerSONG.stop();
-      this.removeGround();
-      if (!hissSFX.isPlaying()) {
-        hissSFX.amp(0.1);
-        hissSFX.play();
-        engine.world.gravity.scale = 0.005;
-      }
-
       setTimeout(() => {
         this.background2Appear = true;
+        denialSONG.stop();
         this.playTime == false;
       }, 4000);
       setTimeout(() => {
@@ -970,7 +994,20 @@ class Depression {
     }
   }
 
+  keyTyped(){
+
+  }
+  keyPressed(){
+
+  }
+  mouseReleased(){
+
+  }
+
   mouseDragged() {
+    if (this.canPlay) {
+      this.addedPoints = this.addedPoints + 5;
+    }
     // if (this.worm.collision(400, 400)) {
     //   console.log('collision')
     //   if (frameCount % 4 === 0) {
@@ -1007,39 +1044,52 @@ class Depression {
       // opens the pop up
       this.hint1found = true;
 
-      if (this.hint1found) {
+      if (this.hint1found && this.clickable) {
         this.hint.text = 'want'
         this.hint1found = false;
         this.answertext1 = true;
+        impactSFX.play();
         setTimeout(() => {
           this.hint2found = true;
         }, 200);
       }
-      if (this.hint2found) {
+      if (this.hint2found && this.clickable) {
         this.hint.text = 'to';
         this.answertext2 = true;
+        impactSFX.play();
+
         setTimeout(() => {
           this.hint3found = true;
         }, 200);
       }
-      if (this.hint3found) {
+      if (this.hint3found && this.clickable) {
         this.hint.text = 'be';
         this.answertext3 = true;
+        impactSFX.play();
+
         setTimeout(() => {
           this.hint4found = true;
         }, 200);
       }
-      if (this.hint4found) {
+      if (this.hint4found && this.clickable) {
         this.hint.text = 'free';
         this.answertext4 = true;
+        impactSFX.play();
+
         setTimeout(() => {
           this.hint5found = true;
         }, 200);
       }
-      if (this.hint5found) {
-        console.log('OVER')
+      if (this.hint5found && this.clickable) {
         this.depressionOver = true;
+        this.clickable = false;
+        impactSFX.play();
         this.answertext5 = true;
+        depressionSFX.stop();
+        depressionBlocksSFX.stop();
+        deepSFX.play();
+        windSFX.stop();
+        thunderSFX.play();
       }
     }
 

@@ -462,6 +462,16 @@ class Main_Level_Page_1 {
 
   }
 
+  keyPressed(){
+
+  }
+  keyTyped(){
+
+  }
+  mouseReleased(){
+    
+  }
+
   mousePressed() {
     if (mouseX > this.denial.x - this.denial.w / 2 &&
       mouseX < this.denial.x + this.denial.w / 2 &&
@@ -470,10 +480,16 @@ class Main_Level_Page_1 {
     this.clickable) {
       this.denialFade = true;
       this.clickable = false;
-      waveSFX.amp(0.02);
+      bell2SFX.play();
       waveSFX.play();
       setTimeout(() => {
+        windSFX.loop();
+        // currentState = new DenialInstructions(smallDeathGIF, smallHeartIMG);
+      }, 3400);
+
+      setTimeout(() => {
         this.denialState = true;
+
         // currentState = new DenialInstructions(smallDeathGIF, smallHeartIMG);
       }, 4500);
     }
@@ -482,18 +498,22 @@ class Main_Level_Page_1 {
       mouseY > this.anger.y - this.anger.h / 2 &&
       mouseY < this.anger.y + this.anger.h / 2) {
       this.angerIsLocked = true;
+      noEnterSFX.play();
     }
     if (mouseX > this.bargaining.x - this.bargaining.w / 2 &&
       mouseX < this.bargaining.x + this.bargaining.w / 2 &&
       mouseY > this.bargaining.y - this.bargaining.h / 2 &&
       mouseY < this.bargaining.y + this.bargaining.h / 2) {
       this.bargainingIsLocked = true;
+      noEnterSFX.play();
+
     }
     if (mouseX > this.depression.x - this.depression.w / 2 &&
       mouseX < this.depression.x + this.depression.w / 2 &&
       mouseY > this.depression.y - this.depression.h / 2 &&
       mouseY < this.depression.y + this.depression.h / 2) {
       this.depressionIsLocked = true;
+      noEnterSFX.play();
 
     }
     if (mouseX > this.acceptance.x - this.acceptance.w / 2 &&
@@ -501,6 +521,8 @@ class Main_Level_Page_1 {
       mouseY > this.acceptance.y - this.acceptance.h / 2 &&
       mouseY < this.acceptance.y + this.acceptance.h / 2) {
       this.acceptanceIsLocked = true;
+      noEnterSFX.play();
+
 
     }
   }

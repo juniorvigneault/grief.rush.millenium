@@ -53,23 +53,23 @@ class Meeting_Sam {
     this.typewriter = new Typewriter();
 
     typewriter2 = new Typewriter();
-    waveSFX.amp(0.1);
-    roomToneSFX.loop();
 
     setTimeout(() => {
       this.samIsThere = true;
-      bell3SFX.play();
+      bell2SFX.play();
     }, 3000);
 
 
     setTimeout(() => {
       this.typewriter.typewrite(`
         Hi...`, 80, 650);
+        keyboardSFX.play();
       this.message1 = true;
     }, 4500);
 
     setTimeout(() => {
       this.toggleTextArrow();
+      keyboardSFX.stop();
     }, 5000);
 
     $(`#name_form`).dialog({
@@ -79,7 +79,6 @@ class Meeting_Sam {
           userName = $(`#nameInput`).val();
           $(".user_name").text(userName);
           this.message3 = true;
-          console.log(this.message3);
           currentState = new Meeting_Sam2(samIMG, arrowGIF, bigSam);
         }
       },
@@ -204,27 +203,52 @@ class Meeting_Sam {
     }
   }
 
+  mouseDragged(){
+
+  }
+
+  keyPressed(){
+
+  }
+
+  keyTyped(){
+
+  }
+
+mouseReleased(){
+
+}
   mousePressed() {
     if (this.message1) {
       this.typewriter.typewrite(`
           I'm Sam.`, 80, 650);
       this.arrow.isShowing = false;
       this.message1 = false;
-
+      keyboardSFX.play();
+      setTimeout(() => {
+        keyboardSFX.play();
+      }, 700);
       setTimeout(() => {
         this.arrow.isShowing = true;
         this.message2 = true;
+        keyboardSFX.stop();
       }, 1000);
     }
     if (this.message2) {
       this.typewriter.typewrite(`
           What's your name?`, 80, 650);
+          setTimeout(() => {
+            keyboardSFX.play();
+          }, 100);
       this.arrow.isShowing = false;
       this.message2 = false;
 
       setTimeout(() => {
         $("#name_form").dialog("open");
+        keyboardSFX.stop();
+
       }, 1500);
+
       this.message2 = false;
     }
   }

@@ -319,15 +319,25 @@ class Start {
       console.log('START');
       this.clickable = false;
       this.activateFade = true;
-      waveSFX.amp(0.02);
       waveSFX.play();
+      // clickSFX.play()
       setTimeout(() => {
         currentState = new Alliance_of_harmony_title(smallHeartIMG, smallDeathIMG);
       }, 4000);
+
     }
   }
 
   mouseDragged() {
+
+  }
+
+  keyTyped(){
+
+  }
+
+  
+  mouseReleased(){
 
   }
   // Pressing start begins the simulation

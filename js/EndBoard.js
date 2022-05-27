@@ -7,7 +7,16 @@ class EndBoard {
     textFont(ibmFONT);
     this.fade = new Fade(0, 1, false, true, 255, 255, 255);
 
+    this.finalTime = timePassed;
 
+    this.grade = 'ABCDE'.split('');
+
+
+    const random = Math.floor(Math.random() * this.grade.length);
+    // console.log(random, this.grade[random]);
+    this.chosenGrade = this.grade[random];
+    console.log(this.chosenGrade);
+    introSFX.loop();
     this.heart = {
       img: heartIMG,
       img2: heartIMG,
@@ -75,35 +84,54 @@ class EndBoard {
     }
 
     this.fadeStart = false;
-
-    setInterval(() => {
       this.informationAppear = true;
-    }, 1000);
 
-    setInterval(() => {
-      this.informationAppear = false;
-    }, 2000);
-
+    // setInterval(() => {
+    //   this.informationAppear = true;
+    // }, 1000);
+    //
+    // setInterval(() => {
+    //   this.informationAppear = false;
+    // }, 2000);
+    //
     setTimeout(() => {
       this.fadeStart = true;
-    }, 7000);
+    }, 10000);
+
+    setTimeout(() => {
+       currentState = new Start(smallHeartIMG, smallDeathIMG);
+       introSFX.stop();
+    }, 16200);
   }
 
   update() {
     this.display();
-    if(this.fadeStart){
-    this.fade.update();
-  }
+    if (this.fadeStart) {
+      this.fade.update();
+    }
   };
 
   display() {
     this.backgroundEnd();
-    this.displayIcons();
     this.displayInformation();
+    // if (frameCount % 85 === 0) {
+    //   this.heart.x = random(100, 700);
+    //   this.heart.y = random(100, 700);
+    //   this.death.x = random(100, 700);
+    //   this.death.y = random(100, 700);
+    //   this.deadRose.x = random(100, 700);
+    //   this.deadRose.y = random(100, 700);
+    //   this.liveRose.x = random(100, 700);
+    //   this.liveRose.y = random(100, 700);
+    // };
 
-    if(this.informationAppear){
-    this.displayName();
-  }
+    this.displayIcons();
+
+    if (this.informationAppear) {
+      this.displayName();
+
+
+    }
   }
 
   backgroundEnd() {
@@ -113,7 +141,7 @@ class EndBoard {
     pop();
   }
 
-  displayIcons(){
+  displayIcons() {
     push();
     imageMode(CENTER);
     image(this.death.img, this.death.x, this.death.y);
@@ -124,20 +152,64 @@ class EndBoard {
     pop();
   }
 
-  displayName(){
+  displayName() {
     push();
-    textAlign(LEFT,CENTER);
-    textSize(40);
+    textAlign(LEFT, CENTER);
+    textSize(35);
     fill(255);
-    text(`Congratulations ` + userName +'!', 70,230)
+    text(`Congratulations ` + userName + '!', 70, 230)
     pop();
   }
-  displayInformation(){
+  displayInformation() {
+
     push();
-    textSize(30);
+    textSize(25);
     fill(255);
-    text(`Total Grieving Points: 3291320`, 70,350);
-    text(`Time: 5 minutes`, 70,400);
+    textFont(ibmFONT)
+    text('Level 5 : ',70, 300)
+    textFont(ibmFONTTypewriter)
+    text(`Thriving Griever`, 220, 300);
     pop();
+
+    push();
+    textSize(25);
+    fill(255);
+    textFont(ibmFONT)
+    text(`Total Grieving Points : `, 70, 350);
+    textFont(ibmFONTTypewriter)
+    text(totalPoints + ' pts', 430, 350)
+    textFont(ibmFONT)
+    text(`Time : `, 70, 400);
+    textFont(ibmFONTTypewriter)
+    text(this.finalTime, 177, 400)
+    pop();
+
+    push();
+    fill(0, 0, 0, 0)
+    stroke(255)
+  //  ellipse(240, 612, 120, 120)
+    textSize(100);
+    fill(255);
+    textFont(ibmFONT)
+    text(this.chosenGrade, 70, 550);
+    pop();
+
+  }
+
+  mousePressed(){
+
+  }
+
+  mouseDragged(){
+
+  }
+  keyTyped(){
+
+  }
+  keyPressed(){
+
+  }
+  mouseReleased(){
+
   }
 }

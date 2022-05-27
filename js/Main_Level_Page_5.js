@@ -1,7 +1,7 @@
 class Main_Level_Page_5 {
   constructor(heartIMG, deadRosePNG, liveRosePNG, deathIMG, smallBrokenHeartIMG) {
     console.log(currentState)
-
+    totalPoints = denialPoints + angerPoints + depressionPoints;
     $("#name_form").hide();
     $("#about_box").hide();
 
@@ -14,10 +14,16 @@ class Main_Level_Page_5 {
       back: false,
       speed2: 2
     }
+
+    thunderSFX.stop();
+
+
     this.acceptanceState = false;
 
-    this.typewriter = new Typewriter();
+    this.blackAlpha = 255;
 
+    this.typewriter = new Typewriter();
+    this.clickable = true;
     this.heart = {
       img: heartIMG,
       img2: heartIMG,
@@ -128,6 +134,7 @@ class Main_Level_Page_5 {
       showing: false
     }
 
+    this.blackBackground = true;
     this.fade = new Fade(0, 1.5, false, true, 255,255,255);
     this.denialFade = false;
   }
@@ -229,7 +236,7 @@ class Main_Level_Page_5 {
     textSize(17)
     textAlign(CENTER, CENTER)
     textFont(ibmFONTTypewriter);
-    text('Level 4 : Fledgling Griever', 400, 690)
+    text('Level 4 : Budding Griever', 400, 690)
     pop();
 
     push();
@@ -289,6 +296,17 @@ class Main_Level_Page_5 {
     }
   }
 
+  displayBlackBG(){
+    push();
+    noStroke();
+    rectMode(CENTER);
+    fill(0,0,0,this.blackAlpha);
+    rect(400,400,width,height);
+    this.blackAlpha = this.blackAlpha - 1.5;
+    constrain(this.blackAlpha, 255,0);
+    pop();
+  }
+
   display() {
     push();
     // rectMode(CENTER)
@@ -313,6 +331,10 @@ class Main_Level_Page_5 {
     }
     if (this.heart.appear5) {
       this.displayAcceptanceHearts()
+    }
+
+    if (this.blackBackground){
+      this.displayBlackBG();
     }
   }
 
@@ -471,16 +493,26 @@ class Main_Level_Page_5 {
   mouseDragged() {
 
   }
+  
+  keyPressed() {
 
+  }
+  keyTyped() {}
+
+  mouseReleased(){
+
+  }
   mousePressed() {
 
     if (mouseX > this.acceptance.x - this.acceptance.w / 2 &&
       mouseX < this.acceptance.x + this.acceptance.w / 2 &&
       mouseY > this.acceptance.y - this.acceptance.h / 2 &&
-      mouseY < this.acceptance.y + this.acceptance.h / 2) {
-      waveSFX.amp(0.03);
+      mouseY < this.acceptance.y + this.acceptance.h / 2 &&
+    this.blackAlpha < 1 && this.clickable) {
+      bell2SFX.play();
       waveSFX.play();
       this.denialFade = true;
+      this.clickable = false;
       setTimeout(() => {
         this.acceptanceState = true;
         // currentState = new DenialInstructions(smallDeathGIF, smallHeartIMG);

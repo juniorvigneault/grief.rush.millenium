@@ -55,6 +55,7 @@ class Main_Level_Page_3 {
       appear5: false
 
     }
+    this.displayWhiteFlash = false;
 
     this.deadRose = {
       img: deadRosePNG,
@@ -64,7 +65,7 @@ class Main_Level_Page_3 {
       x2: 100,
       y2: 700
     }
-
+    this.clickable = true;
     this.death = {
       img: deathIMG,
       img2: deathIMG,
@@ -127,9 +128,16 @@ class Main_Level_Page_3 {
       showing: false
     }
 
-    this.fade = new Fade(0, 1.5, false, true, 255,255,255);
+    this.fade = new Fade(0, 1.5, false, true, 255, 255, 255);
     this.denialFade = false;
-  }
+
+  setInterval(() => {
+this.strobeON = true;
+}, 50);
+  setInterval(() => {
+this.strobeON = false;
+}, 100);
+}
 
   update() {
 
@@ -153,7 +161,7 @@ class Main_Level_Page_3 {
     fill(this.denial.color, 0, 0, 0)
     rectMode(CENTER)
     rect(this.denial.x, this.denial.y, this.denial.w, this.denial.h);
-    fill(0,0,0,100);
+    fill(0, 0, 0, 100);
     textSize(30)
     textAlign(CENTER, CENTER)
     textFont(ibmFONT)
@@ -170,7 +178,7 @@ class Main_Level_Page_3 {
     rectMode(CENTER)
     fill(this.denial.color, 0, 0, 0)
     rect(this.anger.x, this.anger.y, this.anger.w, this.anger.h);
-    fill(0,0,0,100);
+    fill(0, 0, 0, 100);
     textSize(30)
     textAlign(CENTER, CENTER)
     textFont(ibmFONT)
@@ -233,7 +241,7 @@ class Main_Level_Page_3 {
     textSize(17)
     textAlign(CENTER, CENTER)
     textFont(ibmFONTTypewriter);
-    text(totalPoints +' pts', 400, 660)
+    text(totalPoints + ' pts', 400, 660)
     pop();
 
     this.display();
@@ -279,6 +287,21 @@ class Main_Level_Page_3 {
     if (this.denialFade) {
       this.fade.update();
     }
+    if (this.displayWhiteFlash) {
+
+      if(this.strobeON){
+      push();
+      rectMode(CENTER);
+      noStroke();
+      fill(0)
+      rect(400, 400, width, height);
+      pop();
+      this.clickable = false;
+    }
+    else {
+
+    }
+    }
   }
 
   display() {
@@ -310,6 +333,8 @@ class Main_Level_Page_3 {
     if (this.bargainingState) {
       currentState = new BargainingIntro(samIMG, arrowGIF, bigSam);
     }
+
+
   }
 
   displayDenialHearts() {
@@ -357,18 +382,18 @@ class Main_Level_Page_3 {
       mouseX < this.denial.x + this.denial.w / 2 &&
       mouseY > this.denial.y - this.denial.h / 2 &&
       mouseY < this.denial.y + this.denial.h / 2) {
-      this.heart.appear = true;
+      // this.heart.appear = true;
     } else {
-      this.heart.appear = false;
+      // this.heart.appear = false;
     }
 
     if (mouseX > this.anger.x - this.anger.w / 2 &&
       mouseX < this.anger.x + this.anger.w / 2 &&
       mouseY > this.anger.y - this.anger.h / 2 &&
       mouseY < this.anger.y + this.anger.h / 2) {
-      this.heart.appear2 = true
+      // this.heart.appear2 = true
     } else {
-      this.heart.appear2 = false
+      // this.heart.appear2 = false
     }
 
     if (mouseX > this.bargaining.x - this.bargaining.w / 2 &&
@@ -468,24 +493,36 @@ class Main_Level_Page_3 {
 
   }
 
+  keyPressed() {
+
+  }
+  keyTyped() {}
+
+  mouseReleased(){
+    
+  }
+
   mousePressed() {
 
 
     if (mouseX > this.bargaining.x - this.bargaining.w / 2 &&
       mouseX < this.bargaining.x + this.bargaining.w / 2 &&
       mouseY > this.bargaining.y - this.bargaining.h / 2 &&
-      mouseY < this.bargaining.y + this.bargaining.h / 2) {
-        setTimeout(() => {
-          this.bargainingState = true;
-        }, 1500);
-        sineSFX.amp(0.1);
-        sineSFX.play();
+      mouseY < this.bargaining.y + this.bargaining.h / 2 &&
+    this.clickable) {
+      setTimeout(() => {
+        this.bargainingState = true;
+      }, 1200);
+      sineSFX.play();
+      this.displayWhiteFlash = true;
+
     }
     if (mouseX > this.depression.x - this.depression.w / 2 &&
       mouseX < this.depression.x + this.depression.w / 2 &&
       mouseY > this.depression.y - this.depression.h / 2 &&
       mouseY < this.depression.y + this.depression.h / 2) {
       this.depressionIsLocked = true;
+      noEnterSFX.play();
 
     }
     if (mouseX > this.acceptance.x - this.acceptance.w / 2 &&
@@ -493,6 +530,7 @@ class Main_Level_Page_3 {
       mouseY > this.acceptance.y - this.acceptance.h / 2 &&
       mouseY < this.acceptance.y + this.acceptance.h / 2) {
       this.acceptanceIsLocked = true;
+      noEnterSFX.play();
 
     }
   }

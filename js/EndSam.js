@@ -51,40 +51,62 @@ class EndSam {
     this.message2 = false;
     this.message3 = false;
     this.message4 = false;
+    this.lightsOpen = false;
+
+    this.resizeW = 0
+    this.resizeH = 0;
 
     this.fading = false;
     this.displayEndSam = false;
     this.typewriter = new Typewriter();
     // roomToneSFX.amp(0.1)
-    roomToneSFX.loop();
+    // roomToneSFX.loop();
+    angelSFX.play();
 
     this.fade = new Fade(0, 1, false, true, 255, 255, 255);
 
     setTimeout(() => {
+      // noEnterSFX.play();
       this.typewriter.typewrite(`
         ` + userName + `.`, 80, 650);
-    }, 1800);
+        keyboardSFX.play();
+        setTimeout(() => {
+          keyboardSFX.stop();
+        }, 500);
+        setTimeout(() => {
+          spotSFX.play();
+          flashSFX.play();
+          this.lightsOpen = true;
+        }, 2000);
+    }, 5000);
     setTimeout(() => {
       this.typewriter.typewrite(`
         Congratulations, you made it through all
-        the stages of grief!`, 65, 660);
+        the stages of grief.`, 65, 660);
+        keyboardSFX.play();
+        setTimeout(() => {
+          keyboardSFX.stop();
+        }, 3500);
       setTimeout(() => {
         this.arrow.isShowing = true;
         this.message1 = true;
+
       }, 6000);
-    }, 5000);
+    }, 8000);
   }
 
   update() {
 
     push();
+    rectMode(CORNER);
     fill(0);
     rect(0,0,800,800)
     pop();
 
+
     setTimeout(() => {
       this.displayEndSam = true;
-    }, 1800);
+    }, 5000);
 
     if(this.displayEndSam){
       this.display();
@@ -102,6 +124,7 @@ class EndSam {
   display() {
     push();
     fill(0);
+    rectMode(CORNER);
     rect(0,0,2000,2000)
     pop();
     // push();
@@ -115,6 +138,14 @@ class EndSam {
     // push();
     // image(samBG, 0, 0);
     // pop();
+    if (this.lightsOpen){
+        push()
+        imageMode(CENTER);
+        fill(255)
+        ellipse(100,100,100,100)
+        image(endSamBG,400,400);
+        pop()
+    }
 
     if (this.samIsHappy) {
       this.sam.image = this.sam.imageHappy;
@@ -189,12 +220,28 @@ class EndSam {
 
   }
 
+  keyTyped(){
+
+  }
+
+keyPressed(){
+
+}
+
+mouseReleased(){
+
+}
+
   mousePressed() {
     if (this.message1) {
       this.typewriter.typewrite(`
         You are now completely free.` , 60, 650);
+        keyboardSFX.play();
       this.arrow.isShowing = false;
       this.message1 = false;
+      setTimeout(() => {
+        keyboardSFX.stop();
+      }, 1500);
       setTimeout(() => {
         this.arrow.isShowing = true;
         this.message2 = true;
@@ -204,8 +251,12 @@ class EndSam {
       this.typewriter.typewrite(`
         If you ever need me again, I'll
         be here.`, 65, 650);
+        keyboardSFX.play();
       this.message2 = false;
       this.arrow.isShowing = false;
+      setTimeout(() => {
+        keyboardSFX.stop();
+      }, 3000);
       setTimeout(() => {
         this.arrow.isShowing = true;
         this.message3 = true;
@@ -216,19 +267,21 @@ class EndSam {
     if (this.message3) {
       this.typewriter.typewrite(`
         I'll miss you, `+ userName +`.`, 60, 660);
+        keyboardSFX.play();
       this.samIsHappy = true;
-      bell1SFX.amp(0.5);
-      bell1SFX.play();
+      bell3SFX.play();
       this.message3 = false;
       this.arrow.isShowing = false;
       setTimeout(() => {
+        keyboardSFX.stop();
+      }, 2000);
+      setTimeout(() => {
         this.fading = true;
-        waveSFX.amp(0.1);
         waveSFX.play();
       }, 5000);
       setTimeout(() => {
         // this.arrow.isShowing = true;
-        currentState = new EndBoard();
+         currentState = new EndBoard(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
         // this.fading = true;
       }, 12000);
 

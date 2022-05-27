@@ -5,6 +5,7 @@ class Acceptance {
     this.passcode = '4475'
     this.correct = undefined;
     this.currentInput = ``;
+    birdsSFX.loop();
 
     this.rectHint = {
       x: 0,
@@ -13,10 +14,43 @@ class Acceptance {
       h: 50
     }
 
+    this.notRightCombination = true;
+    this.keySound = true;
     this.key = {
       x: 400,
       y: 600
     }
+    this.clickable2 = true;
+    this.clickable3 = true;
+    this.clickable4 = true;
+    this.lastSam = false;
+    this.numbers = {
+      w: 30,
+      h: 30,
+      x: 347,
+      y: 230,
+      x2: 400,
+      y2: 230,
+      x3: 450,
+      y3: 230,
+      x4: 347,
+      y4: 275,
+      x5: 400,
+      y5: 275,
+      x6: 450,
+      y6: 275,
+      x7: 347,
+      y7: 325,
+      x8: 400,
+      y8: 325,
+      x9: 450,
+      y9: 325,
+      x10: 400,
+      y10: 375
+    }
+
+    // this.codeEntered = [];
+    this.codeEntered = '';
 
     this.hint = {
       text: 'I',
@@ -49,6 +83,8 @@ class Acceptance {
       y: 630
     }
 
+    this.numbersEntered = 0;
+
     this.typewriter = new Typewriter();
 
     engine.world.gravity.scale = 0.00001;
@@ -56,6 +92,7 @@ class Acceptance {
     //  depressionSONG.loop();
     this.gameTime = 0;
     this.textColorLight = 220;
+
     this.denialText = {
       string: `ACCEPTANCE`,
       size: 100,
@@ -103,6 +140,7 @@ class Acceptance {
     this.GoTitleTextAppear = false;
     this.GoTitleFontChange = false;
 
+
     this.whiteFade = 0;
     this.heart = {
       img: heartIMG,
@@ -121,7 +159,7 @@ class Acceptance {
     this.keyCursor = false;
 
     this.playTime = false;
-
+    this.goodPassword = false;
 
 
     this.gameOver = {
@@ -181,7 +219,7 @@ class Acceptance {
 
     setTimeout(() => {
       // bell1SFX.amp(0.5);
-      // bell1SFX.play()
+      bell3SFX.play()
     }, 2000);
 
     setTimeout(() => {
@@ -257,8 +295,8 @@ class Acceptance {
 
 
     this.flashingBackground = false;
-    this.startGame = true;
-    this.intro = false;
+    this.startGame = false;
+    this.intro = true;
 
     this.emotionsAreReady = false;
     this.win = false;
@@ -308,7 +346,7 @@ class Acceptance {
       // if (this.gainingPointsAllowed) {
       //   this.gainPoints();
       // }
-
+      // console.log(this.numbersEntered)
       this.background();
       if (this.passcodeFound == false) {
         this.displaySafeAndObjects();
@@ -324,43 +362,51 @@ class Acceptance {
       // this.endGame();
       // this.displayHearts();
       // this.moveDeath();
+      this.displayNumbersRect();
+      this.displayCode();
 
       //    this.deleteGrounds();
       if (this.displayPendant) {
         this.displayBigPendant();
-        setTimeout(() => {
-          this.displayPendant = false
-          this.clickable = true;
-        }, 1500);
       }
 
       if (this.displayBook) {
         this.displayBigBook();
-        setTimeout(() => {
-          this.displayBook = false
-          this.clickable = true;
-        }, 1500);
       }
 
       if (this.displayLamp) {
         this.displayBigLamp();
-        setTimeout(() => {
-          this.displayLamp = false
-          this.clickable = true;
-        }, 1500);
       }
 
       if (this.displayHat) {
         this.displayBigHat();
-        setTimeout(() => {
-          this.displayHat = false
-          this.clickable = true;
-        }, 1500);
       }
 
       push();
-      this.correct = this.checkInput();
-      if (this.correct) {}
+      // this.correct = this.checkInput();
+      // console.log(this.codeEntered)
+      // console.log(this.combination)
+      this.combination = '4 4 7 5 '
+      if (this.codeEntered === this.combination) {
+        this.goodPassword = true;
+        this.notRightCombination = false;
+        this.clickable4 = false;
+        if (!unlockSFX.isPlaying()) {
+          unlockSFX.play();
+          setTimeout(() => {
+            this.soundOff = true;
+          }, 1000);
+        }
+        setTimeout(() => {
+          this.passcodeFound = true;
+          this.keyAppear = true;
+          this.goodPassword = false;
+        }, 1500);
+        if (this.soundOff) {
+          unlockSFX.stop();
+        }
+      }
+
       pop();
 
       if (this.keyAppear) {
@@ -392,6 +438,27 @@ class Acceptance {
 
 
 
+      if (this.numbersEntered == 4) {
+        this.clickable2 = false;
+        if(this.notRightCombination){
+        this.soundOff = false;
+        if (!noEnterSFX.isPlaying()) {
+          noEnterSFX.play();
+          setTimeout(() => {
+            this.soundOff = true;
+          }, 30);
+        }
+        if (this.soundOff) {
+          noEnterSFX.stop();
+        }
+      }
+        setTimeout(() => {
+          this.codeEntered = '';
+          this.numbersEntered = 0
+          this.clickable2 = true;
+        }, 500);
+
+      }
 
       //    for (let i = 0; i < grounds.length; i++) {
       //      grounds[i].update();
@@ -472,6 +539,8 @@ class Acceptance {
 
         }
 
+
+
         setTimeout(() => {
           currentState = new Main_Level_Page_3(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
         }, 7000);
@@ -493,6 +562,7 @@ class Acceptance {
       }
       if (this.background4appear) {
         push();
+        imageMode(CORNER)
         image(acceptanceBG, 0, 0);
         pop();
 
@@ -515,14 +585,17 @@ class Acceptance {
           }
         }
 
+
         // if (this.finalFade) {
         //   this.fade2.update();
         // }
 
       }
+
       if (this.openGift) {
 
         push();
+        imageMode(CORNER)
         image(acceptanceBG, 0, 0);
         pop();
 
@@ -554,10 +627,32 @@ class Acceptance {
       fill(255, 255, 255, this.whiteFade)
       this.whiteFade = this.whiteFade + 1;
       noStroke();
+      rectMode(CORNER);
       rect(0, 0, 800, 800)
       pop();
-      console.log(this.whiteFade);
     }
+    if (this.lastSam) {
+      currentState = new EndSam(samIMG, arrowGIF, bigSam);
+    }
+  }
+
+  displayNumbersRect() {
+    push();
+    rectMode(CENTER);
+    noStroke();
+    fill(255, 255, 255, 0);
+    rect(this.numbers.x, this.numbers.y, this.numbers.w, this.numbers.h);
+    rect(this.numbers.x2, this.numbers.y2, this.numbers.w, this.numbers.h);
+    rect(this.numbers.x3, this.numbers.y3, this.numbers.w, this.numbers.h);
+    rect(this.numbers.x4, this.numbers.y4, this.numbers.w, this.numbers.h);
+    rect(this.numbers.x5, this.numbers.y5, this.numbers.w, this.numbers.h);
+    rect(this.numbers.x6, this.numbers.y6, this.numbers.w, this.numbers.h);
+    rect(this.numbers.x7, this.numbers.y7, this.numbers.w, this.numbers.h);
+    rect(this.numbers.x8, this.numbers.y8, this.numbers.w, this.numbers.h);
+    rect(this.numbers.x9, this.numbers.y9, this.numbers.w, this.numbers.h);
+    rect(this.numbers.x10, this.numbers.y10, this.numbers.w, this.numbers.h);
+
+    pop();
   }
 
 
@@ -725,7 +820,7 @@ class Acceptance {
     textFont(ibmFONT);
     textAlign(CENTER, CENTER);
     textSize(this.denialText.size);
-    fill(30, 30, 30);
+    fill(255);
     text(this.denialText.string, this.denialText.x, this.denialText.y)
     pop();
   }
@@ -739,24 +834,28 @@ class Acceptance {
     pop();
 
     push();
+    imageMode(CORNER)
     image(acceptanceBG, 0, 0);
     pop();
   }
 
   background2() {
     push();
+    imageMode(CORNER)
     image(acceptanceBG, 0, 0);
     pop();
   }
 
   background3() {
     push();
+    imageMode(CORNER)
     image(acceptanceBG, 0, 0)
     pop();
   }
 
   backgroundEndAppear() {
     push();
+    imageMode(CORNER)
     image(acceptanceBG, 0, 0)
     pop();
 
@@ -913,7 +1012,7 @@ class Acceptance {
     push();
     textAlign(CENTER, CENTER);
     textSize(200);
-    fill(this.textColorLight);
+    fill(255);
     textFont(ibmFONT);
     text(this.basicPoints, 400, 300);
     pop();
@@ -921,7 +1020,7 @@ class Acceptance {
       push();
       textAlign(CENTER, CENTER);
       textSize(30);
-      fill(this.textColorLight);
+      fill(255);
       textFont(ibmFONTTypewriter);
       text('Grieving Points', 400, 500);
       pop();
@@ -1028,7 +1127,7 @@ class Acceptance {
     textSize(this.level1Text.size)
     textAlign(CENTER, CENTER);
     textFont(ibmFONT);
-    fill(30, 30, 30);
+    fill(255);
     text(this.level1Text.string, this.level1Text.x, this.level1Text.y)
     pop();
   }
@@ -1043,6 +1142,23 @@ class Acceptance {
     pop();
   }
 
+  displayCode() {
+    push();
+    textSize(17);
+    fill(150, 40, 40, 250);
+    textAlign(LEFT, CENTER);
+    text(this.codeEntered, 370, 410);
+    pop();
+
+    if (this.goodPassword) {
+      push();
+      noStroke();
+      fill(20, 255, 20, 150)
+      ellipseMode(CENTER);
+      ellipse(444, 190, 13, 13)
+      pop();
+    }
+  }
   // displayDeath(x,y) {
   //   push();
   //   imageMode(CENTER);
@@ -1135,27 +1251,35 @@ class Acceptance {
           this.keyAppear = true;
         }, 1000);
       }, 1000);
-
     }
   }
 
 
   keyTyped() {
-    this.currentInput += key;
+    // this.currentInput += key;
   }
+
   keyPressed() {
     if (keyCode === BACKSPACE) {
       this.currentInput = ``;
     }
   }
 
+  mouseDragged() {
+
+  }
+
+  mouseReleased(){
+
+  }
+
   displayPassword() {
-    push();
-    fill(255);
-    textSize(32)
-    textAlign(CENTER, CENTER)
-    text(this.currentInput, 400, 520);
-    pop();
+    // push();
+    // fill(255);
+    // textSize(32)
+    // textAlign(CENTER, CENTER)
+    // text(this.currentInput, 400, 520);
+    // pop();
   }
 
   displaySafeAndObjects() {
@@ -1166,10 +1290,12 @@ class Acceptance {
   displayBigPendant() {
     push();
     noStroke();
-    fill(10)
+    fill(255)
     rectMode(CENTER)
     rect(400, 300, 400, 400)
     imageMode(CENTER);
+    image(velvetIMG, 400, 300)
+    image(frameIMG, 400, 300)
     image(pendantBigIMG, 400, 300)
     pop();
   }
@@ -1180,6 +1306,8 @@ class Acceptance {
     rectMode(CENTER)
     rect(400, 300, 400, 400)
     imageMode(CENTER);
+    image(velvetIMG, 400, 300)
+    image(frameIMG, 400, 300)
     image(bookBigIMG, 400, 300)
     pop();
   }
@@ -1190,6 +1318,8 @@ class Acceptance {
     rectMode(CENTER)
     rect(400, 300, 400, 400)
     imageMode(CENTER);
+    image(velvetIMG, 400, 300)
+    image(frameIMG, 400, 300)
     image(lampBigIMG, 400, 300)
     pop();
   }
@@ -1201,18 +1331,153 @@ class Acceptance {
     rectMode(CENTER)
     rect(400, 300, 400, 400)
     imageMode(CENTER);
+    image(velvetIMG, 400, 300)
+    image(frameIMG, 400, 300)
     image(hatBigIMG, 400, 300)
     pop();
   }
 
+  mouseReleased() {
+    this.displayPendant = false
+    this.clickable = true;
+    this.displayBook = false
+    this.displayHat = false
+    this.displayLamp = false
+    console.log('released')
+  }
+
   mousePressed() {
+
+
+    // console.log(this.codeEntered)
+    if (mouseX > this.numbers.x - this.numbers.w / 2 &&
+      mouseX < this.numbers.x + this.numbers.w / 2 &&
+      mouseY > this.numbers.y - this.numbers.h / 2 &&
+      mouseY < this.numbers.y + this.numbers.h / 2 &&
+      this.clickable && this.clickable2 && this.clickable3) {
+      // this.codeEntered.push('1');
+      this.codeEntered = this.codeEntered + '1 ';
+      this.numbersEntered = this.numbersEntered + 1;
+      bipSFX.play();
+    }
+
+    if (mouseX > this.numbers.x2 - this.numbers.w / 2 &&
+      mouseX < this.numbers.x2 + this.numbers.w / 2 &&
+      mouseY > this.numbers.y2 - this.numbers.h / 2 &&
+      mouseY < this.numbers.y2 + this.numbers.h / 2 &&
+      this.clickable && this.clickable2 && this.clickable3) {
+      // this.codeEntered.push('2');
+      this.codeEntered = this.codeEntered + '2 ';
+      this.numbersEntered = this.numbersEntered + 1;
+      bipSFX.play();
+
+    }
+
+    if (mouseX > this.numbers.x3 - this.numbers.w / 2 &&
+      mouseX < this.numbers.x3 + this.numbers.w / 2 &&
+      mouseY > this.numbers.y3 - this.numbers.h / 2 &&
+      mouseY < this.numbers.y3 + this.numbers.h / 2 &&
+      this.clickable && this.clickable2 && this.clickable3) {
+      // this.codeEntered.push('3');
+      this.codeEntered = this.codeEntered + '3 ';
+      this.numbersEntered = this.numbersEntered + 1;
+      bipSFX.play();
+
+    }
+
+    if (mouseX > this.numbers.x4 - this.numbers.w / 2 &&
+      mouseX < this.numbers.x4 + this.numbers.w / 2 &&
+      mouseY > this.numbers.y4 - this.numbers.h / 2 &&
+      mouseY < this.numbers.y4 + this.numbers.h / 2 &&
+      this.clickable && this.clickable2 && this.clickable3) {
+      // this.codeEntered.push('4');
+      this.codeEntered = this.codeEntered + '4 ';
+      this.numbersEntered = this.numbersEntered + 1;
+      bipSFX.play();
+
+    }
+
+    if (mouseX > this.numbers.x5 - this.numbers.w / 2 &&
+      mouseX < this.numbers.x5 + this.numbers.w / 2 &&
+      mouseY > this.numbers.y5 - this.numbers.h / 2 &&
+      mouseY < this.numbers.y5 + this.numbers.h / 2 &&
+      this.clickable && this.clickable2 && this.clickable3) {
+      // this.codeEntered.push('5');
+      this.codeEntered = this.codeEntered + '5 ';
+      this.numbersEntered = this.numbersEntered + 1;
+      bipSFX.play();
+
+    }
+
+    if (mouseX > this.numbers.x6 - this.numbers.w / 2 &&
+      mouseX < this.numbers.x6 + this.numbers.w / 2 &&
+      mouseY > this.numbers.y6 - this.numbers.h / 2 &&
+      mouseY < this.numbers.y6 + this.numbers.h / 2 &&
+      this.clickable && this.clickable2 && this.clickable3) {
+      // this.codeEntered.push('6');
+      this.codeEntered = this.codeEntered + '6 ';
+      this.numbersEntered = this.numbersEntered + 1;
+      bipSFX.play();
+
+    }
+
+    if (mouseX > this.numbers.x7 - this.numbers.w / 2 &&
+      mouseX < this.numbers.x7 + this.numbers.w / 2 &&
+      mouseY > this.numbers.y7 - this.numbers.h / 2 &&
+      mouseY < this.numbers.y7 + this.numbers.h / 2 &&
+      this.clickable && this.clickable2 && this.clickable3) {
+      // this.codeEntered.push('7');
+      this.codeEntered = this.codeEntered + '7 ';
+      this.numbersEntered = this.numbersEntered + 1;
+      bipSFX.play();
+
+    }
+
+    if (mouseX > this.numbers.x8 - this.numbers.w / 2 &&
+      mouseX < this.numbers.x8 + this.numbers.w / 2 &&
+      mouseY > this.numbers.y8 - this.numbers.h / 2 &&
+      mouseY < this.numbers.y8 + this.numbers.h / 2 &&
+      this.clickable && this.clickable2 && this.clickable3) {
+      // this.codeEntered.push('8');
+      this.codeEntered = this.codeEntered + '8 ';
+      this.numbersEntered = this.numbersEntered + 1;
+      bipSFX.play();
+
+    }
+
+    if (mouseX > this.numbers.x9 - this.numbers.w / 2 &&
+      mouseX < this.numbers.x9 + this.numbers.w / 2 &&
+      mouseY > this.numbers.y9 - this.numbers.h / 2 &&
+      mouseY < this.numbers.y9 + this.numbers.h / 2 &&
+      this.clickable && this.clickable2 && this.clickable3) {
+      // this.codeEntered.push('9');
+      this.codeEntered = this.codeEntered + '9 ';
+      this.numbersEntered = this.numbersEntered + 1;
+      bipSFX.play();
+
+    }
+
+    if (mouseX > this.numbers.x10 - this.numbers.w / 2 &&
+      mouseX < this.numbers.x10 + this.numbers.w / 2 &&
+      mouseY > this.numbers.y10 - this.numbers.h / 2 &&
+      mouseY < this.numbers.y10 + this.numbers.h / 2 &&
+      this.clickable && this.clickable2 && this.clickable3) {
+      // this.codeEntered.push('0');
+      this.codeEntered = this.codeEntered + '0 ';
+      this.numbersEntered = this.numbersEntered + 1;
+      bipSFX.play();
+
+    }
+
+
+
     if (mouseX > this.pendant.x - pendantSmallIMG.width / 2 &&
       mouseX < this.pendant.x + pendantSmallIMG.width / 2 &&
       mouseY > this.pendant.y - pendantSmallIMG.height / 2 &&
       mouseY < this.pendant.y + pendantSmallIMG.height / 2 &&
-      this.clickable) {
+      this.clickable && this.clickable4) {
       console.log('pendant')
-
+      frameSFX.play();
       this.displayPendant = true;
       this.clickable = false;
     }
@@ -1221,8 +1486,9 @@ class Acceptance {
       mouseX < this.book.x + bookSmallIMG.width / 2 &&
       mouseY > this.book.y - bookSmallIMG.height / 2 &&
       mouseY < this.book.y + bookSmallIMG.height / 2 &&
-      this.clickable) {
+      this.clickable && this.clickable4) {
       console.log('book')
+      frameSFX.play();
       this.displayBook = true;
       this.clickable = false;
 
@@ -1232,8 +1498,9 @@ class Acceptance {
       mouseX < this.lamp.x + lampSmallIMG.width / 2 &&
       mouseY > this.lamp.y - lampSmallIMG.height / 2 &&
       mouseY < this.lamp.y + lampSmallIMG.height / 2 &&
-      this.clickable) {
+      this.clickable && this.clickable4) {
       console.log('lamp')
+      frameSFX.play();
       this.displayLamp = true;
       this.clickable = false;
 
@@ -1243,8 +1510,9 @@ class Acceptance {
       mouseX < this.hat.x + hatSmallIMG.width / 2 &&
       mouseY > this.hat.y - hatSmallIMG.height / 2 &&
       mouseY < this.hat.y + hatSmallIMG.height / 2 &&
-      this.clickable) {
+      this.clickable && this.clickable4) {
       console.log('hat')
+      frameSFX.play();
       this.displayHat = true;
       this.clickable = false;
     }
@@ -1255,19 +1523,28 @@ class Acceptance {
       mouseY < this.key.y + keyIMG.height / 2 &&
       this.keyAppear) {
       this.keyCursor = true;
+      if(this.keySound){
+      keySFX.play();
+      this.keySound = false;
+    }
     }
 
     if (mouseX > this.door.x - doorIMG.width / 2 &&
       mouseX < this.door.x + doorIMG.width / 2 &&
       mouseY > this.door.y - doorIMG.height / 2 &&
       mouseY < this.door.y + doorIMG.height / 2 &&
-      this.keyCursor) {
+      this.keyCursor & this.clickable3) {
+      this.clickable3 = false;
+      this.clickable2 = false;
+      doorSFX.play();
+      birdsSFX.stop();
       setTimeout(() => {
-        currentState = new EndSam(samIMG, arrowGIF, bigSam)
-      }, 2000);
+        angelSFX.play();
+
+      }, 800);
+      setTimeout(() => {
+        this.lastSam = true;
+      }, 1000);
     }
-
-
-
   }
 }

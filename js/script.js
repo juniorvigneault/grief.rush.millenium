@@ -238,7 +238,6 @@ function preload() {
 
   titleBG = loadImage('assets/images/png/titlebg.png');
 
-  // tenSecondsBG = loadImage('assets/images/png/tenSecondsBG.png');
   bargainingBG = loadImage('assets/images/xmas_break/bargainingBG.png');
 
   samBG = loadImage('assets/images/xmas_break/samBG.png');

@@ -247,7 +247,7 @@ function preload() {
 
 
   giftPNG = loadImage('assets/images/xmas_break/gift4.png');
-  hatPNG = loadImage('assets/images/xmas_break/bluehat.png');
+  // hatPNG = loadImage('assets/images/xmas_break/bluehat.png');
 
 
 

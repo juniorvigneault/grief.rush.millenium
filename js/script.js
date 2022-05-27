@@ -244,7 +244,7 @@ function preload() {
   mainLevelBG = loadImage('assets/images/xmas_break/mainlevel2BG.png');
   denialBG = loadImage('assets/images/xmas_break/denialmountainBG.png');
   angerBG = loadImage('assets/images/xmas_break/angerBG.png');
-  mainLevel4BG = loadImage('assets/images/xmas_break/mainLevel4bg.png');
+  mainLevel4BG = loadImage('assets/images/xmas_break/mainlevel4bg.png');
 
 
   giftPNG = loadImage('assets/images/xmas_break/gift4.png');

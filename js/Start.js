@@ -336,21 +336,21 @@ class Start {
 
   }
 
-  
+
   mouseReleased(){
 
   }
   // Pressing start begins the simulation
   // Pressing about opens a dialog box with information
   mousePressed() {
-    if (this.mouseIsOverText(this.start.size, this.start.string, this.start.x, this.start.y)) {
-
-
-      // currentState = new Alliance_of_harmony_title(flowersPNG);
-
-    } else if (this.mouseIsOverText(this.about.size, this.about.string, this.about.x, this.about.y)) {
-      console.log('ABOUT');
-      $("#about_box").dialog("open");
-    }
+    // if (this.mouseIsOverText(this.start.size, this.start.string, this.start.x, this.start.y)) {
+    //
+    //
+    //   // currentState = new Alliance_of_harmony_title(flowersPNG);
+    //
+    // } else if (this.mouseIsOverText(this.about.size, this.about.string, this.about.x, this.about.y)) {
+    //   console.log('ABOUT');
+    //   $("#about_box").dialog("open");
+    // }
   }
 }

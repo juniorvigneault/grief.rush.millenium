@@ -621,6 +621,13 @@ class Anger {
     }
   }
 
+  keyTyped(){
+
+  }
+  keyPressed(){
+    
+  }
+
   emotionsReady() {
     for (let i = 0; i < emotions.length; i++) {
       emotions[i].fill.r = random(220, 360);

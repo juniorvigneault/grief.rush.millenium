@@ -3,7 +3,7 @@ class Meeting_Sam2 {
     this.sam = {
       image: samGIF,
       x: 400,
-      y: 310,
+      y: 300,
       vy: 0,
       speed: -7,
       finaleY: 300,

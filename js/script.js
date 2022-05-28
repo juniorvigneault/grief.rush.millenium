@@ -223,7 +223,7 @@ function preload() {
 
   // load white arrow gif
   arrowGIF = loadImage(`assets/gifs/arrow3.gif`);
-  // mediumDeathGIF = loadImage(`assets/gifs/meddeath.gif`);
+  mediumDeathGIF = loadImage(`assets/gifs/meddeath.gif`);
 
   // LOAD intro sound
   introSFX = loadSound(`assets/sounds/music_samples/allianceTitle.wav`)
@@ -355,7 +355,7 @@ function setup() {
   // create the physics in the world
   world = engine.world;
 
-  currentState = new Start(smallHeartIMG, smallDeathIMG);
+  // currentState = new Start(smallHeartIMG, smallDeathIMG);
   // currentState = new Alliance_of_harmony_title(smallHeartIMG, smallDeathIMG);
   // currentState = new Ten_seconds_title(deadRosePNG);
   // currentState = new Loading(loadingCircle);
@@ -368,7 +368,7 @@ function setup() {
   // currentState = new Main_Level_Page_1(smallHeartIMG, smallDeadRosePNG, liveRosePNG, smallDeathIMG, smallBrokenHeartIMG);
 
   // currentState = new Denial(deathGIF, heartIMG, deadRosePNG);
-  // currentState = new Anger(mediumDeathGIF, heartIMG, deadRosePNG);
+  currentState = new Anger(mediumDeathGIF, heartIMG, deadRosePNG);
 
   // currentState = new BargainingIntro(samIMG, arrowGIF, bigSam);
   // currentState = new Bargaining(smallHeartIMG, smallDeathGIF);

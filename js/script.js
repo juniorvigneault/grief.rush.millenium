@@ -394,7 +394,7 @@ function setup() {
     }
   });
 
-  // canvasMouse.pixelRatio = pixelDensity();
+  canvasMouse.pixelRatio = pixelDensity();
   World.add(world, mConstraint);
 
 

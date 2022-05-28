@@ -1,8 +1,6 @@
 # Grief Rush Millenium
 #### by Junior
 
-#### Where I'm at -
-
 This project intends to gamify the grieving process through a speculative experimental game. Exploring the linear five stages of grief model by Swiss psychiatrist Kübler-Ross, players are accompanied through their grieving process, and encounter different gamification methods such as achievements, status and mastery. Made by Junior Vigneault as a Student Research Assistant during summer 2021.
 
 [Process Journal](https://juniorvigneault.github.io/grief_project/process/journal.html) - Where I keep track of what's going on inside my head \
